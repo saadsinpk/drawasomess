@@ -1,20 +1,19 @@
-import React,{useState} from 'react'
+import React from 'react'
 import img1 from '../dist/webImages/2.png'
 import { AiOutlineClose } from "react-icons/ai";
 import Header from './Header';
 
 function HowToPlay({play}) {
-    const [first, setfirst] = useState(play == "active" ? 'section10  active': "section10")
-    
+    const  activefuntion = (e) => {
+        e.preventDefault();
+      };
     const closefuntion = (e) => {
         e.preventDefault();
-        var play = "false";
-        setfirst("f")
       };
   return (
 
    <>
-   <div  className={first}>
+   <div  className={play == "active" ? 'section10  active': "section10"}>
    <div className="closebutton ml-auto text-right px-2">
        <button onClick={closefuntion}><AiOutlineClose /></button>
    </div>
