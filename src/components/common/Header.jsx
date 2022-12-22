@@ -14,16 +14,20 @@ function Header() {
     const [play, setPlay] = useState(false);
     const SettingtoggleClass = (e) => {
         e.preventDefault();
+        const settings = document.querySelector(".Setting");
         setSetting(!setting);
+      //   if(setting) {
+      //     settings.classList.add("active")
+      // }
+      // else {
+      //   settings.classList.remove("active")
+      // }
       };
     const StatisticstoggleClass = (e) => {
         e.preventDefault();
         setStatistics(!statistics);
       };
-    const CongratulationstoggleClass = (e) => {
-        e.preventDefault();
-        setCongratulations(!congratulations);
-      };
+   
     const PlaystoggleClass = (e) => {
         e.preventDefault();
         setPlay(!play);
@@ -31,7 +35,7 @@ function Header() {
   return (
     <>
     <HowToPlay play={play ? 'active': null} />
-       <Setting popuptext={"Setting"} setting={setting ? 'active': null}  />
+       <Setting popuptext={"Setting"}   />
        <Statistics popuptext={"Statistics"} statistics={statistics ? 'active': null}  />
        <Congratulations popuptext={"Congratulations"} congratulations={congratulations ? 'active': null}  />
        <Topranking popuptext={"Today’s Top 30 Players"} congratulations={congratulations ? 'active': null}  />

@@ -3,34 +3,35 @@ import { useState,useEffect } from "react";
 
 
 function Keyboard() {
-    let datav = [];
-    const [keyval, setKeyval] = useState("");
-    const [text, setText] = useState("");
-    const keyboardClick = (e) => {
-        e.preventDefault();
-        const keyval = e.target.getAttribute("data-key");
-        datav.push(keyval);
+  const [keyval, setKeyval] = useState("s");
+  const [text, setText] = useState("");
+  const keyboardClick = (e) => {
+    e.preventDefault();
+    const keyval = e.target.getAttribute("data-key");
+    let datav = keyval;
+        localStorage.setItem("i",datav)
         const dataj = datav.join(",")
         const dataup = dataj.replaceAll(",","");
         const dataf =  dataup;
-        localStorage.setItem('inputval', JSON.stringify(dataf));
+        document.querySelector(".typeval").value = dataf;
         
         
     }
-    useEffect(() => {
-        var getval = localStorage.getItem('inputval');
-        setKeyval(getval)
-      }, [])
-     
-      
+    const keyboardClickback = (e) => {
+      var val = document.querySelector(".typeval").value;
+      var valm = val.split("");
+      var valp = valm.pop();
+      console.log(valp)
+      const dataj = valm.join(",")
+      const dataup = dataj.replaceAll(",","");
+      document.querySelector(".typeval").value = dataup;
+    }
       const KeyboardInput = (e) => {
-        setText(e.target.value);
-        console.log(text)
       }
 
   return (
     <> <div className="typeKeyboard px-5">
-    <input type="text" className=''  value={keyval} onChange={KeyboardInput}  placeholder='Ice Skating' />
+    <input type="text" className='typeval'  value={keyval} onChange={KeyboardInput}   placeholder='Ice Skating' />
    </div>
    <div className="Keyboard-module" role="group" aria-label="Keyboard">
        <div className="container mx-auto px-4">
@@ -66,7 +67,7 @@ function Keyboard() {
             <button type="button" onClick={keyboardClick} data-key="b" className="Key-module_row-button flex items-center justify-center">b</button>
             <button type="button" onClick={keyboardClick} data-key="n" className="Key-module_row-button flex items-center justify-center">n</button>
             <button type="button" onClick={keyboardClick} data-key="m" className="Key-module_row-button flex items-center justify-center">m</button>
-            <button type="button" onClick={keyboardClick} data-key="←" aria-label="backspace" className="Key-module_row-button flex items-center justify-center Key-module_oneAndAHalf__K6JBY"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" className="game-icon" data-testid="icon-backspace"><path fill="var(--color-tone-1)" d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"></path></svg></button>
+            <button type="button" onClick={keyboardClickback} data-key="←" aria-label="backspace" className="Key-module_row-button flex items-center justify-center Key-module_oneAndAHalf__K6JBY"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24" className="game-icon" data-testid="icon-backspace"><path fill="var(--color-tone-1)" d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"></path></svg></button>
             </div>
             </div>
             </div></>

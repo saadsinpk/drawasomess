@@ -1,16 +1,14 @@
 import React from 'react'
-import Header from './Header';
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import Result from '../Result';
 import Social from './Social';
 import img1 from '../dist/webImages/1.png';
 import Topplayers from './Topplayers';
 
-function Statistics({statistics,popuptext}) {
-    console.log(statistics)
+function Statistics({popuptext}) {
   return (
    <>
-   <div  className={statistics == "active" ? 'StatisticsMain Statisticsm active': "Statisticsm StatisticsMain"}>
+   <div  className={"StatisticsMain"}>
     <div className="StatisticsMain-top p-2 flex items-center">
         <div className="StatisticsMain-top-left">
             <AiOutlineArrowLeft />

@@ -1,8 +1,6 @@
 import React from 'react';
-import Diagram from './components/common/Diagram';
 import Header from './components/common/Header';
 import Keyboard from './components/common/Keyboard';
-import Typekeyboard from './components/common/Typekeyboard';
 import img1 from './components/dist/webImages/1.png';
 import { FaPlay } from "react-icons/fa";
 

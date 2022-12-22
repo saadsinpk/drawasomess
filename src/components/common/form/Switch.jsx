@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-
+import { Link } from "react-router-dom";
 function Switch() {
     const [enabled, setEnabled] = useState(false);
     const settingSwitch = (e) => {
         setEnabled(!enabled);
+        const body = document.body;
         if(!enabled) {
             localStorage.setItem('theme', "dark")
             localStorage.setItem('switch', true)
+            body.classList.add("active")
         }
         else {
             localStorage.setItem('theme', "light")
             localStorage.setItem('switch', false);
+            body.classList.remove("active")
         }
     }
     var switchget = localStorage.getItem("switch");
