@@ -4,7 +4,7 @@ import Social from './Social';
 
 function Topranking({popuptext}) {
   return (
-    <div  className={'StatisticsMain Topranking'} style={{bottom:0}}>
+    <div  className={'StatisticsMain Topranking'}>
      <div className="StatisticsMain-top p-2 flex items-center">
          <div className="StatisticsMain-top-left">
              <AiOutlineArrowLeft />
