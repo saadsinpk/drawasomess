@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import Switch from './form/Switch';
 import Social from './Social';
 
-function Setting() {
+function Setting({setting,popuptext}) {
+    
   return (
-   <div className="Setting">
+   <div  className={setting == "active" ? 'Setting active': "Setting"}>
     <div className="heading p-2 flex items-center">
     <div className="heading-left">
             <AiOutlineArrowLeft />
     </div>
-    <h2 className="heading-right mx-auto my-0">Setting</h2>
+    <h2 className="heading-right mx-auto my-0">{popuptext}</h2>
     </div>
     <div className="userList my-5">
         <ul className='list'>
@@ -19,7 +21,9 @@ function Setting() {
             </li>
             <li className='flex justify-between py-2 px-2'>
                 <div className='userList__left'>Dark Theme</div>
-                <div className='userList__right'>UserName</div>
+                <div className='userList__right'>
+                    <Switch />
+                </div>
             </li>
             <li className='flex justify-between py-2 px-2'>
                 <div className='userList__left'>Feedback</div>

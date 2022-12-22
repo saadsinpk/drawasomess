@@ -2,18 +2,19 @@
 body {
     font-family: 'Hepta Slab', serif;
 }
+
 main {
   position: relative;
     max-width: 500px;
     margin: 2rem auto;
-    border: 1px solid #000;
+    border: 1px solid $primary-color;
     overflow: hidden;
 }
 .socailIcon {
   a {
     width: 2.5rem;
     height: 2.5rem;
-    background: #000;
+    background: $primary-color;
   border-radius: 50%;
     font-size: 1.1rem;
     display: grid;

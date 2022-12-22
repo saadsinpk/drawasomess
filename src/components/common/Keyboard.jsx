@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 
 function Keyboard() {
@@ -13,8 +13,16 @@ function Keyboard() {
         const dataj = datav.join(",")
         const dataup = dataj.replaceAll(",","");
         const dataf =  dataup;
-        setKeyval(`${text}${dataf}`)
-      }
+        localStorage.setItem('inputval', JSON.stringify(dataf));
+        
+        
+    }
+    useEffect(() => {
+        var getval = localStorage.getItem('inputval');
+        setKeyval(getval)
+      }, [])
+     
+      
       const KeyboardInput = (e) => {
         setText(e.target.value);
         console.log(text)
@@ -22,7 +30,7 @@ function Keyboard() {
 
   return (
     <> <div className="typeKeyboard px-5">
-    <input type="text" className=''  value={text} onChange={KeyboardInput}  placeholder='Ice Skating' />
+    <input type="text" className=''  value={keyval} onChange={KeyboardInput}  placeholder='Ice Skating' />
    </div>
    <div className="Keyboard-module" role="group" aria-label="Keyboard">
        <div className="container mx-auto px-4">

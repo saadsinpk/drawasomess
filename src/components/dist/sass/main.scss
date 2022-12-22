@@ -25,7 +25,7 @@
     cursor: pointer;
     user-select: none;
     background-color: #d3d6da;
-    color: #000;
+    color: $primary-color;
     text-transform: uppercase;
 }
 .keygap {
@@ -39,15 +39,29 @@
     border: 1px solid transparent;
     padding: 10px 20px;
     text-align: center;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid $primary-color;
     outline: none;
     width: 100%;
     margin-bottom: 1rem;
 }
 .StatisticsMain {
+    position: absolute;
+    bottom: 0;
+    z-index: 9;
     padding-top: 1rem;
     border-radius: 5px;
-    border: 1px solid #000;
+    border: 1px solid $primary-color;
+    background: #fff;
+    bottom: -300%;
+    transition: .7s;
+    overflow: auto;
+    width: 100%;
+    &.Statisticsm.active {
+        bottom: 0%; 
+    }
+    &.congratulationsm.active {
+        bottom: 0%; 
+    }
 
     &-top {
         &-center {
@@ -80,10 +94,10 @@
     width: 90%;
     margin: 0 auto 1rem;
     &Box {
-      padding: 1rem 4rem;
+      padding: 1rem 2rem;
     font-size: 20px;
-    border-top: 1px solid #000;
-    border-bottom: 1px solid #000;
+    border-top: 1px solid $primary-color;
+    border-bottom: 1px solid $primary-color;
     &:last-child{
         border-bottom: unset;
     }
@@ -105,18 +119,45 @@ font-size: 20px;
 .Setting {
     position: absolute;
     bottom: 0;
-    border-top: 1px solid #000;
+    border-top: 1px solid $primary-color;
     border-radius: .5rem .5rem 0 0;
     width: 100%;
     background: #fff;
     padding: 1rem;
+    transition: .5s;
+    bottom: -100vh;
+    &.active {
+        bottom: 0;
+    }
 
 }
 .userList {
     li {
       & + li {
-        border-top: 1px solid #000;
+        border-top: 1px solid $primary-color;
       }  
+    }
+}
+.playBox {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 1px solid $primary-color;
+    cursor: pointer;
+    i {
+        font-size: 2rem
+    }
+}
+.heading {
+    &-right {
+        position: relative;
+        left: -1rem;
+        font-weight: 500;
+    }
+}
+.timeMian {
+    h2 {
+        font-size: 40px;
     }
 }
 @import "./footer";
