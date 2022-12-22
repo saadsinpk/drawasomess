@@ -1,0 +1,127 @@
+@import "./reset";
+@import "./variable";
+@import "./function";
+@import "./mixin";
+@import "./typography";
+@import "./layout";
+@import "./list";
+@import "./btn";
+@import "./banner";
+@import "./media";
+@import "./input";
+@import "./search";
+@import "./animation";
+@import "./header";
+
+
+.Key-module_row-button {
+    font-family: inherit;
+    font-weight: bold;
+    border: 0;
+    padding: 10px;
+    height: 58px;
+    border-radius: 4px;
+    width: 100%;
+    cursor: pointer;
+    user-select: none;
+    background-color: #d3d6da;
+    color: #000;
+    text-transform: uppercase;
+}
+.keygap {
+    min-width: 10px;
+}
+.jeff {
+    width: 50%;
+    max-width: 300px;
+}
+.typeKeyboard input {
+    border: 1px solid transparent;
+    padding: 10px 20px;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    outline: none;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+.StatisticsMain {
+    padding-top: 1rem;
+    border-radius: 5px;
+    border: 1px solid #000;
+
+    &-top {
+        &-center {
+            font-size: 24px;
+        }
+        &-left {
+            font-size: 20px;
+        }
+    }
+}
+
+
+.result {
+    width: 70%;
+    margin: 1rem auto;
+    &Box {
+        &__top {
+            font-size: 40px;
+        }
+        &__bottom {
+            font-size: 10px;
+        }
+       
+    }
+
+}
+
+
+.section1 {
+    width: 90%;
+    margin: 0 auto 1rem;
+    &Box {
+      padding: 1rem 4rem;
+    font-size: 20px;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    &:last-child{
+        border-bottom: unset;
+    }
+  }
+    a {
+
+        color: #1565FF;
+    }
+}
+
+.flowBox {
+    padding: 1rem;
+    h2 {
+        font-weight: 400;
+font-size: 20px;
+
+    }
+}
+.Setting {
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #000;
+    border-radius: .5rem .5rem 0 0;
+    width: 100%;
+    background: #fff;
+    padding: 1rem;
+
+}
+.userList {
+    li {
+      & + li {
+        border-top: 1px solid #000;
+      }  
+    }
+}
+@import "./footer";
+@import "./innerPage";
+.bordernone {
+    border: unset !important;
+}
+

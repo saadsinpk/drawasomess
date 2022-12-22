@@ -1,0 +1,83 @@
+.grid {
+    display: grid;
+    &-col90 {
+        grid-template: auto / 5fr 90fr 5fr;
+        .block__inner {
+            grid-column: 3/2;
+        }
+    }
+    &-col80 {
+        grid-template: auto / 10fr 80fr 10fr;
+        .block__inner {
+            grid-column: 3/2;
+        }
+    }
+    &-col70 {
+        grid-template: auto / 15fr 70fr 15fr;
+        .block__inner {
+            grid-column: 3/2;
+        }
+    }
+    &-col60 {
+        grid-template: auto / 20fr 60fr 20fr;
+        .block__inner {
+            grid-column: 3/2;
+        }
+    }
+    &-col50 {
+        grid-template: auto / 25fr 50fr 25fr;
+        .block__inner {
+            grid-column: 3/2;
+        }
+    }
+    &-col40 {
+        grid-template: auto / 30fr 40fr 30fr;
+        .block__inner {
+            grid-column: 3/2;
+        }
+    }
+}
+.block{
+&__1x2 {
+    grid-template: auto / repeat(2, 1fr);
+  }
+  &__1x3 {
+    grid-template: auto / repeat(3, 1fr);
+  }
+}
+
+.padding-vertical {
+    padding: $vertical-padding;
+}
+
+.flex_ {
+    display: flex;
+}
+
+.flex_center {
+    justify-content: center;
+}
+.flex_space {
+    justify-content: space-between;
+}
+.flex_wrap {
+    flex-wrap: wrap;
+}
+.align_center {
+    align-items: center;
+}
+.vertical__padding {
+    padding: 4rem 0;
+}
+.grid {
+display:grid;
+}
+.grid_2 {
+    grid-template-columns: repeat(2,1fr);
+}
+.grid_3 {
+    grid-template-columns: repeat(3,1fr);
+}
+.grid_4 {
+    grid-template-columns: repeat(4,1fr);
+}

@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@400;500;700;900&display=swap');
+body {
+    font-family: 'Hepta Slab', serif;
+}
+main {
+  position: relative;
+    max-width: 500px;
+    margin: 2rem auto;
+    border: 1px solid #000;
+    overflow: hidden;
+}
+.socailIcon {
+  a {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: #000;
+  border-radius: 50%;
+    font-size: 1.1rem;
+    display: grid;
+    place-items: center;
+    transition: .3s;
+    &:hover {
+      transform: rotate(360deg);
+    }
+    svg {
+      color: #fff;
+    }
+  }
+}

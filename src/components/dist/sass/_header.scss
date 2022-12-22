@@ -1,0 +1,13 @@
+.header {
+    border-bottom: 1px solid #000;
+    svg {
+        font-size: 20px;
+    }
+    &__left {
+        &text {
+            font-size: 20px;
+            font-weight: 600;
+        }
+    }
+}
+
