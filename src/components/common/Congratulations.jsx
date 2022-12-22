@@ -1,5 +1,4 @@
 import React from 'react'
-import Header from './Header';
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import Result from '../Result';
 import Social from './Social';
