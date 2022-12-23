@@ -1,37 +1,36 @@
-import React from 'react'
+import React from 'react';
+import $ from "jquery";
 import { useState,useEffect } from "react";
 
 
 function Keyboard() {
-  const [keyval, setKeyval] = useState("s");
+  const [value, setValue] = useState("");
   const [text, setText] = useState("");
+  let keyvalue = [];
   const keyboardClick = (e) => {
     e.preventDefault();
-    const keyval = e.target.getAttribute("data-key");
-    let datav = keyval;
-        localStorage.setItem("i",datav)
-        const dataj = datav.join(",")
-        const dataup = dataj.replaceAll(",","");
-        const dataf =  dataup;
-        document.querySelector(".typeval").value = dataf;
+    let datav = e.target.getAttribute("data-key");
+    keyvalue.push(datav);
+   $(".typeval").val($(".typeval").val() +  e.target.getAttribute("data-key"));
         
         
     }
     const keyboardClickback = (e) => {
-      var val = document.querySelector(".typeval").value;
-      var valm = val.split("");
-      var valp = valm.pop();
-      console.log(valp)
-      const dataj = valm.join(",")
-      const dataup = dataj.replaceAll(",","");
-      document.querySelector(".typeval").value = dataup;
+      let val = $(".typeval").val();
+      let val2 = val.split("");
+      console.log(val2)
+      val2.pop();
+      $(".typeval").val(val2.join(""));
     }
       const KeyboardInput = (e) => {
+        var val = keyvalue;
+        setValue(e.target.value)
       }
+        
 
   return (
-    <> <div className="typeKeyboard px-5">
-    <input type="text" className='typeval'  value={keyval} onChange={KeyboardInput}   placeholder='Ice Skating' />
+    <> <div className="typeKeyboard px-5"> 
+    <input type="text" className='typeval' focus="true"  value={value} onChange={KeyboardInput}   placeholder='Ice Skating' />
    </div>
    <div className="Keyboard-module" role="group" aria-label="Keyboard">
        <div className="container mx-auto px-4">
@@ -59,7 +58,7 @@ function Keyboard() {
             <button type="button" onClick={keyboardClick} data-key="l" className="Key-module_row-button flex items-center justify-center">l</button>
             <div data-testid="spacer" className="keygap"></div>
             </div><div className="Keyboard-module_row my-2 flex items-center gap-2">
-                <button type="button" onClick={keyboardClick} data-key="↵" className="Key-module_row-button flex items-center justify-center Key-module_oneAndAHalf__K6JBY">enter</button>
+                <button type="button" data-key="↵" className="Key-module_row-button flex items-center justify-center Key-module_oneAndAHalf__K6JBY">enter</button>
             <button type="button" onClick={keyboardClick} data-key="z" className="Key-module_row-button flex items-center justify-center">z</button>
             <button type="button" onClick={keyboardClick} data-key="x" className="Key-module_row-button flex items-center justify-center">x</button>
             <button type="button" onClick={keyboardClick} data-key="c" className="Key-module_row-button flex items-center justify-center">c</button>

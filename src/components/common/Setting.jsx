@@ -4,16 +4,9 @@ import Switch from './form/Switch';
 import Social from './Social';
 
 function Setting({popuptext}) {
-    const [modal, setModal] = useState(false);
     const removeModal = (e) => {
-        setModal(!modal);
         const setting = document.querySelector(".Setting");
-        if(modal) {
-            setting.classList.add("active")
-        }
-        else {
-            setting.classList.remove("active")
-        }
+        setting.classList.remove("active");
     }
   return (
    <div  className={'Setting'}>

@@ -1,14 +1,14 @@
-import React from 'react'
+import React from 'react';
+import $ from "jquery";
 import img1 from '../dist/webImages/2.png'
 import { AiOutlineClose } from "react-icons/ai";
-import Header from './Header';
 
 function HowToPlay({play}) {
     const  activefuntion = (e) => {
         e.preventDefault();
       };
     const closefuntion = (e) => {
-        e.preventDefault();
+      $(e.target).closest(".section10").removeClass("active");
       };
   return (
 

@@ -1,0 +1,25 @@
+body.active {
+    background-color: #000;
+    color: #fff;
+    main {
+        border-color: #fff;
+    }
+    .playBox {
+        border-color: #fff;
+        
+    }
+    .section10 {
+        background: #000;
+    }
+    .StatisticsMain,
+    .Setting {
+        background: #000;
+        
+    }
+    .socailIcon a {
+        background: #fff;
+        svg {
+            color: #000;
+        }
+    }
+}

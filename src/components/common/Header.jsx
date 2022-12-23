@@ -1,4 +1,5 @@
-import React,{useState} from 'react';
+import React,{useState,useContext} from 'react';
+import $ from "jquery";
 import { AiOutlineSetting } from "react-icons/ai";
 import { FaBars,FaQuestion,FaRegSun,FaAlignLeft } from "react-icons/fa";
 import Congratulations from './Congratulations';
@@ -6,26 +7,19 @@ import HowToPlay from './HowToPlay';
 import Setting from './Setting';
 import Statistics from './Statistics';
 import Topranking from './Topranking';
+import Faq from './Faq';
 
 function Header() {
-    const [setting, setSetting] = useState(false);
     const [statistics, setStatistics] = useState(false);
     const [congratulations, setCongratulations] = useState(false);
     const [play, setPlay] = useState(false);
     const SettingtoggleClass = (e) => {
         e.preventDefault();
-        const settings = document.querySelector(".Setting");
-        setSetting(!setting);
-      //   if(setting) {
-      //     settings.classList.add("active")
-      // }
-      // else {
-      //   settings.classList.remove("active")
-      // }
+        $(".Setting").toggleClass('active')
       };
-    const StatisticstoggleClass = (e) => {
+      const StatisticstoggleClass = (e) => {
         e.preventDefault();
-        setStatistics(!statistics);
+        $(".StatisticsPage").toggleClass('active');
       };
    
     const PlaystoggleClass = (e) => {
@@ -34,9 +28,10 @@ function Header() {
       };
   return (
     <>
-    <HowToPlay play={play ? 'active': null} />
+    {/* <Faq  popuptext={"PLAYER FAQ"}   /> */}
+    <HowToPlay />
        <Setting popuptext={"Setting"}   />
-       <Statistics popuptext={"Statistics"} statistics={statistics ? 'active': null}  />
+       <Statistics popuptext={"Statistics"}   />
        <Congratulations popuptext={"Congratulations"} congratulations={congratulations ? 'active': null}  />
        <Topranking popuptext={"Today’s Top 30 Players"} congratulations={congratulations ? 'active': null}  />
        <div className="header py-2">
@@ -53,7 +48,7 @@ function Header() {
                     <ul className='list flex justify-center gap-2'>
                         <li><a href="#" onClick={PlaystoggleClass}><FaQuestion /></a></li>
                         <li><a href="#" onClick={StatisticstoggleClass}><FaAlignLeft /></a></li>
-                        <li><a href="#" className={setting ? 'active': null}  onClick={SettingtoggleClass} ><AiOutlineSetting /></a></li>
+                        <li><a href="#"  onClick={SettingtoggleClass} ><AiOutlineSetting /></a></li>
                     </ul>
             </div>
         </div>

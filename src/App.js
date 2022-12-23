@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import ModalDailogProvider from "./context/ModalDailogContext";
+import Modal from "./components/common/Modal";
 import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import Statistics from "./components/common/Statistics";
@@ -22,6 +24,7 @@ function App() {
         <Routes >
           <Route exact path="/" element={<Home />} />
         </Routes>
+        {/* <Modal /> */}
       </main>
     </>
   );

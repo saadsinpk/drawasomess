@@ -13,7 +13,9 @@
 @import "./animation";
 @import "./header";
 
-
+body {
+    scroll-behavior: smooth;
+}
 .Key-module_row-button {
     font-family: inherit;
     font-weight: bold;
@@ -56,7 +58,7 @@
     transition: .7s;
     overflow: auto;
     width: 100%;
-    &.Statisticsm.active {
+    &.StatisticsPage.active {
         bottom: 0%; 
     }
     &.congratulationsm.active {
@@ -68,6 +70,7 @@
             font-size: 24px;
         }
         &-left {
+            cursor: pointer;
             font-size: 20px;
         }
     }
@@ -182,19 +185,44 @@ font-size: 20px;
     }
 }
 .heading {
+    &-left {
+        cursor: pointer;
+    }
     &-right {
         position: relative;
         left: -1rem;
         font-weight: 500;
     }
 }
+.Modal {
+    &__heading {
+        &--left {
+            cursor: pointer;
+        }
+        &--right {
+            position: relative;
+            left: -1rem;
+            font-weight: 500;
+        }
+    }
+   
+}
 .timeMian {
     h2 {
         font-size: 40px;
     }
 }
+.border-t {
+    border-color: #000
+}
+.faqBox {
+    h2 {
+        font-size: 22px
+    }
+}
 @import "./footer";
 @import "./innerPage";
+@import "./dark";
 .bordernone {
     border: unset !important;
 }
