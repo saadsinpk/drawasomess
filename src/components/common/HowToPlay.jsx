@@ -3,17 +3,17 @@ import $ from "jquery";
 import img1 from '../dist/webImages/2.png'
 import { AiOutlineClose } from "react-icons/ai";
 
-function HowToPlay({play}) {
+function HowToPlay({closePlay}) {
     const  activefuntion = (e) => {
         e.preventDefault();
       };
     const closefuntion = (e) => {
-      $(e.target).closest(".section10").removeClass("active");
+      closePlay(false)
       };
-  return (
+  return (  
 
    <>
-   <div  className={play == "active" ? 'section10  active': "section10"}>
+   <div  className={'section10  active'}>
    <div className="closebutton ml-auto text-right px-2">
        <button onClick={closefuntion}><AiOutlineClose /></button>
    </div>

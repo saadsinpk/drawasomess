@@ -1,36 +1,40 @@
 import React from 'react';
 import $ from "jquery";
-import { useState,useEffect } from "react";
+import { useState,useEffect,useRef } from "react";
 
 
 function Keyboard() {
   const [value, setValue] = useState("");
-  const [text, setText] = useState("");
+  const inputRef = useRef();
   let keyvalue = [];
   const keyboardClick = (e) => {
+    inputRef.current.focus();
+    // console.log( inputRef.current)
     e.preventDefault();
     let datav = e.target.getAttribute("data-key");
     keyvalue.push(datav);
    $(".typeval").val($(".typeval").val() +  e.target.getAttribute("data-key"));
-        
-        
+   
+   
     }
     const keyboardClickback = (e) => {
       let val = $(".typeval").val();
       let val2 = val.split("");
-      console.log(val2)
       val2.pop();
       $(".typeval").val(val2.join(""));
     }
-      const KeyboardInput = (e) => {
-        var val = keyvalue;
-        setValue(e.target.value)
-      }
-        
-
+    const KeyboardInput = (e) => {
+      var val = keyvalue;
+      setValue(e.target.value)
+    }
+    window.addEventListener("keypress", function() {
+      if(inputRef.current){
+       inputRef.current.focus();
+     }
+      })
   return (
     <> <div className="typeKeyboard px-5"> 
-    <input type="text" className='typeval' focus="true"  value={value} onChange={KeyboardInput}   placeholder='Ice Skating' />
+    <input type="text" ref={inputRef} className='typeval'   value={value} onChange={KeyboardInput}   placeholder='Ice Skating' />
    </div>
    <div className="Keyboard-module" role="group" aria-label="Keyboard">
        <div className="container mx-auto px-4">

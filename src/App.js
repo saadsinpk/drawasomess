@@ -5,6 +5,8 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import Statistics from "./components/common/Statistics";
 import HowToPlay from "./components/common/HowToPlay";
+import PlayBy from "./PlayBy";
+import Submission from "./Submission";
 function App() {
   const [theme, setTheme] = useState("light")
   const themeMode = (e) => {
@@ -20,9 +22,11 @@ function App() {
   }
   return (
     <>
-      <main onLoad={themeMode} className={theme}>
+      <main onLoad={themeMode} className={theme} >
         <Routes >
           <Route exact path="/" element={<Home />} />
+          <Route exact path="/playby" element={<PlayBy />} />
+          <Route exact path="/submission" element={<Submission />} />
         </Routes>
         {/* <Modal /> */}
       </main>

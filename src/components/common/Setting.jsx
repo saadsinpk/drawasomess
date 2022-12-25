@@ -3,13 +3,12 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import Switch from './form/Switch';
 import Social from './Social';
 
-function Setting({popuptext}) {
+function Setting({popuptext,closeSetting}) {
     const removeModal = (e) => {
-        const setting = document.querySelector(".Setting");
-        setting.classList.remove("active");
+        closeSetting(false)
     }
   return (
-   <div  className={'Setting'}>
+   <div  className={'Setting active'}>
     <div className="heading p-2 flex items-center">
     <div className="heading-left" onClick={removeModal}>
             <AiOutlineArrowLeft />

@@ -12,7 +12,19 @@
 @import "./search";
 @import "./animation";
 @import "./header";
-
+.Modal {
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #000;
+    border-radius: 0.5rem 0.5rem 0 0;
+    width: 100%;
+    background: #fff;
+    padding: 1rem;
+    transition: 0.5s;
+    min-height: 90%;
+    max-height: 90%;
+    overflow: auto;
+}
 body {
     scroll-behavior: smooth;
 }
@@ -220,10 +232,58 @@ font-size: 20px;
         font-size: 22px
     }
 }
+.inputdesign {
+    outline: none;
+    padding: 20px;
+    border-bottom: 1px solid #000;
+}
+.w-100 {
+    width: 100%;
+}
+.colorMain {
+    &Box {
+     &_ {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+     }
+    }
+}
+.size {
+    .sizeBox{
+        background: #ddd;
+        border-radius: 50%;
+&:nth-child(1){
+width: 30px;
+height: 30px;
+}        
+&:nth-child(2){
+width: 25px;
+height: 25px;
+}        
+&:nth-child(3){
+width: 20px;
+height: 20px;
+}        
+&:nth-child(4){
+width: 10px;
+height: 10px;
+}        
+
+&.active {
+
+            background: #000;
+        }
+    }
+}
 @import "./footer";
 @import "./innerPage";
+@import "./responsive";
 @import "./dark";
 .bordernone {
     border: unset !important;
+}
+.playbtn svg {
+    font-size: 2rem;
 }
 
