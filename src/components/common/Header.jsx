@@ -13,32 +13,34 @@
 
   function Header() {
       const [settingModal, setsettingModal] = useState(false);
+      const [userModal, setUserModal] = useState(false);
       const [howToSubmit, setHowToSubmit] = useState(false);
-      const [statistics, setStatistics] = useState(false);
-      const [congratulations, setCongratulations] = useState(false);
+      const [statisticsModal, setStatisticsModal] = useState(false);
+      const [congratulationsModal, setCongratulationsModal] = useState(false);
       const [play, setPlay] = useState(false);
       const SettingtoggleClass = (e) => {
         setsettingModal(true)
         };
         const StatisticstoggleClass = (e) => {
-          e.preventDefault();
-          $(".StatisticsPage").toggleClass('active');
+          setStatisticsModal(true);
         };
     
       const PlaystoggleClass = (e) => {
           setPlay(true);
         };
+      const UserModaltoggle = (e) => {
+        setUserModal(true);
+        };
     return (
       <>
       {/* <HowToSubmit   /> */}
      {/* {howToSubmit && <HowToSubmit   />}  */}
-           {/* <UserModal popuptext={"Setting"}  /> */}
+         {userModal && <UserModal closeUserModal={UserModaltoggle}  />}  
       {/* <Faq  popuptext={"PLAYER FAQ"}   /> */}
     {play && <HowToPlay closePlay={setPlay} />} 
       {settingModal && <Setting popuptext={"Setting"} closeSetting={setsettingModal}   />}  
-        <Statistics popuptext={"Statistics"}   />
-        <Congratulations popuptext={"Congratulations"} congratulations={congratulations ? 'active': null}  />
-        <Topranking popuptext={"Today’s Top 30 Players"} congratulations={congratulations ? 'active': null}  />
+       {statisticsModal &&  <Statistics popuptext={"Statistics"} closeStatistics={setStatisticsModal}   />}
+        {/* <Congratulations popuptext={"Congratulations"} closeCongratulations={setCongratulationsModal}  /> */}
         <div className="header py-2">
           <div className="container flex justify-between items-center gap-1 mx-auto px-4">
               <div className="header__left flex  items-center gap-2">

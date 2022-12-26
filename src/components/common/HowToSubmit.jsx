@@ -5,19 +5,16 @@ import img1 from '../dist/webImages/2.png'
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 
-function HowToSubmit({closePlay}) {
-    const  activefuntion = (e) => {
-        e.preventDefault();
-      };
-    const closefuntion = (e) => {
-      closePlay(false)
-      };
+function HowToSubmit({closesubmirModal}) {
+    const removeModal = (e) => {
+        closesubmirModal(false)
+    }
   return (  
 
    <>
    <div  className={'Modal'}>
    <div className="closebutton ml-auto text-right px-2">
-       <button onClick={closefuntion}><AiOutlineClose /></button>
+       <button onClick={removeModal}><AiOutlineClose /></button>
    </div>
    <h2><b>How to Submit</b></h2>
    <p>Press play and you will have 60 seconds to draw an image. Enter the word or phrase as well as your information and submit. There is no limited to length of word(s).</p>

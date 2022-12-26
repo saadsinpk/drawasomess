@@ -5,14 +5,13 @@ import Social from './Social';
 import img1 from '../dist/webImages/1.png';
 import Topplayers from './Topplayers';
 
-function Statistics({popuptext}) {
+function Statistics({popuptext,closeStatistics}) {
     const removeModal = (e) => {
-        const StatisticsPage = document.querySelector(".StatisticsPage");
-        StatisticsPage.classList.remove("active");
+        closeStatistics(false)
     }
   return (
    <>
-   <div  className={"StatisticsMain StatisticsPage"}>
+   <div  className={"Modal"}>
     <div className="StatisticsMain-top p-2 flex items-center">
         <div className="StatisticsMain-top-left" onClick={removeModal}>
             <AiOutlineArrowLeft />

@@ -8,9 +8,21 @@
             font-size: 20px;
             font-weight: 600;
             h4 {
+                position: relative;
+                margin-top: -.5rem;
+                font-size: 1rem;
                 color: red;
             }
         }
     }
 }
-
+.adminHeader {
+    border-bottom: 1px solid #000;
+    padding: 1rem 0;
+    &__Logo {
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+    }
+}

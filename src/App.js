@@ -1,35 +1,20 @@
-import React, { useState } from "react";
-import ModalDailogProvider from "./context/ModalDailogContext";
-import Modal from "./components/common/Modal";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "./Home";
-import Statistics from "./components/common/Statistics";
-import HowToPlay from "./components/common/HowToPlay";
-import PlayBy from "./PlayBy";
-import Submission from "./Submission";
+import { ToastContainer } from "react-toastify";
+import { injectStyle } from "react-toastify/dist/inject-style";
+import WebLayout from "./routes/WebLayout";
+import LoginLayout from "./routes/LoginLayout";
+import DashboardLayout from "./routes/DashboardLayout";
 function App() {
-  const [theme, setTheme] = useState("light")
-  const themeMode = (e) => {
-    const body = document.body;
-    if (localStorage.getItem("theme") == "dark") {
-      setTheme("dark");
-      body.classList.add("active");
-    }
-    else {
-      setTheme("light");
-       body.classList.remove("active")
-    }
-  }
+  injectStyle();
   return (
     <>
-      <main onLoad={themeMode} className={theme} >
-        <Routes >
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/playby" element={<PlayBy />} />
-          <Route exact path="/submission" element={<Submission />} />
-        </Routes>
-        {/* <Modal /> */}
-      </main>
+        <Routes>
+            <Route path="/admin/*" element={<DashboardLayout />} />
+            <Route path="/admin/login/*" element={<LoginLayout />} />
+            <Route path="*" element={<WebLayout />} />
+          </Routes>
+            <ToastContainer />
     </>
   );
 }

@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
+import Header from "./Header";
 import Social from './Social';
 
 function Topranking({popuptext}) {
@@ -172,12 +174,14 @@ const data = {
 
     // if (!randomQuote) return null;
   return (
-    <div  className={'StatisticsMain Topranking'}>
+    <>
+      <Header  />
+    <div  className={'topranking'}>
      <div className="StatisticsMain-top p-2 flex items-center">
-         <div className="StatisticsMain-top-left">
+         <Link to="/" className="StatisticsMain-top-left">
              <AiOutlineArrowLeft />
-         </div>
-         <h2 className="heading-right mx-auto my-0">{popuptext}</h2>
+         </Link>
+         <h2 className="heading-right mx-auto my-0">{"Today’s Top 30 Players"}</h2>
      </div>
      <div className='section1'>
    
@@ -207,6 +211,7 @@ const data = {
             </div>
      </div>
      </div>
+     </>
   )
 }
 
