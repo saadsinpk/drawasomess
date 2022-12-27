@@ -10,6 +10,9 @@ import Loader from './components/common/Loader';
 
 
 function AdminSetting() {
+  const [userdata, setUserdata] = useState({
+    primary_email: "muzzammil"
+  })
   const isComponentMounted = useRef(true);
   const [formdata, setFormdata] = useState();
   const [loading, setLoading] = useState(true);
@@ -55,7 +58,11 @@ function AdminSetting() {
     //     new_password: yup.string(),
     //     confirm: yup.string().oneOf([yup.ref('new_password'), null], 'Passwords must match')
     //   });
-
+    const  handleChange  = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setUserdata({...userdata,[name]: value})
+    }
 
       const  onSubmit  = async (values) => {
         axios.defaults.headers = {
@@ -80,7 +87,6 @@ function AdminSetting() {
           });
       }
      
-      if (loading) return <Loader />;
     
 
   return (
@@ -109,6 +115,8 @@ function AdminSetting() {
                   <Field
                       type="text"
                       name="primary_email"
+                      value={userdata.primary_email}
+                      onChange={handleChange}
                     
                     />
                       <ErrorMessage name="primary_email">

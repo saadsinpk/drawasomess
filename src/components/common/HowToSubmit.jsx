@@ -1,6 +1,5 @@
 
 import React from 'react';
-import $ from "jquery";
 import img1 from '../dist/webImages/2.png'
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
