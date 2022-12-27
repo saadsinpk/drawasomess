@@ -1,5 +1,4 @@
 import React from 'react';
-import $ from "jquery";
 import img1 from '../dist/webImages/2.png'
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -13,7 +12,7 @@ function HowToPlay({closePlay}) {
   return (  
 
    <>
-   <div  className={'section10  active'}>
+   <div  className={'Modal'}>
    <div className="closebutton ml-auto text-right px-2">
        <button onClick={closefuntion}><AiOutlineClose /></button>
    </div>

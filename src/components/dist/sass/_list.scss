@@ -14,3 +14,15 @@
         }
     }
 }
+
+.table {
+    width: 100%;
+    td,th {
+        padding: 5px;
+        border: 1px solid #000;
+        button {
+            border-radius: 1rem;
+            color: #fff;
+        }
+    }
+}
