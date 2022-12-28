@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import PlayBy from "../PlayBy";
-import Submission from "../Submission";
-import Home from "../Home";
-import Topranking from "../components/common/Topranking";
+import PlayBy from "../website/PlayBy";
+import Submission from "../website/Submission";
+import Home from "../website/Home";
+import Topranking from "../website/components/common/Topranking";
 
 function WebLayout() {
         const [theme, setTheme] = useState("light");

@@ -5,9 +5,9 @@ import config from "../services/config.json";
 import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
-import { setTokenSession,getTokenSession,removeTokenSession } from "../utils/common";
+import { setTokenSession,getTokenSession,removeTokenSession } from "../dashboard/utils/common";
 import { toast } from "react-toastify";
-import AdminHeader from '../components/common/AdminHeader';
+import AdminHeader from '../dashboard/components/common/AdminHeader';
 
 function LoginLayout() {
   // const [token, setToken] = useState(getTokenSession);

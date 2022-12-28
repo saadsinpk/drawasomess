@@ -5,6 +5,7 @@ import { injectStyle } from "react-toastify/dist/inject-style";
 import WebLayout from "./routes/WebLayout";
 import LoginLayout from "./routes/LoginLayout";
 import DashboardLayout from "./routes/DashboardLayout";
+import Forget from "./dashboard/components/Forget";
 function App() {
   injectStyle();
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
             <Route path="/admin/*" element={<DashboardLayout />} />
             <Route path="/admin/login" element={<LoginLayout />} />
+            <Route path="/admin/forget" element={<Forget />} />
             <Route path="*" element={<WebLayout />} />
           </Routes>
             <ToastContainer />

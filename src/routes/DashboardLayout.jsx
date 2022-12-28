@@ -2,16 +2,14 @@ import React, { useState,useEffect,useRef } from "react";
 import axios from "axios";
 import config from "../services/config.json";
 import { Routes, Route,useNavigate } from "react-router-dom";
-import AdminDatabase from "../AdminDatabase";
-import AdminSetting from "../AdminSetting";
-import AdminStatistics from "../AdminStatistics";
-import AdminDashboard from "../components/common/AdminDashboard";
-import AdminHeader from "../components/common/AdminHeader";
-import Forget from "../components/common/Forget";
-import {getTokenSession,removeTokenSession} from "../utils/common";
-import LoginLayout from "./LoginLayout";
+import AdminDatabase from "../dashboard/AdminDatabase";
+import AdminSetting from "../dashboard/AdminSetting";
+import AdminStatistics from "../dashboard/AdminStatistics";
+import AdminDashboard from "../dashboard/components/common/AdminDashboard";
+import AdminHeader from "../dashboard/components/common/AdminHeader";
+import {getTokenSession,removeTokenSession} from "../dashboard/utils/common";
 import { toast } from "react-toastify";
-import Loader from "../components/common/Loader";
+import Loader from "../dashboard/components/common/Loader";
 
 function DashboardLayout() {
   const [isLoggedin, setIsLoggedin] = useState(true);
@@ -60,7 +58,6 @@ function DashboardLayout() {
           <Route  path="/setting" element={<AdminSetting />} />
           <Route  path="/statistics" element={<AdminStatistics />} />
           <Route  path="/database" element={<AdminDatabase />} />
-          <Route  path="/forget" element={<Forget />} />
         </Routes>
   
 
