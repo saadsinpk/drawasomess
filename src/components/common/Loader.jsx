@@ -25,7 +25,7 @@ const Loader = () => {
         progress={progress}
         onLoaderFinished={() => setProgress(0)}
       />
-      <h2>gfohoi</h2>
+      <h2>Drawesome</h2>
       {/* <img src={logo} alt="" /> */}
     </LoaderDiv>,
     document.getElementById("root")

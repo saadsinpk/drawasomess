@@ -7,19 +7,20 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { setTokenSession,getTokenSession,removeTokenSession } from "../utils/common";
 import { toast } from "react-toastify";
+import AdminHeader from '../components/common/AdminHeader';
 
 function LoginLayout() {
+  // const [token, setToken] = useState(getTokenSession);
     const navigate = useNavigate();
    
       useEffect(() => {
-      getTokenSession() && navigate(`/admin/dasboard`);
+      getTokenSession() && navigate(`/admin/dashboard`);
     }, []);
     const initialValues = {
       username: "",
         password: "",
       };
       const validationSchema = yup.object({
-        // email: yup.string().email("Invaild Email").required("Must Required"),
         password: yup.string().min(5, "Mininum 5 length").max(20, "Maximum 20 length").required("Must Required"),
       });
       const  onSubmit  = async (values) => {
@@ -50,6 +51,7 @@ function LoginLayout() {
       };
   return (
     <>
+    <AdminHeader data={"fa"} />
     <Formik
           initialValues={initialValues}
           onSubmit={onSubmit}

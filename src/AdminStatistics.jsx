@@ -1,6 +1,93 @@
-import React from 'react'
+import React,{useState,useEffect,useRef, useMemo} from 'react';
+import axios from "axios";
+import config from "./services/config.json";
+import { toast } from "react-toastify";
+import {getTokenSession} from "./utils/common";
+import Loader from './components/common/Loader';
+import Search from './components/common/Search';
+import Table from './components/common/Table';
+ 
 
 function AdminStatistics() {
+    const isComponentMounted = useRef(true);
+    const [userdata, setUserdata] = useState([]);
+    const [totalItem, setTotalItem] = useState(0);
+    const [currentPage, setCurrentPage] = useState()
+    const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(true);
+    const tableheader = [
+        {
+            name: " Word/Phrase",
+            feildL: "word"
+        },
+        {
+            name: "Day of the Week",
+            feildL: "day"
+        },
+        {
+            name: "Date",
+            feildL: "date"
+        },
+        {
+            name: "View Count",
+            feildL: "count"
+        },
+        {
+            name: "Games Completed",
+            feildL: "completed"
+        },
+        {
+            name: "Fastest Time",
+            feildL: "fastest"
+        },
+        {
+            name: "Average Time",
+            feildL: "average"
+        },
+        {
+            name: "Link to Photoz",
+            feildL: "Photo"
+        },
+    ];
+
+
+    useEffect(() => {
+      if (isComponentMounted.current) { 
+        getData();
+      }
+      return () => {
+        isComponentMounted.current = false;
+        setLoading(true);
+      }
+    }, []);
+    const getData = async () => {
+        axios.defaults.headers = {
+          "Content-Type": "application/json",
+          "Authorization":`Bearer ${getTokenSession()}`,
+        };
+        axios.get(`${config.apiEndPoint}statistics`,)
+           .then ((response) => {
+            setUserdata(response.data)
+             setLoading(false);
+          })
+          .catch((error) => {
+            setLoading(true);
+            if (error.response.status === 401)
+            toast.error(error.response.data.message);
+            else toast.error("Something went wrong. Please try again later.");
+          });
+      }
+      const keys = ["word_phrase","day_of_week","date_today","view_count","games_completed","fastest_time","average_time","link_to_photo"];
+      const searchtable = (data) => {
+        return data.filter(
+            (item) =>
+            // keys.some((key) => item[key].toLowerCase().includes(search))
+         
+                item.word_phrase.toLowerCase().includes(search) ||
+                item.day_of_week.toLowerCase().includes(search)
+            )
+        };
+      if (loading) return <Loader />;
   return (
    <>
    <div className="AdminStatistics">
@@ -47,7 +134,7 @@ function AdminStatistics() {
     <div className="AdminStatistics2 my-4">
             <div className="AdminStatistics2__top flex justify-around py-2 items-center">
                 <div className="searchBox">
-                    <input type="text" placeholder='search' />
+                  <input type="text" onChange={(e) => setSearch(e.target.value)} />
                 </div>
                 <div className="userdata">
                 User data
@@ -58,29 +145,21 @@ function AdminStatistics() {
            <table className="table">
             <thead>
                 <tr>
+                    
                     <th></th>
-                    <th> Word/Phrase</th>
-                    <th>Day of the Week</th>
-                    <th>Date</th>
-                    <th>View Count</th>
-                    <th>Games Completed</th>
-                    <th>Fastest Time</th>
-                    <th>Average Time</th>
-                    <th>Link to Photoz</th>
+                  {  
+                  tableheader.map(({name},index) =>{
+                    return (
+                        <th key={index}>{name}</th>
+
+                    )
+
+                    })}
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><input type="checkbox" /></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                <Table data={searchtable(userdata.tabledata)} />
+               
             </tbody>
 
            </table>

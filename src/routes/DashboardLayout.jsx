@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useRef } from "react";
 import axios from "axios";
 import config from "../services/config.json";
 import { Routes, Route,useNavigate } from "react-router-dom";
@@ -8,53 +8,59 @@ import AdminStatistics from "../AdminStatistics";
 import AdminDashboard from "../components/common/AdminDashboard";
 import AdminHeader from "../components/common/AdminHeader";
 import Forget from "../components/common/Forget";
-import {getTokenSession,getidSession} from "../utils/common";
+import {getTokenSession,removeTokenSession} from "../utils/common";
 import LoginLayout from "./LoginLayout";
+import { toast } from "react-toastify";
+import Loader from "../components/common/Loader";
 
 function DashboardLayout() {
+  const [isLoggedin, setIsLoggedin] = useState(true);
+  const isComponentMounted = useRef(true);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
   useEffect(() => {
+    !getTokenSession() && navigate(`/admin/login`);
+
     getData();
   }, []);
 
+  const loginoutfunc = (e) => {
+    removeTokenSession();
+    setIsLoggedin(true);
+    toast.success("logOut");
+    navigate(`/admin/login`)
+    };
+
   const getData = async () => {
-    // axios.defaults.headers = {
-    //   "headers": `${getTokenSession()}`,
-    // };
-    // axios.post(`${config.apiEndPoint}login/`,
-    //    values)
-    //    .then((response) => {
-    //     console.log(response)
-    //     if( !response.data.token){
-    //       removeTokenSession(response.data.token);
-    //       toast.error(response.data.errorMessage); 
-    //     }
-    //     else {
-    //       setTokenSession(response.data.token);
-    //       toast.success(response.data.successMessage);
-    //       navigate("/admin/dasboard");
-    //     }
-       
-        
-    //   })
-    //   .catch((error) => {
-    //     if (error.response.status === 401)
-    //     toast.error(error.response.data.message);
-    //     else toast.error("Something went wrong. Please try again later.");
-    //   });
+      axios.defaults.headers = {
+        "Content-Type": "application/json",
+        "Authorization":`Bearer ${getTokenSession()}`,
+      };
+      axios.get(`${config.apiEndPoint}profile/1`,)
+         .then ((response) => {
+           setLoading(false);
+         
+        })
+        .catch((error) => {
+          setLoading(true);
+          removeTokenSession()
+          if (error.response.status === 401)
+          toast.error(error.response.data.message);
+          else toast.error("Something went wrong. Please try again later.");
+        });
   }
-    
+  if (loading) return <Loader />;
   return (
    <>
 
-   <AdminHeader data={"fa"} />
+   <AdminHeader  logoutfun={loginoutfunc} />
    <Routes >
-          <Route exact path="/dashboard" element={<AdminDashboard />} />
-          <Route exact path="/setting" element={<AdminSetting />} />
-          <Route exact path="/statistics" element={<AdminStatistics />} />
-          <Route exact path="/database" element={<AdminDatabase />} />
-          <Route exact path="/login" element={<LoginLayout />} />
-          <Route exact path="/forget" element={<Forget />} />
+          <Route exact path="/*" element={<AdminDashboard />} />
+          <Route  path="/setting" element={<AdminSetting />} />
+          <Route  path="/statistics" element={<AdminStatistics />} />
+          <Route  path="/database" element={<AdminDatabase />} />
+          <Route  path="/forget" element={<Forget />} />
         </Routes>
   
 

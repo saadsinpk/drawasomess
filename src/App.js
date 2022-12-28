@@ -11,6 +11,7 @@ function App() {
     <>
         <Routes>
             <Route path="/admin/*" element={<DashboardLayout />} />
+            <Route path="/admin/login" element={<LoginLayout />} />
             <Route path="*" element={<WebLayout />} />
           </Routes>
             <ToastContainer />

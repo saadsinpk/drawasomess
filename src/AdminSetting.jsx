@@ -11,10 +11,16 @@ import Loader from './components/common/Loader';
 
 function AdminSetting() {
   const [userdata, setUserdata] = useState({
-    primary_email: "muzzammil"
+    primary_email: "",
+    current_password: "",
+    new_password: "",
+    confirm: "",
+    instagram_link: "",
+    twitter_link: "",
+    tiktok_link: "",
+    snapchat_link: ""
   })
   const isComponentMounted = useRef(true);
-  const [formdata, setFormdata] = useState();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (isComponentMounted.current) { 
@@ -22,7 +28,6 @@ function AdminSetting() {
     }
     return () => {
       isComponentMounted.current = false;
-      setFormdata(null);
       setLoading(true);
     }
   }, []);
@@ -33,8 +38,17 @@ function AdminSetting() {
     };
     axios.get(`${config.apiEndPoint}profile/1`,)
        .then ((response) => {
-         setFormdata(response);
          setLoading(false);
+         setUserdata({
+          primary_email: response.data.data.email,
+          current_password: response.data.data.password,
+          instagram_link: response.data.data.instagram_link,
+          twitter_link: response.data.data.twitter_link,
+          tiktok_link: response.data.data.tiktok_link,
+          snapchat_link: response.data.data.snapchat_link == null && "",
+          new_password: "",
+          confirm: ""
+        })
        
       })
       .catch((error) => {
@@ -44,25 +58,12 @@ function AdminSetting() {
         else toast.error("Something went wrong. Please try again later.");
       });
   }
-    let initialValues = {
-      primary_email: "",
-      current_password: "",
-      new_password: "",
-      instagram_link: "",
-      twitter_link: "",
-      tiktok_link: "",
-      snapchat_link: ""
-    };
     // const validationSchema = yup.object({
-    //     email: yup.string().email("Invaild Email").required("Must Required"),
+    //   primary_email: yup.string().email("Invaild Email").required("Must Required"),
     //     new_password: yup.string(),
     //     confirm: yup.string().oneOf([yup.ref('new_password'), null], 'Passwords must match')
     //   });
-    const  handleChange  = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        setUserdata({...userdata,[name]: value})
-    }
+
 
       const  onSubmit  = async (values) => {
         axios.defaults.headers = {
@@ -74,7 +75,6 @@ function AdminSetting() {
           .then((response) => {
             setLoading(false);
             toast.success(response.data.message);
-            setFormdata(response);
           })
           .catch((error) => {
             setLoading(false);
@@ -86,9 +86,7 @@ function AdminSetting() {
             else toast.error("Something went wrong. Please try again later.");
           });
       }
-     
-    
-
+      if (loading) return <Loader />;
   return (
     <div className='my-5 p-5'>
    <div className='adminForm flex'>
@@ -104,7 +102,7 @@ function AdminSetting() {
     </div>
     <div className="adminFormright">
     <Formik
-          initialValues={initialValues}
+          initialValues={userdata}
           onSubmit={onSubmit}
           validateOnChange
         >
@@ -115,8 +113,6 @@ function AdminSetting() {
                   <Field
                       type="text"
                       name="primary_email"
-                      value={userdata.primary_email}
-                      onChange={handleChange}
                     
                     />
                       <ErrorMessage name="primary_email">
@@ -131,21 +127,18 @@ function AdminSetting() {
                   <Field
                       type="password"
                       name="current_password"
-                      // value={!loading && formdata.data.password}
                     />
                     </div>
                   <div className="inputBox">
                   <Field
                       type="password"
                       name="new_password"
-                      // value={!loading && formdata.data.password}
                     />
                     </div>
                   <div className="inputBox">
                   <Field
                       type="password"
                       name="confirm"
-                      // value={""}
                     />
                        <ErrorMessage name="confirm">
                     {(msg) => (
@@ -159,30 +152,26 @@ function AdminSetting() {
                   <Field
                       type="text"
                       name="instagram_link"
-                      // value={!loading ? formdata.data.instagram_link : ""}
                     />
                     </div>
                   <div className="inputBox">
                   <Field
                       type="text"
                       name="twitter_link"
-                      // value={!loading ? formdata.data.twitter_link : ""}
                     
                     />
                     </div>
                   <div className="inputBox">
                   <Field
                       type="text"
-                      name="twitter_tiktok"
-                      // value={!loading ? formdata.data.tiktok_link : ""} 
+                      name="tiktok_link"
                     
                     />
                     </div>
                   <div className="inputBox">
                   <Field
                       type="text"
-                      name="twitter_snapchat"
-                      // value={!loading ? formdata.data.snapchat_link : ""}
+                      name="snapchat_link"
                     
                     />
                     </div>
