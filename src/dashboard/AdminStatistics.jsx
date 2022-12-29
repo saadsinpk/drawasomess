@@ -87,9 +87,11 @@ function AdminStatistics() {
                 item.day_of_week.toLowerCase().includes(search)
             )
         };
+        
       if (loading) return <Loader />;
   return (
    <>
+    { }
    <div className="AdminStatistics">
     <div className="AdminStatistics1">
         <div className="container flex gap-4  px-4 py-3">
@@ -97,37 +99,37 @@ function AdminStatistics() {
         <ul className='list'>
             <li className='flex justify-between' >
                 <div className="AdminStatistics1Box__left">Today’s Date</div>
-                <div className="AdminStatistics1Box__right">Mon 12/19/2022</div>
+                <div className="AdminStatistics1Box__right">{userdata.statistics.date_today && userdata.statistics.date_today}</div>
                 </li>
             <li className='flex justify-between' >
                 <div className="AdminStatistics1Box__left">How many users played today total?</div>
-                <div className="AdminStatistics1Box__right">330</div>
+                <div className="AdminStatistics1Box__right">{userdata.statistics.users_played_today && userdata.statistics.users_played_today}</div>
                 </li>
             <li className='flex justify-between' >
                 <div className="AdminStatistics1Box__left">How many users played complete game?</div>
-                <div className="AdminStatistics1Box__right">275</div>
+                <div className="AdminStatistics1Box__right">{userdata.statistics.games_completed_today && userdata.statistics.games_completed_today}</div>
                 </li>
             <li className='flex justify-between' >
                 <div className="AdminStatistics1Box__left">How many new users currently</div>
-                <div className="AdminStatistics1Box__right">150</div>
+                <div className="AdminStatistics1Box__right">{userdata.statistics.new_users_today && userdata.statistics.new_users_today}</div>
                 </li>
             <li className='flex justify-between' >
                 <div className="AdminStatistics1Box__left">How many players in the last 7 days?</div>
-                <div className="AdminStatistics1Box__right">1150</div>
+                <div className="AdminStatistics1Box__right">{userdata.statistics.last_7_days_players && userdata.statistics.last_7_days_players}</div>
                 </li>
             <li className='flex justify-between' >
                 <div className="AdminStatistics1Box__left">How many players in the last 30 days</div>
-                <div className="AdminStatistics1Box__right">3000</div>
+                <div className="AdminStatistics1Box__right">{userdata.statistics.last_30_days_players && userdata.statistics.last_30_days_players}</div>
                 </li>
         </ul>
     </div>
     <div className="AdminStatistics1Box text-center p-5">
    <h2> Today’s Word/Phrase</h2>
-    <h5>“Alpha Dog”</h5>
+    <h5>{userdata.statistics.word_of_day && userdata.statistics.word_of_day}</h5>
     <br />
     <h2>Average guess time</h2>
     <h5>today</h5>
-
+           <h1>{userdata.statistics.average_guess_time_today}</h1> 
     </div>
     </div>
     </div>

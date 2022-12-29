@@ -44,8 +44,7 @@ function LoginLayout() {
             
           })
           .catch((error) => {
-            if (error.response.status === 401)
-            toast.error(error.response.data.message);
+            if (error.response.status === 401) toast.error(error.response.data.message);
             else toast.error("Something went wrong. Please try again later.");
           });
       };
@@ -103,14 +102,11 @@ function LoginLayout() {
                     name="submit"
                     className="btn btn-primary"
                     disabled={isSubmitting}
-                  >
-                    Login
+                  >{isSubmitting ? "login..." : "login" }
                   </button>
                   <Link to={"/admin/forget"}>Forget Password</Link>
                     </div>
-                  
                 </Form>
-
                 );
             }}
         </Formik>

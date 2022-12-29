@@ -5,7 +5,7 @@ import { Routes, Route,useNavigate } from "react-router-dom";
 import AdminDatabase from "../dashboard/AdminDatabase";
 import AdminSetting from "../dashboard/AdminSetting";
 import AdminStatistics from "../dashboard/AdminStatistics";
-import AdminDashboard from "../dashboard/components/common/AdminDashboard";
+import AdminDashboard from "../dashboard/AdminDashboard";
 import AdminHeader from "../dashboard/components/common/AdminHeader";
 import {getTokenSession,removeTokenSession} from "../dashboard/utils/common";
 import { toast } from "react-toastify";
@@ -13,6 +13,7 @@ import Loader from "../dashboard/components/common/Loader";
 
 function DashboardLayout() {
   const [isLoggedin, setIsLoggedin] = useState(true);
+  const [data,setData] = useState("")
   const isComponentMounted = useRef(true);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function DashboardLayout() {
     !getTokenSession() && navigate(`/admin/login`);
 
     getData();
-  }, []);
+  }, [data]);
 
   const loginoutfunc = (e) => {
     removeTokenSession();
@@ -37,6 +38,7 @@ function DashboardLayout() {
       };
       axios.get(`${config.apiEndPoint}profile/1`,)
          .then ((response) => {
+          // setData(response.data)
            setLoading(false);
          
         })

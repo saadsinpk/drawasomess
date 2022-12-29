@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-function Search({onSearch }) {
-    const [search, setSearch] = useState();
-   const  onInputChange = (value) => {
-        setSearch(value);
-        onSearch(value);
-    }
+function Search({ search, onSearch }) {
+  //   const [search, setSearch] = useState();
+  //  const  onInputChange = (value) => {
+  //       setSearch(value);
+  //       onSearch(value);
+  //   }
   return (
     <div className="search">
       <input
@@ -13,7 +13,9 @@ function Search({onSearch }) {
         id=""
         className=""
         value={search}
-        onChange={(e) => onInputChange(e.target.value)  }
+        onChange={(e) => {
+          onSearch(e);
+        }}
       />
     </div>
   );

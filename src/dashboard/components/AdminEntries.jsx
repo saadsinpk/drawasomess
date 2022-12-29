@@ -11,7 +11,7 @@ function AdminEntries({proptext,AdminEntriesdata}) {
     <div className="AdminEntries__bottom">
         <ul className='list adminlist'>
         {AdminEntriesdata.map((item, index) => (
-        <li className="list__item flex gap-2 items-center justify-between" key={index}>
+        <li className="list__item flex gap-2 items-center justify-between" key={item.id}>
           <div>
                     <span>Username</span>
                     <span>{item.username}</span>
@@ -21,7 +21,7 @@ function AdminEntries({proptext,AdminEntriesdata}) {
                     <span>{item.submissiondate}</span>
                 </div>
                 {item.like &&  <div className='heart'>
-                <AiFillHeart />
+                <button><AiFillHeart /></button>
                 </div>}
               
                 <button className='closebtn'>

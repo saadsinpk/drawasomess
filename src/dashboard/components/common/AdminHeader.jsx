@@ -13,7 +13,7 @@ function AdminHeader({ logoutfun }) {
             <h2>Drawesome</h2>
         </div>
         {logoutfun &&  <div className="adminHeader--right">
-        <ul className='list flex gap-2'>
+        <ul className='list flex gap-10'>
         <li><Link to="admin/dashboard">Dashboard</Link></li>
         <li><Link to="setting">Setting</Link></li>
         <li><Link to="dashboard">Database</Link></li>
