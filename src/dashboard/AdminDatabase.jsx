@@ -1,15 +1,80 @@
-import React, { useState } from 'react';
+import React,{useState,useEffect,useRef} from 'react';
+import axios from "axios";
+import config from "../services/config.json";
+import {getTokenSession} from "./utils/common";
+import { toast } from "react-toastify";
+import Loader from './components/common/Loader';
+import Table2 from './components/common/Table2';
 
 function AdminDatabase() {
+    const [userdata, setUserdata] = useState([]);
+    const [updated, setupdated] = useState(false);
+    const isComponentMounted = useRef(true);
+    const [search, setSearch] = useState("");
+    const [loading, setLoading] = useState(true);
     const [switchs, setSwitchs] = useState(false);
-    const Switchtoggle = (e) => {
-        setSwitchs(!switchs);
+    const setSwitchstoggle = (e) => {
+        setSwitchs(true);
+        
+        };
+   
+    useEffect(() => {
+      if (isComponentMounted.current) { 
+        getData();
+      }
+      return () => {
+        isComponentMounted.current = false;
+        setLoading(true);
+      }
+    }, []);
+    const getData = async () => {
+        axios.defaults.headers = {
+          "Content-Type": "application/json",
+          "Authorization":`Bearer ${getTokenSession()}`,
+        };
+        axios.get(`${config.apiEndPoint}getAllUsers`,)
+        .then ((response) => {
+            setLoading(false)
+            setUserdata(response.data.users);
+    
+        })
+        .catch((error) => {
+          setLoading(true);
+          if (error.response.status === 401)
+          toast.error(error.response.data.message);
+          else toast.error("Something went wrong. Please try again later.");
+        });
     }
+    const searchtable = (data) => {
+        return data.filter(
+            (item) =>
+            // keys.some((key) => item[key].toLowerCase().includes(search))
+         
+                item.email.toLowerCase().includes(search) ||
+                item.email.toLowerCase().includes(search)
+            )
+        };
+      const  handlesave = () => {
+        axios.defaults.headers = {
+            "Content-Type": "application/json",
+            "Authorization":`Bearer ${getTokenSession()}`,
+          };
+          axios.put(`${config.apiEndPoint}changeUserStatus/`,{
+            "userId": true,
+            "active": true
+          })
+          .then((response) => {
+            if(response) {
+              toast.success(response.message)
+            }
+        })
+      }
+    if (loading) return <Loader />;
   return (
     <div className="AdminDatabase my-4">
           <div className="AdminStatistics2__top flex justify-around py-2 items-center">
                 <div className="searchBox">
-                    <input type="text" placeholder='search' />
+                <input type="text" onChange={(e) => setSearch(e.target.value)} />
                 </div>
                 <div className="userdata">
                 User data
@@ -36,31 +101,7 @@ function AdminDatabase() {
          </tr>
      </thead>
      <tbody>
-         <tr>
-             <td><input type="checkbox" /></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td></td>
-             <td>
-             <div className="relative flex flex-col items-center justify-center overflow-hidden">
-    <div className="flex">
-        <label className="inline-flex relative items-center cursor-pointer">
-            <input type="checkbox"  onClick={Switchtoggle} className="sr-only peer" checked={switchs && true} />
-            <div  className="w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"
-            ></div>
-        </label>
-    </div>
-</div>
-             </td>
-             <td></td>
-             <td> <button className='btn btn-primary'>Save</button></td>
-         </tr>
+     <Table2 saved={handlesave} switches={setSwitchstoggle} data={searchtable(userdata)} />
      </tbody>
 
     </table>

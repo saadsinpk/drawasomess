@@ -14,9 +14,9 @@ function AdminHeader({ logoutfun }) {
         </div>
         {logoutfun &&  <div className="adminHeader--right">
         <ul className='list flex gap-10'>
-        <li><Link to="admin/dashboard">Dashboard</Link></li>
+        <li><Link to="dashboard">Dashboard</Link></li>
         <li><Link to="setting">Setting</Link></li>
-        <li><Link to="dashboard">Database</Link></li>
+        <li><Link to="database">Database</Link></li>
         <li><Link to="statistics">Statistics</Link></li>
         <li><Link to="admin">Email</Link></li>
         <li><button onClick={removetoken} >Log Out</button></li>

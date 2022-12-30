@@ -11,7 +11,6 @@ import Table from './components/common/Table';
 function AdminStatistics() {
     const isComponentMounted = useRef(true);
     const [userdata, setUserdata] = useState([]);
-    const [totalItem, setTotalItem] = useState(0);
     const [currentPage, setCurrentPage] = useState()
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
@@ -160,6 +159,7 @@ function AdminStatistics() {
                 </tr>
             </thead>
             <tbody>
+        
                 <Table data={searchtable(userdata.tabledata)} />
                
             </tbody>
