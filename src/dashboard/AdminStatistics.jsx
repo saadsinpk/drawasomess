@@ -10,7 +10,7 @@ import Table from './components/common/Table';
 
 function AdminStatistics() {
     const isComponentMounted = useRef(true);
-    const [userdata, setUserdata] = useState([]);
+    const [userdata, setUserdata] = useState([]);   
     const [currentPage, setCurrentPage] = useState()
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);

@@ -48,20 +48,22 @@ function AdminDatabase() {
     const searchtable = (data) => {
         return data.filter(
             (item) =>
-            // keys.some((key) => item[key].toLowerCase().includes(search))
          
                 item.email.toLowerCase().includes(search) ||
                 item.email.toLowerCase().includes(search)
             )
         };
-      const  handlesave = () => {
+      const  handlesave = (item,e) => {
+        let itemid = item.id;
+        let activeis = item.is_active == 1 ? true : false;
+        console.log(item)
         axios.defaults.headers = {
             "Content-Type": "application/json",
             "Authorization":`Bearer ${getTokenSession()}`,
           };
           axios.put(`${config.apiEndPoint}changeUserStatus/`,{
-            "userId": true,
-            "active": true
+            "userId": item.id,
+            "active": activeis
           })
           .then((response) => {
             if(response) {

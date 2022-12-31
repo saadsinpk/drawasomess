@@ -4,6 +4,7 @@ import Switch from './form/Switch';
 import Social from './Social';
 
 function Setting({popuptext,closeSetting}) {
+   
     const removeModal = (e) => {
         closeSetting(false)
     }

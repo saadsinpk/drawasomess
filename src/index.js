@@ -5,13 +5,17 @@ import './dist/sass/main.scss';
 import App from './App';
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+      <DndProvider backend={HTML5Backend}>
       <BrowserRouter>
     <App />
     </BrowserRouter>
+    </DndProvider>
   </React.StrictMode>
 );
 

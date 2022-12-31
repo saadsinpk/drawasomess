@@ -11,15 +11,17 @@
   import UserModal from './UserModal';
   import HowToSubmit from './HowToSubmit';
 
-  function Header() {
-      const [settingModal, setsettingModal] = useState(false);
-      const [userModal, setUserModal] = useState(false);
-      const [howToSubmit, setHowToSubmit] = useState(false);
-      const [statisticsModal, setStatisticsModal] = useState(false);
-      const [congratulationsModal, setCongratulationsModal] = useState(false);
-      const [play, setPlay] = useState(false);
+  function Header({keyboa}) {
+    const [settingModal, setsettingModal] = useState(false);
+    const [userModal, setUserModal] = useState(false);
+    const [howToSubmit, setHowToSubmit] = useState(false);
+    const [statisticsModal, setStatisticsModal] = useState(false);
+    const [congratulationsModal, setCongratulationsModal] = useState(false);
+    const [play, setPlay] = useState(false);
+    const [openModal, setOpenModal] = useState("");
       const SettingtoggleClass = (e) => {
         setsettingModal(true)
+        keyboa(true)
         };
         const StatisticstoggleClass = (e) => {
           setStatisticsModal(true);

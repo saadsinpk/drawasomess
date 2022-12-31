@@ -4,6 +4,7 @@ import PlayBy from "../website/PlayBy";
 import Submission from "../website/Submission";
 import Home from "../website/Home";
 import Topranking from "../website/components/common/Topranking";
+import Congratulations from "../website/components/common/Congratulations";
 
 function WebLayout() {
         const [theme, setTheme] = useState("light");
@@ -26,6 +27,7 @@ function WebLayout() {
           <Route exact path="/playby" element={<PlayBy />} />
           <Route exact path="/topranking" element={<Topranking />} />
           <Route exact path="/submission" element={<Submission />} />
+          <Route exact path="/congratulations" element={<Congratulations />} />
         </Routes>
         </main>
         </>

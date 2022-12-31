@@ -5,17 +5,18 @@ import Result from '../Result';
 import Social from './Social';
 import Topplayers from './Topplayers';
 import Time from './Time';
+import Header from './Header';
 
-function Congratulations({closeCongratulations,popuptext}) {
-
+function Congratulations() {
   return (
-   <>
-   <div  className="Modal">
+    <>
+    <Header />
+   <div  className="con">
     <div className="StatisticsMain-top p-2 flex items-center">
-        <div className="StatisticsMain-top-left">
+        <Link className="StatisticsMain-top-left" to={"/"}>
             <AiOutlineArrowLeft />
-        </div>
-        <h2 className="heading-right mx-auto my-0">{popuptext}</h2>
+        </Link>
+        <h2 className="heading-right mx-auto my-0">Congratulations</h2>
     </div>
     <Time />
     

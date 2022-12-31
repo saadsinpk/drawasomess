@@ -1,4 +1,5 @@
 import React,{useState,useEffect,useRef} from 'react';
+import { useDrop } from 'react-dnd'
 import axios from "axios";
 import config from "../services/config.json";
 import AdminEntries from './components/AdminEntries'
@@ -9,16 +10,16 @@ import { toast } from "react-toastify";
 import Loader from './components/common/Loader';
 
 
-function AdminDashboard() {
+function AdminDashboard({ isDragging }) {
     const [data, setData] = useState("");
     const [updated, setupdated] = useState(false);
     const isComponentMounted = useRef(true);
     const [loading, setLoading] = useState(true);
+    const [seconds, setSeconds] = useState(60)
+    const [initiallyRunning, setinitiallyRunning] = useState(false)
     useEffect(() => {
       if (isComponentMounted.current) { 
         getData();
-       
-       
       }
       return () => {
         isComponentMounted.current = false;
@@ -32,6 +33,12 @@ function AdminDashboard() {
 const upcomingenteries = [
     {
         title: "Tues December 20th 2022",
+    },
+    {
+        title: "Wednes December 21th 2022",
+    },
+    {
+        title: "Thurs December 22th 2022",
     },
 ];
 const getData = async () => {
@@ -65,7 +72,6 @@ const getUserData = async (id) => {
   axios.get(`${config.apiEndPoint}userInfo/${id}`,)
   .then ((response) => {
     setUserdata(response.data.data);
-
   })
   .catch((error) => {
     setLoading(true);
@@ -93,14 +99,11 @@ const handlesavedEntries  =  (e) => {
       if(response) {
         toast.success("update")
       }
-      
-       
      })
      .catch((error) => {
        if (error.response.status === 401) toast.error(error.response.data.message);
        else toast.error("Something went wrong. Please try again later.");
      });
- 
   };
   const handleEntrieslist =  (e) => {
     const savedEntriesupdate = adminEntrieslist.filter((item) => item.entry_id != e.target.id);
@@ -143,7 +146,6 @@ const handlesavedEntries  =  (e) => {
 
   }
   const handleClick = (item,e) => {
-   console.log(e)
     axios.defaults.headers = {
       "Content-Type": "application/json",
       "Authorization":`Bearer ${getTokenSession()}`,
@@ -155,11 +157,29 @@ const handlesavedEntries  =  (e) => {
       }
       else {
         setUserdata(response.data.data);
-        console.log(userdata)
         
       }
   })
   }
+  const currentCount = seconds
+  let  myInterval;
+  const startTimer = () => {
+    setinitiallyRunning(true);
+    myInterval  = setInterval(() => {
+      initiallyRunning && setSeconds(seconds => seconds - 1)
+  }, 1000)
+   
+  }
+  const stopTimer = () => {
+    alert("dskgfdahjg")
+    setinitiallyRunning(false);
+    clearInterval(myInterval)
+  }
+  // const [collected, drag, dragPreview] = useDrag(() => ({
+  //   type,
+  //   item: { id }
+  // }))
+
   return (
     <>
      <div className='aadmindasboard my-2 grid grid-cols-3'>
@@ -171,7 +191,8 @@ const handlesavedEntries  =  (e) => {
     <div className="AdminEntries__bottom">
         <ul className='list adminlist'>
         {adminEntrieslist.map((item, index) => (
-        <li className="list__item flex gap-2 items-center justify-between"  onClick={(e) => handleClick(item,e)} key={index}>
+          
+        <li   className="list__item flex gap-2 items-center justify-between"  onClick={(e) => handleClick(item,e)} key={index}>
           <div>
                     <span>Username</span>
                     <span>{item.username}</span>
@@ -226,12 +247,12 @@ const handlesavedEntries  =  (e) => {
     <div className="aadmindasboard__center  p-5">
     <div className='paintBox'></div>
     <div className='aadmindasboard__center- flex justify-between items-center gap-2 my-3 px-5'> 
-        <div className='timeBox'>60</div>
+        <div className='timeBox'>{currentCount}</div>
         <div className='aadmindasboard__center-center'>
       <span className='block' style={{fontSize:"10px"}}>  Button Frame</span>
       <div className=' gap-1'>
-        <button className='btn btn-pink block w-100 my-1'>Play</button>
-        <button className='btn btn-pink block w-100 my-1'>Pause</button>
+      <button className=" btn btn-pink block w-100 my-1 start-button" onClick={startTimer}>Play</button>
+            <button className="btn btn-pink block w-100 my-1 stop-button" onClick={stopTimer}>Pause</button>
 
       </div>
         </div>
@@ -241,7 +262,6 @@ const handlesavedEntries  =  (e) => {
             <h5>{userdata.username}</h5>
         </div>
         </div>
-        {console.log(userdata.username && userdata.username)}
         {<Userdata user={userdata} /> }
     </div>
     <div className="aadmindasboard__right">
