@@ -16,7 +16,6 @@ const usePost = () => {
   };
 
   const callAPI  = async (url, payload) => {
-    console.log("inner")
     setRes((prevState) => ({ ...prevState, isLoading: true }));
     http
       .post(`${config.apiEndPoint}${url}`, payload, {

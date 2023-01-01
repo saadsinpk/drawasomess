@@ -26,8 +26,24 @@ function AdminDashboard({ isDragging }) {
         setLoading(true);
       }
     }, []);
-    const [adminEntrieslist, setAdminEntrieslist] = useState("");
-    const [savedEntrieslist, setSavedEntrieslist] = useState("");
+    const [adminEntrieslist, setAdminEntrieslist] = useState([{
+      entry_id: "1",
+      username: "muzzz",
+      submissiondate: "Monday 12 2022"
+    },{
+      entry_id: "2",
+      username: "ALi",
+      submissiondate: "Monday 12 2023"
+    }]);
+    const [savedEntrieslist, setSavedEntrieslist] = useState([{
+      entry_id: "3",
+      username: "zain",
+      submissiondate: "Monday 22 2022"
+    },{
+      entry_id: "4",
+      username: "affan",
+      submissiondate: "Monday 01 2022"
+    }]);
     const [userdata, setUserdata] = useState("");
        
 const upcomingenteries = [
@@ -42,45 +58,45 @@ const upcomingenteries = [
     },
 ];
 const getData = async () => {
-    axios.defaults.headers = {
-      "Content-Type": "application/json",
-      "Authorization":`Bearer ${getTokenSession()}`,
-    };
-    axios.get(`${config.apiEndPoint}dashboard`,)
-    .then ((response) => {
-      setData(response.data);
-      const AdminEntriesupdate = response.data.entries.filter((item) => item.saved == "0");
-      const savedEntriesupdate = response.data.entries.filter((item) => item.saved != "0");
-      setAdminEntrieslist(AdminEntriesupdate)
-      setSavedEntrieslist(savedEntriesupdate)
-      setLoading(false);
-      getUserData(`${response.data.entries[0].entry_id}`);
+    // axios.defaults.headers = {
+    //   "Content-Type": "application/json",
+    //   "Authorization":`Bearer ${getTokenSession()}`,
+    // };
+    // axios.get(`${config.apiEndPoint}dashboard`,)
+    // .then ((response) => {
+    //   setData(response.data);
+      // const AdminEntriesupdate = response.data.entries.filter((item) => item.saved == "0");
+      // const savedEntriesupdate = response.data.entries.filter((item) => item.saved != "0");
+      // setAdminEntrieslist()
+      // setSavedEntrieslist()
+    //   setLoading(false);
+    //   getUserData(`${response.data.entries[0].entry_id}`);
 
-    })
-    .catch((error) => {
-      setLoading(true);
-      if (error.response.status === 401)
-      toast.error(error.response.data.message);
-      else toast.error("Something went wrong. Please try again later.");
-    });
+    // })
+    // .catch((error) => {
+    //   setLoading(true);
+    //   if (error.response.status === 401)
+    //   toast.error(error.response.data.message);
+    //   else toast.error("Something went wrong. Please try again later.");
+    // });
 }
 const getUserData = async (id) => {
-  axios.defaults.headers = {
-    "Content-Type": "application/json",
-    "Authorization":`Bearer ${getTokenSession()}`,
-  };
-  axios.get(`${config.apiEndPoint}userInfo/${id}`,)
-  .then ((response) => {
-    setUserdata(response.data.data);
-  })
-  .catch((error) => {
-    setLoading(true);
-    if (error.response.status === 401)
-    toast.error(error.response.data.message);
-    else toast.error("Something went wrong. Please try again later.");
-  });
+  // axios.defaults.headers = {
+  //   "Content-Type": "application/json",
+  //   "Authorization":`Bearer ${getTokenSession()}`,
+  // };
+  // axios.get(`${config.apiEndPoint}userInfo/${id}`,)
+  // .then ((response) => {
+  //   setUserdata(response.data.data);
+  // })
+  // .catch((error) => {
+  //   setLoading(true);
+  //   if (error.response.status === 401)
+  //   toast.error(error.response.data.message);
+  //   else toast.error("Something went wrong. Please try again later.");
+  // });
 }
-if (loading) return <Loader />;
+// if (loading) return <Loader />;
 
 const handlesavedEntries  =  (e) => {
   const savedEntriesupdate = savedEntrieslist.filter((item) => item.entry_id != e.target.id);
@@ -259,10 +275,10 @@ const handlesavedEntries  =  (e) => {
         <div className="aadmindasboard__center-right">
             <h4>Word / </h4>
             <h4>Phrase </h4>
-            <h5>{userdata.username}</h5>
+            {/* <h5>{userdata?.username}</h5> */}
         </div>
         </div>
-        {<Userdata user={userdata} /> }
+        {/* {<Userdata user={userdata} /> } */}
     </div>
     <div className="aadmindasboard__right">
         <div className="UpcomingEntrie">
