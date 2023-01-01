@@ -15,13 +15,14 @@ function DashboardLayout() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    !getTokenSession() && navigate(`/admin/login`);
+
+    // !getTokenSession() && navigate(`/admin/login`);
   }, []);
 
   const loginoutfunc = (e) => {
     removeTokenSession();
     toast.success("logOut");
-    navigate(`/admin/login`)
+    // navigate(`/admin/login`)
     };
 
 
