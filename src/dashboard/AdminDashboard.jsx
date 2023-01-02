@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDrop } from "react-dnd";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import config from "../services/config.json";
 import AdminEntries from "./components/AdminEntries";
@@ -14,102 +14,96 @@ import styled from "styled-components";
 import DraggableDateElement from "./dragsComponents/DraggableDateElement";
 
 function AdminDashboard({ isDragging }) {
+  const navigate = useNavigate();
   const [data, setData] = useState("");
-  const [updated, setupdated] = useState(false);
+  const [alllistData, setAlllistData] = useState("");
   const isComponentMounted = useRef(true);
   const [loading, setLoading] = useState(true);
   const [seconds, setSeconds] = useState(60);
   const [initiallyRunning, setinitiallyRunning] = useState(false);
   useEffect(() => {
+    !getTokenSession() && navigate(`/admin/login`);
     if (isComponentMounted.current) {
-      getData();
+      getDataa();
     }
     return () => {
       isComponentMounted.current = false;
       setLoading(true);
     };
   }, []);
-  const [adminEntrieslist, setAdminEntrieslist] = useState([
-    {
-      entry_id: "1",
-      id: "1",
-      username: "muzzz",
-      submissiondate: "Monday 12 2022",
-    },
-    {
-      entry_id: "2",
-      id: "2",
-      username: "ALi",
-      submissiondate: "Monday 12 2023",
-    },
-  ]);
-  const [savedEntrieslist, setSavedEntrieslist] = useState([
-    {
-      entry_id: "3",
-      username: "zain",
-      submissiondate: "Monday 22 2022",
-    },
-    {
-      entry_id: "4",
-      username: "affan",
-      submissiondate: "Monday 01 2022",
-    },
-  ]);
+  const [adminEntrieslist, setAdminEntrieslist] = useState();
+  const [savedEntrieslist, setSavedEntrieslist] = useState();
   const [userdata, setUserdata] = useState("");
+  const now = new Date();
+  
+  // 👇️ all days of the current month
+
+  
+  const date = new Date();
+  function getAllDaysInMonth(year, month) {
+    const date = new Date(year, month, 1);
+  
+    const dates = [];
+  
+    while (date.getMonth() === month) {
+      dates.push(new Date(date));
+      date.setDate(date.getDate() + 1);
+    }
+  
+    return dates;
+  }
+  var arry = [];
+  var a = getAllDaysInMonth(now.getFullYear(), now.getMonth())
+  for (let index in a) {
+    arry.push(`${a[index].getMonth()-1}-${a[index].getFullYear()}`)
+    
+  }
+    console.log(arry);
 
   const [upcomingenteries, setupcomingenteries] = useState([
-    {
-      id: "1uc",
-      title: "Tues December 20th 2022",
-    },
-    {
-      id: "2uc",
-      title: "Wednes December 21th 2022",
-    },
-    {
-      id: "3uc",
-      title: "Thurs December 22th 2022",
-    },
   ]);
-  const getData = async () => {
-    // axios.defaults.headers = {
-    //   "Content-Type": "application/json",
-    //   "Authorization":`Bearer ${getTokenSession()}`,
-    // };
-    // axios.get(`${config.apiEndPoint}dashboard`,)
-    // .then ((response) => {
-    //   setData(response.data);
-    // const AdminEntriesupdate = response.data.entries.filter((item) => item.saved == "0");
-    // const savedEntriesupdate = response.data.entries.filter((item) => item.saved != "0");
-    // setAdminEntrieslist()
-    // setSavedEntrieslist()
-    //   setLoading(false);
-    //   getUserData(`${response.data.entries[0].entry_id}`);
-    // })
-    // .catch((error) => {
-    //   setLoading(true);
-    //   if (error.response.status === 401)
-    //   toast.error(error.response.data.message);
-    //   else toast.error("Something went wrong. Please try again later.");
-    // });
+  const getDataa = async () => {
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      "Authorization":`Bearer ${getTokenSession()}`,
+    };
+    axios.get(`${config.apiEndPoint}dashboard`,)
+    .then ((response) => {
+      setData(response.data);
+    const AdminEntriesupdate = response.data.entries.filter((item) => item.saved == "0");
+    const savedEntriesupdate = response.data.entries.filter((item) => item.saved != "0");
+    setAdminEntrieslist(AdminEntriesupdate)
+    setSavedEntrieslist(savedEntriesupdate)
+    setAlllistData(response.data.entries)
+    getUserData(`${response.data.entries[0].entry_id}`);
+    let  upcom = response.data.entries.filter((item) => item.upcomming_date != "");
+    // setupcomingenteries(upcom)
+    setLoading(false);
+    })
+    .catch((error) => {
+      setLoading(true);
+      if (error.response.status === 401)
+      toast.error(error.response.data.message);
+      else toast.error("Something went wrong. Please try again later.");
+    });
   };
   const getUserData = async (id) => {
-    // axios.defaults.headers = {
-    //   "Content-Type": "application/json",
-    //   "Authorization":`Bearer ${getTokenSession()}`,
-    // };
-    // axios.get(`${config.apiEndPoint}userInfo/${id}`,)
-    // .then ((response) => {
-    //   setUserdata(response.data.data);
-    // })
-    // .catch((error) => {
-    //   setLoading(true);
-    //   if (error.response.status === 401)
-    //   toast.error(error.response.data.message);
-    //   else toast.error("Something went wrong. Please try again later.");
-    // });
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      "Authorization":`Bearer ${getTokenSession()}`,
+    };
+    axios.get(`${config.apiEndPoint}userInfo/${id}`,)
+    .then ((response) => {
+      setUserdata(response.data.data);
+    })
+    .catch((error) => {
+      setLoading(true);
+      if (error.response.status === 401)
+      toast.error(error.response.data.message);
+      else toast.error("Something went wrong. Please try again later.");
+    });
   };
-  // if (loading) return <Loader />;
+  if (loading) return <Loader />;
 
   const handlesavedEntries = (e) => {
     const savedEntriesupdate = savedEntrieslist.filter(
@@ -153,8 +147,7 @@ function AdminDashboard({ isDragging }) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${getTokenSession()}`,
     };
-    axios
-      .put(`${config.apiEndPoint}updateEntry/${e.target.id}`, {
+    axios.put(`${config.apiEndPoint}updateEntry/${e.target.id}`, {
         updateValue: true,
       })
       .then((response) => {
@@ -177,8 +170,7 @@ function AdminDashboard({ isDragging }) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${getTokenSession()}`,
     };
-    axios
-      .post(
+    axios.post(
         `${config.apiEndPoint}deleteEntry/${e.target.getAttribute(
           "data-delete"
         )}`
@@ -213,20 +205,33 @@ function AdminDashboard({ isDragging }) {
     }, 1000);
   };
   const stopTimer = () => {
-    alert("dskgfdahjg");
     setinitiallyRunning(false);
     clearInterval(myInterval);
   };
   const onDragEnd = (result) => {
-    const indexOfDroppableEntry = adminEntrieslist.findIndex(
-      (item) => item.id === result.draggableId
+    const indexOfDroppableEntry = alllistData.findIndex(
+      (item) => item.entry_id == result.draggableId
     );
     const indexOfDestinationEntry = upcomingenteries.findIndex(
-      (item) => item.id === result.destination.droppableId
-    );
-    console.log(indexOfDroppableEntry, "indexOfDroppableEntry");
+      (item) => item.id == result.destination.droppableId
+      );
+      console.log()
+      axios.defaults.headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getTokenSession()}`,
+      };
+      axios
+        .put(`${config.apiEndPoint}addUpcomingEntry/`, {
+  
+            "entryId": result.destination.droppableId,
+            "playDate": "2-1-2023"
+        },)
+        .then((response) => {
+         
+        });
     if (!result.destination) return;
     else if (result.destination.droppableId === "newEntries") return;
+    else if (result.destination.droppableId === "savedEntries") return;
     else if (upcomingenteries[indexOfDestinationEntry].submitted) {
       alert("already Submitted");
       return;
@@ -235,19 +240,26 @@ function AdminDashboard({ isDragging }) {
       prev.map((item) => {
         if (item.id === result.destination.droppableId) {
           const user = adminEntrieslist[indexOfDroppableEntry];
+          console.log(user.entry_id)
           return {
             ...item,
             submitted: true,
             name: user.username,
             date: user.submissiondate,
           };
+          
+         
         } else return item;
       })
     );
     setAdminEntrieslist((prev) =>
-      prev.filter((item) => item.id !== result.draggableId)
+      prev.filter((item) => item.entry_id != result.draggableId)
+    );
+    setSavedEntrieslist((prev) =>
+      prev.filter((item) => item.entry_id != result.draggableId)
     );
   };
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <>
@@ -262,6 +274,7 @@ function AdminDashboard({ isDragging }) {
                   elements={adminEntrieslist}
                   key={"newEntries"}
                   prefix={"newEntries"}
+                  SavedMove={handleEntrieslist}
                 />
               </div>
             </div>
@@ -271,34 +284,16 @@ function AdminDashboard({ isDragging }) {
               </div>
               <div className="AdminEntries__bottom">
                 <ul className="list adminlist">
-                  {savedEntrieslist.map((item, index) => (
-                    <li
-                      className="list__item flex gap-2 items-center justify-between"
-                      onClick={(e) => handleClick(item, e)}
-                      key={index}
-                    >
-                      <div>
-                        <span>Username</span>
-                        <span>{item.username}</span>
-                      </div>
-                      <div>
-                        <span>Submission Date</span>
-                        <span>{item.submissiondate}</span>
-                      </div>
-
-                      <button
-                        className="closebtn"
-                        id={item.entry_id}
-                        onClick={handlesavedEntries}
-                      >
-                        X
-                      </button>
-                    </li>
-                  ))}
+                <DraggableElement
+                  elements={savedEntrieslist}
+                  key={"savedEntries"}
+                  prefix={"savedEntries"}
+                  removeSaved={handlesavedEntries}
+                />
+                 
                 </ul>
               </div>
             </div>
-            {/* <AdminEntries proptext="New Entries" /> */}
           </div>
           <div className="aadmindasboard__center  p-5">
             <div className="paintBox"></div>

@@ -22,7 +22,7 @@ function DashboardLayout() {
   const loginoutfunc = (e) => {
     removeTokenSession();
     toast.success("logOut");
-    // navigate(`/admin/login`)
+    navigate(`/admin/login`)
     };
 
 

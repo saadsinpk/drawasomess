@@ -1,7 +1,10 @@
 import { Draggable } from "react-beautiful-dnd";
-const ListItem = ({ item, index }) => {
+const ListItem = ({ item, index,saved,removed }) => {
+  const handleSClick = (e) => {
+    removed(e)
+  }
   return (
-    <Draggable draggableId={item.id} index={index}>
+    <Draggable draggableId={item.entry_id.toString()} index={index}>
       {(provided, snapshot) => {
         return (
           <li
@@ -10,7 +13,6 @@ const ListItem = ({ item, index }) => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             className="list__item flex gap-2 items-center justify-between"
-            // onClick={(e) => handleClick(item, e)}
             key={index}
           >
             <div>
@@ -21,22 +23,12 @@ const ListItem = ({ item, index }) => {
               <span>Submission Date</span>
               <span>{item.submissiondate}</span>
             </div>
-            <div className="heart">
-              <button
-                id={item.entry_id}
-                //   onClick={handleEntrieslist}
-              >
-                H{/* <AiFillHeart /> */}
-              </button>
-            </div>
+            {item.saved == 0 &&   <div className="heart">
+              <button onClick={saved} id={item.entry_id}>H{/* <AiFillHeart /> */}</button>
+            </div>}
+           
 
-            <button
-              className="closebtn"
-              data-delete={item.entry_id}
-              //   onClick={handlelistdelete}
-            >
-              X
-            </button>
+            <button className="closebtn" id={item.entry_id} onClick={handleSClick}> X </button>
           </li>
         );
       }}

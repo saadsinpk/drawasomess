@@ -1,19 +1,32 @@
-import React,{useEffect} from 'react'
+import React,{useEffect} from 'react';
 import axios from "axios";
 import config from "../../services/config.json";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
+import {setTokenSession} from "../utils/common";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 import { toast } from "react-toastify";
 
 function Forget() {
-
+  const navigate = useNavigate();
     const initialValues = {
         email: "",
+        currentPassword: "",
+        newPassword: "",
       };
       const validationSchema = yup.object({
-        email: yup.string().email("Invaild Email").required("Must Required"),
-      })
+      email: yup.string().email("Invaild Email").required("Must Required"),
+      currentPassword: yup
+      .string()
+      .min(5, "Mininum 5 length")
+      .max(20, "Maximum 20 length")
+      .required("Must Required"),
+      newPassword: yup
+      .string()
+      .min(5, "Mininum 5 length")
+      .max(20, "Maximum 20 length")
+      .required("Must Required"),
+      });
 
       const  onSubmit  = async (values) => {
         axios.defaults.headers = {
@@ -21,12 +34,17 @@ function Forget() {
         };
         axios
         
-          .post(`${config.apiEndPoint}api-login.php`,
+          .put(`${config.apiEndPoint}changePassword`,
            values)
           .then((response) => {
-            if( !response){toast.error(response.data.message); 
+            if(response.data.token) {
+              setTokenSession(response.data.token);
+              navigate(`/admin/dashboard`)
+              toast.success("Change Password Sucessfully");
+
             }
             else {
+              navigate(`/admin/login`)
               toast.success(response.data.message);
             }
            
@@ -62,6 +80,42 @@ function Forget() {
                     />
                     </div>
                     <ErrorMessage name="email">
+                    {(msg) => (
+                      <div style={{ color: "red", whiteSpace: "nowrap" }}>
+                        {msg}
+                      </div>
+                    )}
+                  </ErrorMessage>
+                    </div>
+                    <div className='inputMain'>
+                    <label>Current Password</label>
+                    <div className="inputMainBox">
+                    <Field
+                      type="password"
+                      name="currentPassword"
+                      placeholder="Current Password"
+                      className="effect-8"
+                    />
+                    </div>
+                    <ErrorMessage name="currentPassword">
+                    {(msg) => (
+                      <div style={{ color: "red", whiteSpace: "nowrap" }}>
+                        {msg}
+                      </div>
+                    )}
+                  </ErrorMessage>
+                    </div>
+                    <div className='inputMain'>
+                    <label>Current Password</label>
+                    <div className="inputMainBox">
+                    <Field
+                      type="password"
+                      name="newPassword"
+                      placeholder="New Password"
+                      className="effect-8"
+                    />
+                    </div>
+                    <ErrorMessage name="newPassword">
                     {(msg) => (
                       <div style={{ color: "red", whiteSpace: "nowrap" }}>
                         {msg}

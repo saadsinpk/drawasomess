@@ -495,8 +495,17 @@ margin-bottom: 1rem;
 
 
 
+.upcominglist.active {
+    background-color: #df2020 !important;
+    border-bottom: 1px solid #fff !important;
+}
 
-
+.upcominglist {
+    gap: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 // ----------------------canvas-------------------------------
 #colorsDiv .colorbox {
@@ -531,3 +540,16 @@ border-color:black;
 } 
 
 // ---------------------------------close canvas ----------------------------------
+
+
+.adminlist li {
+    background-color: #fff;
+}
+.UpcomingEntrie__bottom li {
+    border-color: transparent !important;
+    border-bottom-color: #000 !important;
+}
+
+.UpcomingEntrie__bottom {
+    background: #cccccc66;
+}
