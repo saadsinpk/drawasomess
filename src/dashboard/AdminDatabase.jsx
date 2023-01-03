@@ -14,8 +14,6 @@ function AdminDatabase() {
     const [loading, setLoading] = useState(true);
     const [switchs, setSwitchs] = useState(false);
     const setSwitchstoggle = (e) => {
-        setSwitchs(true);
-        
         };
    
     useEffect(() => {
@@ -50,20 +48,20 @@ function AdminDatabase() {
             (item) =>
          
                 item.email.toLowerCase().includes(search) ||
-                item.email.toLowerCase().includes(search)
+                item.username.toLowerCase().includes(search) ||
+                item.username.toLowerCase().includes(search) 
             )
         };
-      const  handlesave = (item,e) => {
+      const  handlesave = (item,swit) => {
         let itemid = item.id;
-        let activeis = item.is_active == 1 ? true : false;
-        console.log(item)
+        let activeis = swit;
         axios.defaults.headers = {
             "Content-Type": "application/json",
             "Authorization":`Bearer ${getTokenSession()}`,
           };
           axios.put(`${config.apiEndPoint}changeUserStatus/`,{
             "userId": item.id,
-            "active": activeis
+            "active":  activeis
           })
           .then((response) => {
             if(response) {

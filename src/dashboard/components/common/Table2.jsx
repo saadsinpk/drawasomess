@@ -3,19 +3,14 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 
 function Table2({data,switches,saved}) {
     const [toggleval, settoggleval] = useState("")
+    const [swit, setswit] = useState("")
     const ref = useRef(null);
     const Switchtoggle = useCallback((e) => {
-        switches(e.target.getAttribute('checked'));
-        if(e.target.value == "true") {
-            e.target.value = "false"
-        }
-        else {
-            e.target.value = "false"
-        }
-      
+        switches(e.target.checked);
+        setswit(e.target.checked);
     }, []);
-    const savedbtn = (item,e) => {
-        saved(item)
+    const savedbtn = (item) => {
+        saved(item, swit)
     }
     const initialValues = {
         username: "",
@@ -41,7 +36,7 @@ function Table2({data,switches,saved}) {
                 <div className="relative flex flex-col items-center justify-center overflow-hidden">
        <div className="flex">
            <label className="inline-flex relative items-center cursor-pointer">
-               <input name='checkbox' ref={ref} type="checkbox" readOnly defaultChecked={is_active == 1 ?true:false} value={is_active == 1 ?true:false}  onClick={Switchtoggle} className="sr-only peer"  />
+               <input name='checkbox' ref={ref} type="checkbox" readOnly defaultChecked={is_active == 1 ?true:false}   onClick={Switchtoggle} className="sr-only peer"  />
                <div  className="w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"
                ></div>
            </label>

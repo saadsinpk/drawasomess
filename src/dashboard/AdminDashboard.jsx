@@ -34,31 +34,7 @@ function AdminDashboard({ isDragging }) {
   const [adminEntrieslist, setAdminEntrieslist] = useState();
   const [savedEntrieslist, setSavedEntrieslist] = useState();
   const [userdata, setUserdata] = useState("");
-  const now = new Date();
-  
-  // 👇️ all days of the current month
-
-  
-  const date = new Date();
-  function getAllDaysInMonth(year, month) {
-    const date = new Date(year, month, 1);
-  
-    const dates = [];
-  
-    while (date.getMonth() === month) {
-      dates.push(new Date(date));
-      date.setDate(date.getDate() + 1);
-    }
-  
-    return dates;
-  }
-  var arry = [];
-  var a = getAllDaysInMonth(now.getFullYear(), now.getMonth())
-  for (let index in a) {
-    arry.push(`${a[index].getMonth()-1}-${a[index].getFullYear()}`)
-    
-  }
-    console.log(arry);
+ 
 
   const [upcomingenteries, setupcomingenteries] = useState([
   ]);
@@ -77,7 +53,6 @@ function AdminDashboard({ isDragging }) {
     setAlllistData(response.data.entries)
     getUserData(`${response.data.entries[0].entry_id}`);
     let  upcom = response.data.entries.filter((item) => item.upcomming_date != "");
-    // setupcomingenteries(upcom)
     setLoading(false);
     })
     .catch((error) => {
