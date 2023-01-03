@@ -52,7 +52,7 @@ function AdminDatabase() {
                 item.username.toLowerCase().includes(search) 
             )
         };
-      const  handlesave = (item,swit) => {
+      const  handlesave = (item,swit) => {    
         let itemid = item.id;
         let activeis = swit;
         axios.defaults.headers = {
