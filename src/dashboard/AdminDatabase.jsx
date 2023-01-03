@@ -53,7 +53,6 @@ function AdminDatabase() {
             )
         };
       const  handlesave = (item,swit) => {    
-        let itemid = item.id;
         let activeis = swit;
         axios.defaults.headers = {
             "Content-Type": "application/json",

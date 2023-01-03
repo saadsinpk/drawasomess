@@ -5,7 +5,7 @@ import config from "../services/config.json";
 import AdminEntries from "./components/AdminEntries";
 import Userdata from "./components/Userdata";
 import { AiFillHeart, AiOutlineClose } from "react-icons/ai";
-import { getTokenSession } from "./utils/common";
+import { getTokenSession,removeTokenSession } from "./utils/common";
 import { toast } from "react-toastify";
 import Loader from "./components/common/Loader";
 import { DragDropContext } from "react-beautiful-dnd";
@@ -56,10 +56,18 @@ function AdminDashboard({ isDragging }) {
     setLoading(false);
     })
     .catch((error) => {
-      setLoading(true);
-      if (error.response.status === 401)
-      toast.error(error.response.data.message);
-      else toast.error("Something went wrong. Please try again later.");
+      if(error.response.status === 500) {
+      removeTokenSession("token")
+      }
+      else if(error.response.status === 401) {
+        setLoading(true);
+        toast.error(error.response.data.message);
+      } 
+      
+      else {
+        setLoading(true);
+        toast.error("Something went wrong. Please try again later.");
+      } 
     });
   };
   const getUserData = async (id) => {
