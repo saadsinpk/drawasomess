@@ -28,7 +28,7 @@ const ListItem = ({ item, index,saved,removed }) => {
               <span>{item.submissiondate}</span>
             </div>
             {item.saved == 0 &&   <div className="heart">
-              <button onClick={console.log(item)} data-heart={item.entry_id}>
+              <button onClick={() => {}} data-heart={item.entry_id}>
               <AiFillHeart />
               </button>
             </div>}
