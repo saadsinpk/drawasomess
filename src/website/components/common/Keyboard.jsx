@@ -8,9 +8,7 @@ function Keyboard({keyboa}) {
   const inputRef = useRef();
   let keyvalue = [];
   const keyboardClick = (e) => {
-  
       inputRef.current.focus();
-      // console.log( inputRef.current)
       e.preventDefault();
       let datav = e.target.getAttribute("data-key");
       keyvalue.push(datav);

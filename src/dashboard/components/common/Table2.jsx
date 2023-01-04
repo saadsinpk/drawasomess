@@ -9,7 +9,10 @@ function Table2({data,switches,saved}) {
         switches(e.target.checked);
         setswit(e.target.checked);
     }, []);
-    const savedbtn = (item) => {
+    const savedbtn = (item,e) => {
+        item.is_active = true;
+        console.log(e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling)
+        console.log(item.is_active,item)
         saved(item, swit)
     }
     const initialValues = {
