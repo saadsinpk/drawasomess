@@ -1,4 +1,5 @@
-import React,{useState,useEffect,useRef, useMemo} from 'react';
+import React,{useState,useEffect,useRef,} from 'react';
+import ReactPaginate from 'react-paginate';
 import axios from "axios";
 import config from "../services/config.json";
 import { toast } from "react-toastify";
@@ -6,6 +7,7 @@ import {getTokenSession} from "./utils/common";
 import Loader from './components/common/Loader';
 import Search from './components/common/Search';
 import Table from './components/common/Table';
+import PaginatedItems from './PaginatedItems';
  
 
 function AdminStatistics() {
@@ -160,7 +162,7 @@ function AdminStatistics() {
             </thead>
             <tbody>
         
-                <Table data={searchtable(userdata.tabledata)} />
+                <Table data={userdata.tabledata} itemsPerPage={4} />
                
             </tbody>
 

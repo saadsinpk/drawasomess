@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { removeTokenSession,getTokenSession } from "../../utils/common";
 
 function AdminHeader({ logoutfun }) {
    const  removetoken = () => {
@@ -10,7 +9,7 @@ function AdminHeader({ logoutfun }) {
  <div className='adminHeader'>
     <div className="container px-4 flex justify-between items-center">
         <div className="adminHeader__Logo">
-            <h2>Drawesome</h2>
+            <h2><Link to={"/admin/dashboard"} >Drawesome</Link></h2>
         </div>
         {logoutfun &&  <div className="adminHeader--right">
         <ul className='list flex gap-10'>
