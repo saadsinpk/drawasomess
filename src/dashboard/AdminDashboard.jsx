@@ -37,6 +37,18 @@ function AdminDashboard({ isDragging }) {
  
 
   const [upcomingenteries, setupcomingenteries] = useState([
+    {
+      title: "Tues December 20th 2022",
+      id: "1e1"
+  },
+  {
+      title: "Wednes December 21th 2022",
+      id: "1e2"
+  },
+  {
+      title: "Thurs December 22th 2022",
+      id: "1e3"
+  },
   ]);
   const getDataa = async () => {
     axios.defaults.headers = {
