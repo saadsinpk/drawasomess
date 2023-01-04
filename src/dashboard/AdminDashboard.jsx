@@ -22,6 +22,9 @@ function AdminDashboard({ isDragging }) {
   const [initiallyRunning, setinitiallyRunning] = useState(false);
   useEffect(() => {
     !getTokenSession() && navigate(`/admin/login`);
+    const now = new Date();
+    console.log(getAllDaysInMonth(now.getFullYear(), now.getMonth()));
+    const date = new Date();
     if (isComponentMounted.current) {
       getDataa();
     }
@@ -30,6 +33,21 @@ function AdminDashboard({ isDragging }) {
       setLoading(true);
     };
   }, []);
+  function getAllDaysInMonth(year, month) {
+    const date = new Date(year, month, 1);
+  
+    const dates = [];
+  
+    while (date.getMonth() === month) {
+      dates.push(new Date(date));
+      date.setDate(date.getDate() + 1);
+    }
+  
+    return dates;
+  }
+  
+
+  
   const [adminEntrieslist, setAdminEntrieslist] = useState();
   const [savedEntrieslist, setSavedEntrieslist] = useState();
   const [userdata, setUserdata] = useState("");
