@@ -24,7 +24,6 @@ function Table({data,itemsPerPage}) {
   };
   console.log(currentItems)
   return (
-    <>
     
                     
     currentItems.map((item,index) => {
@@ -37,6 +36,7 @@ function Table({data,itemsPerPage}) {
               average_time,
               link_to_photo} = item
             return(
+             <>
              <tr key={index}>
               <td><input type="checkbox" /></td>
               <td>{word_phrase}</td>
@@ -48,21 +48,11 @@ function Table({data,itemsPerPage}) {
               <td>{average_time}</td>
               <td><a href={link_to_photo}><img className='block mx-auto' style={{width:"50px",height:"50px",borderRadius:"50%"}} src={link_to_photo} target="_blank" alt="" /></a></td>
               </tr>
+               
+                </>
              );
             
-            })
-           <ReactPaginate
-                breakLabel="..."
-                nextLabel="next >"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={5}
-                pageCount={pageCount}
-                previousLabel="< previous"
-                renderOnZeroPageCount={null}
-                />
-
-          </>
-       
+          })
             
   )
 }

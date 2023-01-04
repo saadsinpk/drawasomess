@@ -162,7 +162,7 @@ function AdminStatistics() {
             </thead>
             <tbody>
         
-                <Table data={userdata.tabledata} itemsPerPage={4} />
+                {/* <Table data={userdata.tabledata} itemsPerPage={4} /> */}
                
             </tbody>
 
