@@ -14,8 +14,8 @@ const DraggableDateElement = ({ title, prefix, user }) => (
           ref={provided.innerRef}
         >
           {title}
-         <span> {user.name}</span>
-          {user.date}
+          <span> {user.name}</span>
+          {user.date?.toString()}
         </div>
         {provided.placeholder}
       </>
