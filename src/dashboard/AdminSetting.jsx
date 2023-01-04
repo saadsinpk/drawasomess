@@ -19,7 +19,8 @@ function AdminSetting() {
     twitter_link: "",
     tiktok_link: "",
     snapchat_link: ""
-  })
+  });
+  const [submitbutton, setSubmitbutton] = useState(false)
   const isComponentMounted = useRef(true);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -58,14 +59,15 @@ function AdminSetting() {
         else toast.error("Something went wrong. Please try again later.");
       });
   }
-    // const validationSchema = yup.object({
-    //   primary_email: yup.string().email("Invaild Email").required("Must Required"),
-    //     new_password: yup.string(),
-    //     confirm: yup.string().oneOf([yup.ref('new_password'), null], 'Passwords must match')
-    //   });
+    const validationSchema = yup.object({
+      primary_email: yup.string().email("Invaild Email").required("Must Required"),
+        new_password: yup.string(),
+        confirm: yup.string().oneOf([yup.ref('new_password'), null], 'Passwords must match')
+      });
 
 
       const  onSubmit  = async (values) => {
+        setSubmitbutton(true)
         axios.defaults.headers = {
           "Content-Type": "application/json",
           "Authorization":`Bearer ${getTokenSession()}`,
@@ -73,10 +75,12 @@ function AdminSetting() {
         axios.put(`${config.apiEndPoint}update/1`,
            values)
           .then((response) => {
+            setSubmitbutton(false)
             setLoading(false);
             toast.success(response.data.message);
           })
           .catch((error) => {
+            setSubmitbutton(false)
             setLoading(false);
             if (error.response.status === 401)
             {
@@ -105,6 +109,7 @@ function AdminSetting() {
           initialValues={userdata}
           onSubmit={onSubmit}
           validateOnChange
+          validationSchema={validationSchema}
         >
            {({ isSubmitting }) => {
             return (
@@ -176,7 +181,7 @@ function AdminSetting() {
                     />
                     </div>
                   <div className='px-10'>  <button  type="submit"
-                    name="submit"  disabled={isSubmitting} className='mt-4 btn btn-primary'>Save</button></div>
+                    name="submit"  disabled={submitbutton} className='mt-4 btn btn-primary'> {submitbutton ? "login..." : "login"}</button></div>
                     </Form>
            );
           }}

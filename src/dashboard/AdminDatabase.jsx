@@ -8,7 +8,7 @@ import Table2 from './components/common/Table2';
 
 function AdminDatabase() {
     const [userdata, setUserdata] = useState([]);
-    const [updated, setupdated] = useState(false);
+    const [submitbutton, setSubmitbutton] = useState(false)
     const isComponentMounted = useRef(true);
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true);
@@ -60,19 +60,20 @@ function AdminDatabase() {
                 item.username.toLowerCase().includes(search) 
             )
         };
-      const  handlesave = (item,swit) => {    
-        let activeis = swit;
+      const  handlesave = (item) => {    
+        setSubmitbutton(true)
         axios.defaults.headers = {
             "Content-Type": "application/json",
             "Authorization":`Bearer ${getTokenSession()}`,
           };
           axios.put(`${config.apiEndPoint}changeUserStatus/`,{
             "userId": item.id,
-            "active":  activeis
+            "active":  item.is_active
           })
           .then((response) => {
-            if(response) {
-              toast.success(response.message)
+            setSubmitbutton(false)
+            if(response.data.message) {
+              toast.success(response.data.message)
             }
         })
       }

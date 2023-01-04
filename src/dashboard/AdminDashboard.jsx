@@ -4,7 +4,6 @@ import axios from "axios";
 import config from "../services/config.json";
 import AdminEntries from "./components/AdminEntries";
 import Userdata from "./components/Userdata";
-import { AiFillHeart, AiOutlineClose } from "react-icons/ai";
 import { getTokenSession,removeTokenSession } from "./utils/common";
 import { toast } from "react-toastify";
 import Loader from "./components/common/Loader";
@@ -34,8 +33,8 @@ function AdminDashboard({ isDragging }) {
   const [adminEntrieslist, setAdminEntrieslist] = useState();
   const [savedEntrieslist, setSavedEntrieslist] = useState();
   const [userdata, setUserdata] = useState("");
- 
 
+ 
   const [upcomingenteries, setupcomingenteries] = useState([
     {
       title: "Tues December 20th 2022",
@@ -128,12 +127,12 @@ function AdminDashboard({ isDragging }) {
         else toast.error("Something went wrong. Please try again later.");
       });
   };
-  const handleEntrieslist = (e) => {
+  const handleEntrieslist = (itemsave) => {
     const savedEntriesupdate = adminEntrieslist.filter(
-      (item) => item.entry_id != e.target.id
+      (item) => item.entry_id != itemsave
     );
     const adminEntrieslistdate = adminEntrieslist.filter(
-      (item) => item.entry_id == e.target.id
+      (item) => item.entry_id == itemsave
     );
     setAdminEntrieslist(savedEntriesupdate);
     setSavedEntrieslist([...savedEntrieslist, adminEntrieslistdate[0]]);
@@ -142,7 +141,7 @@ function AdminDashboard({ isDragging }) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${getTokenSession()}`,
     };
-    axios.put(`${config.apiEndPoint}updateEntry/${e.target.id}`, {
+    axios.put(`${config.apiEndPoint}updateEntry/${itemsave}`, {
         updateValue: true,
       })
       .then((response) => {
@@ -210,13 +209,11 @@ function AdminDashboard({ isDragging }) {
     const indexOfDestinationEntry = upcomingenteries.findIndex(
       (item) => item.id == result.destination.droppableId
       );
-      console.log()
       axios.defaults.headers = {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getTokenSession()}`,
       };
-      axios
-        .put(`${config.apiEndPoint}addUpcomingEntry/`, {
+      axios.put(`${config.apiEndPoint}addUpcomingEntry/`, {
   
             "entryId": result.destination.droppableId,
             "playDate": "2-1-2023"

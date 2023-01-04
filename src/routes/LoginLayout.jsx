@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import config from "../services/config.json";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import AdminHeader from "../dashboard/components/common/AdminHeader";
 
 function LoginLayout() {
-  // const [token, setToken] = useState(getTokenSession);
+  const [submitbutton, setSubmitbutton] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,7 +30,8 @@ function LoginLayout() {
       .max(20, "Maximum 20 length")
       .required("Must Required"),
   });
-  const onSubmit = async (values) => {
+  const onSubmit = async (values,{ setSubmitting }) => {
+    setSubmitbutton(true)
     axios.defaults.headers = {
       "Content-Type": "application/json",
     };
@@ -38,6 +39,7 @@ function LoginLayout() {
       .post(`${config.apiEndPoint}login/`, values)
       .then((response) => {
         if (!response.data.token) {
+          setSubmitbutton(false)
           removeTokenSession(response.data.token);
           toast.error(response.data.errorMessage);
         } else {
@@ -105,9 +107,9 @@ function LoginLayout() {
                   type="submit"
                   name="submit"
                   className="btn btn-primary"
-                  disabled={isSubmitting}
+                  disabled={submitbutton}
                 >
-                  {isSubmitting ? "login..." : "login"}
+                  {submitbutton ? "login..." : "login"}
                 </button>
                 <Link to={"/admin/forget"}>Forget Password</Link>
               </div>

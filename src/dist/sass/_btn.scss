@@ -2,5 +2,7 @@
     padding: 10px 20px;
     &-primary {
         background: $secondary-color;
+        color: #fff;
+        text-transform: uppercase;
     }
 }

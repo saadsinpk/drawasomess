@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
+import { AiFillHeart, AiOutlineClose } from "react-icons/ai";
 const ListItem = ({ item, index,saved,removed }) => {
+  const [itemsave, setitemsave] = useState()
   const handleSClick = (e) => {
-    removed(e)
+    removed()
   }
+
   return (
     <Draggable draggableId={item.entry_id.toString()} index={index}>
       {(provided, snapshot) => {
@@ -24,7 +28,9 @@ const ListItem = ({ item, index,saved,removed }) => {
               <span>{item.submissiondate}</span>
             </div>
             {item.saved == 0 &&   <div className="heart">
-              <button onClick={saved} id={item.entry_id}>H{/* <AiFillHeart /> */}</button>
+              <button onClick={console.log(item)} data-heart={item.entry_id}>
+              <AiFillHeart />
+              </button>
             </div>}
            
 

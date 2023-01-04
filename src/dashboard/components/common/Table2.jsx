@@ -1,19 +1,14 @@
 import React,{useState, useCallback,useRef } from 'react';
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import $ from "jquery";
 
 function Table2({data,switches,saved}) {
-    const [toggleval, settoggleval] = useState("")
-    const [swit, setswit] = useState("")
     const ref = useRef(null);
     const Switchtoggle = useCallback((e) => {
         switches(e.target.checked);
-        setswit(e.target.checked);
     }, []);
     const savedbtn = (item,e) => {
-        item.is_active = true;
-        console.log(e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling)
-        console.log(item.is_active,item)
-        saved(item, swit)
+        item.is_active = $(e.target).closest("tr").find(".sr-only").is(":checked");
+        saved(item)
     }
     const initialValues = {
         username: "",
