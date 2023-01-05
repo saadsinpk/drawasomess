@@ -50,20 +50,7 @@ function AdminDashboard({ isDragging }) {
   const [savedEntrieslist, setSavedEntrieslist] = useState();
   const [userdata, setUserdata] = useState("");
 
-  const [upcomingenteries, setupcomingenteries] = useState([
-    {
-      title: "Tues December 20th 2022",
-      id: "1e1",
-    },
-    {
-      title: "Wednes December 21th 2022",
-      id: "1e2",
-    },
-    {
-      title: "Thurs December 22th 2022",
-      id: "1e3",
-    },
-  ]);
+  const [upcomingenteries, setupcomingenteries] = useState();
   const getDataa = async () => {
     axios.defaults.headers = {
       "Content-Type": "application/json",
@@ -389,7 +376,6 @@ function AdminDashboard({ isDragging }) {
                   ))}
                 </ul>
 
-                <button className="btn btn-sky text-center w-100">Save</button>
               </div>
             </div>
           </div>

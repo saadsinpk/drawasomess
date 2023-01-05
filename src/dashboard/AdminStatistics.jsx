@@ -84,8 +84,8 @@ function AdminStatistics() {
             (item) =>
             // keys.some((key) => item[key].toLowerCase().includes(search))
          
-                item.word_phrase.toLowerCase().includes(search) ||
-                item.day_of_week.toLowerCase().includes(search)
+                item.word_phrase.toLowerCase().includes(search.toLowerCase()) ||
+                item.day_of_week.toLowerCase().includes(search.toLowerCase())
             )
         };
         
@@ -144,30 +144,7 @@ function AdminStatistics() {
                 </div>
             </div>
             <div className="AdminStatistics2__bottom">
-           <div className="tableScroll">
-           <table className="table">
-            <thead>
-                <tr>
-                    
-                    <th></th>
-                  {  
-                  tableheader.map(({name},index) =>{
-                    return (
-                        <th key={index}>{name}</th>
-
-                    )
-
-                    })}
-                </tr>
-            </thead>
-            <tbody>
-        
-                {/* <Table data={userdata.tabledata} itemsPerPage={4} /> */}
-               
-            </tbody>
-
-           </table>
-           </div>
+            <Table data={searchtable(userdata.tabledata)} tableheader={tableheader} itemsPerPage={5} />
             </div>
     </div>
    </div>

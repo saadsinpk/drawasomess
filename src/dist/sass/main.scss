@@ -420,6 +420,8 @@ margin-bottom: 1rem;
 .UpcomingEntrie__bottom {
    ul {
     min-height: 70vh;
+    max-height: 70vh;
+    overflow: auto;
    }
     li {
         background: #D9D9D9;
