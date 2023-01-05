@@ -8,8 +8,9 @@ import Home from "../website/Home";
 import Topranking from "../website/components/common/Topranking";
 import Congratulations from "../website/components/common/Congratulations";
 import Loader from "../dashboard/components/common/Loader";
-import {getUserToken,removeUserToken} from "../website/utils/common";
+import {getUserToken,removeUserToken,setUserToken} from "../website/utils/common";
 import { toast } from "react-toastify";
+import { set } from "lodash";
 
 function WebLayout() {
   const isComponentMounted = useRef(true);
@@ -42,9 +43,10 @@ function WebLayout() {
               Authorization: `Bearer ${getUserToken()}`,
             };
           }
-        axios.get(`${config.apiEndPoint}dashboard`)
+        axios.post(`${config.apiEndPoint2}getUserId`)
             .then((response) => {
               console.log(response.data)
+              setUserToken(response.data.token)
               setLoading(false);
             })
             .catch((error) => {
