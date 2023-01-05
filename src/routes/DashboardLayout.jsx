@@ -1,5 +1,4 @@
 import React, { useState,useEffect,useRef } from "react";
-import axios from "axios";
 import config from "../services/config.json";
 import { Routes, Route,useNavigate } from "react-router-dom";
 import AdminDatabase from "../dashboard/AdminDatabase";
@@ -13,7 +12,6 @@ import Loader from "../dashboard/components/common/Loader";
 
 function DashboardLayout() {
   const navigate = useNavigate();
-
   useEffect(() => {
     !getTokenSession() && navigate(`/admin/login`);
   }, []);
@@ -27,7 +25,6 @@ function DashboardLayout() {
 
   return (
    <>
-
    <AdminHeader  logoutfun={loginoutfunc} />
    <Routes >
           <Route exact path="/*" element={<AdminDashboard />} />

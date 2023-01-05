@@ -15,7 +15,7 @@ const DraggableDateElement = ({ title, prefix, user }) => (
         >
           {title}
           <span> {user.name}</span>
-          {user.date?.toString()}
+          {user.date?.getDate().toString() + "-" + (user.date?.getMonth() + 1).toString() + "-" + (user.date?.getFullYear()).toString()}
         </div>
         {provided.placeholder}
       </>

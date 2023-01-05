@@ -89,7 +89,7 @@ function AdminDatabase() {
                 </div>
             </div>
             <div className="AdminDatabase__bototm">
-            <Table2 saved={handlesave} switches={setSwitchstoggle} data={searchtable(userdata)} />
+            <Table2 saved={handlesave} switches={setSwitchstoggle} itemsPerPage={5} data={searchtable(userdata)} />
     </div>
     </div>
   )

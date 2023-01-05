@@ -1,15 +1,15 @@
 // return the token from the session storage
-export const getTokenSession = () => {
-    return localStorage.getItem("token") ||   null
+export const getUserToken = () => {
+    return localStorage.getItem("usertoken") ||   null
   };
 
   // remove the token and user from the session storage
-  export const removeTokenSession = () => {
-    localStorage.removeItem("token");
+  export const removeUserToken = () => {
+    localStorage.removeItem("usertoken");
   };
   
   // set the token and user from the session storage
-  export const setTokenSession = (token,id) => {
-    localStorage.setItem("token", token);
+  export const setUserToken = (token) => {
+    localStorage.setItem("usertoken", token);
   };
   

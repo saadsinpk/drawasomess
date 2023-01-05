@@ -2,7 +2,7 @@ import React,{useState, useCallback,useRef } from 'react';
 import $ from "jquery";
 import ReactPaginate from 'react-paginate';
 
-function Table2({data,switches,saved}) {
+function Table2({data,switches,saved,itemsPerPage}) {
     const ref = useRef(null);
     const Switchtoggle = useCallback((e) => {
         switches(e.target.checked);
@@ -20,12 +20,13 @@ function Table2({data,switches,saved}) {
       const newOffset = (event.selected * itemsPerPage) % data.length;
       // console.log( `User requested page number ${event.selected}, which is offset ${newOffset}` );
       setItemOffset(newOffset);
+    }
     return (
           <>
-            <div className="tableScroll">
-    <table className="table">
-     <thead>
-         <tr>
+        <div className="tableScroll">
+                <table className="table">
+                     <thead>
+        <tr>
              <th></th>
              <th>Username</th>
              <th> Email</th>
@@ -42,12 +43,7 @@ function Table2({data,switches,saved}) {
          </tr>
      </thead>
      <tbody>
-    
-     </tbody>
-
-    </table>
-    </div>
-          </>
+         {
         data.map((item,index) => {
           const {email,username,tiktok_link,twitter_link,instagram_link,share_user,share_social,created_at,is_active,id,ip_address} = item
             return(
@@ -80,6 +76,31 @@ function Table2({data,switches,saved}) {
              );
             
           })
+        }
+     </tbody>
+
+</table>
+</div>
+<ReactPaginate
+                breakLabel="..."
+                nextLabel="next >"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={pageCount}
+                previousLabel="< previous"
+                renderOnZeroPageCount={null}
+                breakClassName={'page-item'}
+                breakLinkClassName={'page-link'}
+                containerClassName={'pagination'}
+                pageClassName={'page-item'}
+              pageLinkClassName={'page-link'}
+              previousClassName={'page-item'}
+            previousLinkClassName={'page-link'}
+        nextClassName={'page-item'}
+ nextLinkClassName={'page-link'}
+ activeClassName={'active'}
+                />  
+           </>
             
   )
 }

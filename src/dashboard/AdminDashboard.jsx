@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import config from "../services/config.json";
 import AdminEntries from "./components/AdminEntries";
@@ -9,18 +8,13 @@ import { toast } from "react-toastify";
 import Loader from "./components/common/Loader";
 import { DragDropContext } from "react-beautiful-dnd";
 import DraggableElement from "./dragsComponents/DraggableElement";
-import styled from "styled-components";
 import DraggableDateElement from "./dragsComponents/DraggableDateElement";
 
 function AdminDashboard({ isDragging }) {
-  const navigate = useNavigate();
   const [data, setData] = useState("");
   const [alllistData, setAlllistData] = useState("");
   const isComponentMounted = useRef(true);
   const [loading, setLoading] = useState(true);
-  // const [seconds, setSeconds] = useState(60);
-  const [initiallyRunning, setinitiallyRunning] = useState(false);
-
   const [time, setTime] = useState(60);
   const [startTimer, setStartTimer] = useState(false);
   const [timerid, setTimerid] = useState(0);
@@ -58,10 +52,6 @@ function AdminDashboard({ isDragging }) {
   }, [startTimer]);
 
   useEffect(() => {
-    !getTokenSession() && navigate(`/admin/login`);
-    const now = new Date();
-    // console.log(getAllDaysInMonth(now.getFullYear(), now.getMonth()));
-    const date = new Date();
     if (isComponentMounted.current) {
       getDataa();
     }
@@ -86,7 +76,7 @@ function AdminDashboard({ isDragging }) {
   const [adminEntrieslist, setAdminEntrieslist] = useState();
   const [savedEntrieslist, setSavedEntrieslist] = useState();
   const [userdata, setUserdata] = useState("");
-
+  const [newsavedentrydata, setNewsavedentrydata] = useState("");
   const [upcomingenteries, setupcomingenteries] = useState();
   const getDataa = async () => {
     axios.defaults.headers = {
@@ -100,9 +90,12 @@ function AdminDashboard({ isDragging }) {
         const AdminEntriesupdate = response.data.entries.filter(
           (item) => item.saved == "0"
         );
+        const AdminEntriesupdate2 = AdminEntriesupdate.filter((item) => !item.upcomming_date)
         const savedEntriesupdate = response.data.entries.filter(
           (item) => item.saved != "0"
         );
+        setNewsavedentrydata(response.data.entries.filter((item) => !item.upcomming_date))
+        const savedEntriesupdate2 = savedEntriesupdate.filter((item) => !item.upcomming_date)
         const responseUpcommingEntires = response.data.entries
           .filter((item) => item.upcomming_date)
           .map((el) => ({
@@ -110,14 +103,13 @@ function AdminDashboard({ isDragging }) {
             upcomming_date: new Date(el.upcomming_date),
           }));
 
-        console.log(responseUpcommingEntires, "responseUpcommingEntires");
 
-        setAdminEntrieslist(AdminEntriesupdate);
-        setSavedEntrieslist(savedEntriesupdate);
+        setAdminEntrieslist(AdminEntriesupdate2);
+        setSavedEntrieslist(savedEntriesupdate2);
         setAlllistData(response.data.entries);
         getUserData(`${response.data.entries[0].entry_id}`);
 
-        const now = new Date("01-01-2023");
+        const now = new Date();
         const upCommingEntries = getAllDaysInMonth(
           now.getFullYear(),
           now.getMonth()
@@ -200,12 +192,14 @@ function AdminDashboard({ isDragging }) {
         else toast.error("Something went wrong. Please try again later.");
       });
   };
-  const handleEntrieslist = (itemsave) => {
+  const handleEntrieslist = (item) => {
+    
+    let a = item
     const savedEntriesupdate = adminEntrieslist.filter(
-      (item) => item.entry_id != itemsave
+      (item) => item.entry_id != a.entry_id
     );
     const adminEntrieslistdate = adminEntrieslist.filter(
-      (item) => item.entry_id == itemsave
+      (item) => item.entry_id == a.entry_id
     );
     setAdminEntrieslist(savedEntriesupdate);
     setSavedEntrieslist([...savedEntrieslist, adminEntrieslistdate[0]]);
@@ -215,11 +209,12 @@ function AdminDashboard({ isDragging }) {
       Authorization: `Bearer ${getTokenSession()}`,
     };
     axios
-      .put(`${config.apiEndPoint}updateEntry/${itemsave}`, {
+      .put(`${config.apiEndPoint}updateEntry/${a.entry_id}`, {
         updateValue: true,
       })
       .then((response) => {
         if (response) {
+          getDataa();
           toast.success("update");
         }
       })
@@ -265,25 +260,20 @@ function AdminDashboard({ isDragging }) {
         }
       });
   };
-
+let  getdate;
   const onDragEnd = (result) => {
-    const indexOfDroppableEntry = adminEntrieslist.findIndex(
+    const indexOfDroppableEntry = newsavedentrydata.findIndex(
       (item) => item.entry_id == result.draggableId
     );
-
+    
     const indexOfDestinationEntry = upcomingenteries.findIndex(
       (item) => item.id == result.destination.droppableId
     );
-    axios.defaults.headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getTokenSession()}`,
-    };
-    axios
-      .put(`${config.apiEndPoint}addUpcomingEntry/`, {
-        entryId: result.destination.droppableId,
-        playDate: "2-1-2023",
-      })
-      .then((response) => {});
+
+    const userid = upcomingenteries.filter(
+      (item) => item.entry_id == result.destination.droppableId
+    );
+
     if (!result.destination) return;
     else if (result.destination.droppableId === "newEntries") return;
     else if (result.destination.droppableId === "savedEntries") return;
@@ -295,22 +285,28 @@ function AdminDashboard({ isDragging }) {
       prev.map((item) => {
         if (item.id == result.destination.droppableId) {
           const user = adminEntrieslist[indexOfDroppableEntry];
-          console.log(user, "drag");
+          getdate = item.date
+      
           return {
             ...user,
             date: item.date,
           };
-          // return {
-          //   ...item,
-
-          //   user: {
-          //     name: user.username,
-          //   },
-          //   // date: user.submissiondate,
-          // };
         } else return item;
       })
     );
+
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getTokenSession()}`,
+    };
+    axios
+      .put(`${config.apiEndPoint}addUpcomingEntry/`, {
+        entryId: result.draggableId,
+        playDate: `${getdate.getMonth() + 1}-${getdate.getDate()}-${getdate.getFullYear()}`,
+      })
+      .then((response) => {
+        console.log(response.data)
+      });
     setAdminEntrieslist((prev) =>
       prev.filter((item) => item.entry_id != result.draggableId)
     );
@@ -333,9 +329,7 @@ function AdminDashboard({ isDragging }) {
                   elements={adminEntrieslist}
                   key={"newEntries"}
                   prefix={"newEntries"}
-                  SavedMove={(item) => {
-                    console.log(item);
-                  }}
+                  SavedMove={(item) => handleEntrieslist(item)}
                 />
               </div>
             </div>

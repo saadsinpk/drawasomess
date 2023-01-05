@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
+import axios from "axios";
+import config from "../services/config.json";
 import PlayBy from "../website/PlayBy";
 import Submission from "../website/Submission";
 import Home from "../website/Home";
 import Topranking from "../website/components/common/Topranking";
 import Congratulations from "../website/components/common/Congratulations";
+import Loader from "../dashboard/components/common/Loader";
+import {getUserToken,removeUserToken} from "../website/utils/common";
+import { toast } from "react-toastify";
 
 function WebLayout() {
+  const isComponentMounted = useRef(true);
+  const [loading, setLoading] = useState(true);
         const [theme, setTheme] = useState("light");
         const themeMode = (e) => {
           const body = document.body;
@@ -19,6 +26,40 @@ function WebLayout() {
              body.classList.remove("active")
           }
         }
+        useEffect(() => {
+          if (isComponentMounted.current) {
+            getDataa();
+          }
+          return () => {
+            isComponentMounted.current = false;
+            setLoading(true);
+          };
+        }, []);
+        const getDataa = async () => {
+          if(getUserToken()) {
+            axios.defaults.headers = {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${getUserToken()}`,
+            };
+          }
+        axios.get(`${config.apiEndPoint}dashboard`)
+            .then((response) => {
+              console.log(response.data)
+              setLoading(false);
+            })
+            .catch((error) => {
+              if (error?.response?.status === 500) {
+                removeUserToken("usertoken");
+              } else if (error?.response?.status === 401) {
+                setLoading(true);
+                toast.error(error.response.data.message);
+              } else {
+                setLoading(true);
+                toast.error("Something went wrong. Please try again later.");
+              }
+            });
+          }
+            if (loading) return <Loader />;
   return (
    <>
     <main onLoad={themeMode} className={theme} >
