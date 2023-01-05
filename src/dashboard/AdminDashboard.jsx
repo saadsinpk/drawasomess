@@ -18,8 +18,45 @@ function AdminDashboard({ isDragging }) {
   const [alllistData, setAlllistData] = useState("");
   const isComponentMounted = useRef(true);
   const [loading, setLoading] = useState(true);
-  const [seconds, setSeconds] = useState(60);
+  // const [seconds, setSeconds] = useState(60);
   const [initiallyRunning, setinitiallyRunning] = useState(false);
+
+  const [time, setTime] = useState(60);
+  const [startTimer, setStartTimer] = useState(false);
+  const [timerid, setTimerid] = useState(0);
+
+  function handleplay() {
+    setStartTimer(true);
+  }
+
+  function handlestop() {
+    setStartTimer(false);
+  }
+
+  function handleReload() {
+    setTime(60);
+    setStartTimer(false);
+  }
+
+  useEffect(() => {
+    let interval = null;
+    if (startTimer) {
+      interval = setInterval(() => {
+        setTime((prev) => {
+          if (prev == 0) {
+            handlestop();
+            return prev;
+          } else {
+            return prev - 1;
+          }
+        });
+      }, 1000);
+      setTimerid(interval);
+    } else {
+      clearInterval(timerid);
+    }
+  }, [startTimer]);
+
   useEffect(() => {
     !getTokenSession() && navigate(`/admin/login`);
     const now = new Date();
@@ -228,18 +265,7 @@ function AdminDashboard({ isDragging }) {
         }
       });
   };
-  const currentCount = seconds;
-  let myInterval;
-  const startTimer = () => {
-    setinitiallyRunning(true);
-    myInterval = setInterval(() => {
-      initiallyRunning && setSeconds((seconds) => seconds - 1);
-    }, 1000);
-  };
-  const stopTimer = () => {
-    setinitiallyRunning(false);
-    clearInterval(myInterval);
-  };
+
   const onDragEnd = (result) => {
     const indexOfDroppableEntry = adminEntrieslist.findIndex(
       (item) => item.entry_id == result.draggableId
@@ -307,8 +333,9 @@ function AdminDashboard({ isDragging }) {
                   elements={adminEntrieslist}
                   key={"newEntries"}
                   prefix={"newEntries"}
-                  SavedMove={(item) =>  {console.log(item)} }
-
+                  SavedMove={(item) => {
+                    console.log(item);
+                  }}
                 />
               </div>
             </div>
@@ -331,7 +358,7 @@ function AdminDashboard({ isDragging }) {
           <div className="aadmindasboard__center  p-5">
             <div className="paintBox"></div>
             <div className="aadmindasboard__center- flex justify-between items-center gap-2 my-3 px-5">
-              <div className="timeBox">{currentCount}</div>
+              <div className="timeBox">{time}</div>
               <div className="aadmindasboard__center-center">
                 <span className="block" style={{ fontSize: "10px" }}>
                   Button Frame
@@ -339,15 +366,21 @@ function AdminDashboard({ isDragging }) {
                 <div className=" gap-1">
                   <button
                     className=" btn btn-pink block w-100 my-1 start-button"
-                    onClick={startTimer}
+                    onClick={handleplay}
                   >
                     Play
                   </button>
                   <button
                     className="btn btn-pink block w-100 my-1 stop-button"
-                    onClick={stopTimer}
+                    onClick={handlestop}
                   >
                     Pause
+                  </button>
+                  <button
+                    onClick={handleReload}
+                    className="btn btn-pink block w-100 my-1 stop-button"
+                  >
+                    clear
                   </button>
                 </div>
               </div>
@@ -375,7 +408,6 @@ function AdminDashboard({ isDragging }) {
                     />
                   ))}
                 </ul>
-
               </div>
             </div>
           </div>
