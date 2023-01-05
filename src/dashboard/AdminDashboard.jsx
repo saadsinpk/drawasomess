@@ -111,7 +111,7 @@ function AdminDashboard({ isDragging }) {
         let user__id = response.data.entries[0].user_id
         getUserData(user__id);
 
-        const now = new Date("06-03-2023");
+        const now = new Date("01-01-2023");
         const upCommingEntries = getAllDaysInMonth(
           now.getFullYear(),
           now.getMonth()
