@@ -1,5 +1,6 @@
 import React,{useState, useCallback,useRef } from 'react';
 import $ from "jquery";
+import ReactPaginate from 'react-paginate';
 
 function Table2({data,switches,saved}) {
     const ref = useRef(null);
@@ -10,12 +11,43 @@ function Table2({data,switches,saved}) {
         item.is_active = $(e.target).closest("tr").find(".sr-only").is(":checked");
         saved(item)
     }
-    const initialValues = {
-        username: "",
-          password: "",
-        };
+    const [itemOffset, setItemOffset] = useState(0);
+    const endOffset = itemOffset + itemsPerPage;
+    // console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    const currentItems = data.slice(itemOffset, endOffset);
+    const pageCount = Math.ceil(data.length / itemsPerPage);
+    const handlePageClick = (event) => {
+      const newOffset = (event.selected * itemsPerPage) % data.length;
+      // console.log( `User requested page number ${event.selected}, which is offset ${newOffset}` );
+      setItemOffset(newOffset);
     return (
-          
+          <>
+            <div className="tableScroll">
+    <table className="table">
+     <thead>
+         <tr>
+             <th></th>
+             <th>Username</th>
+             <th> Email</th>
+             <th>TikTok</th>
+             <th>Twitter</th>
+             <th>Instagram</th>
+             <th>Facebook</th>
+             <th>Share User</th>
+             <th>Share Social</th>
+             <th>Creation Date</th>
+             <th>Active</th>
+             <th>IP Address</th>
+             <th></th>
+         </tr>
+     </thead>
+     <tbody>
+    
+     </tbody>
+
+    </table>
+    </div>
+          </>
         data.map((item,index) => {
           const {email,username,tiktok_link,twitter_link,instagram_link,share_user,share_social,created_at,is_active,id,ip_address} = item
             return(

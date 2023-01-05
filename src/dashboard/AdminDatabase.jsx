@@ -89,31 +89,7 @@ function AdminDatabase() {
                 </div>
             </div>
             <div className="AdminDatabase__bototm">
-    <div className="tableScroll">
-    <table className="table">
-     <thead>
-         <tr>
-             <th></th>
-             <th>Username</th>
-             <th> Email</th>
-             <th>TikTok</th>
-             <th>Twitter</th>
-             <th>Instagram</th>
-             <th>Facebook</th>
-             <th>Share User</th>
-             <th>Share Social</th>
-             <th>Creation Date</th>
-             <th>Active</th>
-             <th>IP Address</th>
-             <th></th>
-         </tr>
-     </thead>
-     <tbody>
-     <Table2 saved={handlesave} switches={setSwitchstoggle} data={searchtable(userdata)} />
-     </tbody>
-
-    </table>
-    </div>
+            <Table2 saved={handlesave} switches={setSwitchstoggle} data={searchtable(userdata)} />
     </div>
     </div>
   )

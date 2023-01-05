@@ -1,5 +1,4 @@
 import React,{useState,useEffect,useRef,} from 'react';
-import ReactPaginate from 'react-paginate';
 import axios from "axios";
 import config from "../services/config.json";
 import { toast } from "react-toastify";
