@@ -2,10 +2,7 @@ import { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { AiFillHeart, AiOutlineClose } from "react-icons/ai";
 const ListItem = ({ item, index, saved, removed }) => {
-  const [itemsave, setitemsave] = useState();
-  const handleSClick = (e) => {
-    removed();
-  };
+
 
   return (
     <Draggable draggableId={item.entry_id.toString()} index={index}>
@@ -43,7 +40,9 @@ const ListItem = ({ item, index, saved, removed }) => {
             <button
               className="closebtn"
               id={item.entry_id}
-              onClick={handleSClick}
+              onClick={() => {
+                removed(item);
+              }}
             >
               {" "}
               X{" "}

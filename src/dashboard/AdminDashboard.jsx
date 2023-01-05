@@ -9,6 +9,7 @@ import Loader from "./components/common/Loader";
 import { DragDropContext } from "react-beautiful-dnd";
 import DraggableElement from "./dragsComponents/DraggableElement";
 import DraggableDateElement from "./dragsComponents/DraggableDateElement";
+import swal from 'sweetalert';
 
 function AdminDashboard({ isDragging }) {
   const [data, setData] = useState("");
@@ -107,16 +108,17 @@ function AdminDashboard({ isDragging }) {
         setAdminEntrieslist(AdminEntriesupdate2);
         setSavedEntrieslist(savedEntriesupdate2);
         setAlllistData(response.data.entries);
-        getUserData(`${response.data.entries[0].entry_id}`);
+        let user__id = response.data.entries[0].user_id
+        getUserData(user__id);
 
-        const now = new Date();
+        const now = new Date("06-03-2023");
         const upCommingEntries = getAllDaysInMonth(
           now.getFullYear(),
           now.getMonth()
         ).map((item, index) => {
           const isEntryOnDate = responseUpcommingEntires.filter(
             (el) =>
-              el.upcomming_date.getDate() + el.upcomming_date.getMonth() ===
+              el.upcomming_date.getDate() + el.upcomming_date.getMonth() ==
               item.getDate() + item.getMonth()
           )[0];
           if (isEntryOnDate) {
@@ -131,7 +133,7 @@ function AdminDashboard({ isDragging }) {
         console.log(upCommingEntries, "upCommingEntries");
         setupcomingenteries(upCommingEntries);
         // let  upcom = response.data.entries.filter((item) => item.upcomming_date != "");
-        setLoading(false);
+        
       })
       .catch((error) => {
         if (error?.response?.status === 500) {
@@ -145,15 +147,16 @@ function AdminDashboard({ isDragging }) {
         }
       });
   };
-  const getUserData = async (id) => {
+  const getUserData = async (user__id) => {
     axios.defaults.headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${getTokenSession()}`,
     };
     axios
-      .get(`${config.apiEndPoint}userInfo/${id}`)
+      .get(`${config.apiEndPoint}userInfo/${user__id}`)
       .then((response) => {
         setUserdata(response.data.data);
+        setLoading(false);
       })
       .catch((error) => {
         setLoading(true);
@@ -164,87 +167,85 @@ function AdminDashboard({ isDragging }) {
   };
   if (loading) return <Loader />;
 
-  const handlesavedEntries = (e) => {
-    const savedEntriesupdate = savedEntrieslist.filter(
-      (item) => item.entry_id != e.target.id
-    );
-    const adminEntrieslistdate = savedEntrieslist.filter(
-      (item) => item.entry_id == e.target.id
-    );
-    setSavedEntrieslist(savedEntriesupdate);
-    setAdminEntrieslist([...adminEntrieslist, adminEntrieslistdate[0]]);
-    axios.defaults.headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getTokenSession()}`,
-    };
-    axios
-      .put(`${config.apiEndPoint}updateEntry/${e.target.id}`, {
-        updateValue: false,
+  const handlesavedEntries = (item) => {
+
+    if(item.saved == 1) {
+      let itemid = item.entry_id;
+      const savedEntriesupdate = savedEntrieslist.filter(
+        (item) => item.entry_id != itemid
+      );
+      const adminEntrieslistdate = savedEntrieslist.filter(
+        (item) => item.entry_id == itemid
+      );
+      adminEntrieslistdate[0].saved = 0;
+      setSavedEntrieslist(savedEntriesupdate);
+      setAdminEntrieslist([...adminEntrieslist, adminEntrieslistdate[0]]);
+      axios.defaults.headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getTokenSession()}`,
+      };
+      axios
+        .put(`${config.apiEndPoint}updateEntry/${itemid}`, {
+          updateValue: false,
+        })
+        .then((response) => {
+          if (response) {
+            toast.success("update");
+          }
+        })
+        .catch((error) => {
+          if (error.response.status === 401)
+            toast.error(error.response.data.message);
+          else toast.error("Something went wrong. Please try again later.");
+        });
+
+    }
+    else {
+      let itemid = item.entry_id;
+      swal({
+        title: "Are you sure?",
+        icon: "warning",
+        dangerMode: true,
       })
-      .then((response) => {
-        if (response) {
-          toast.success("update");
+      .then(willDelete => {
+        if (willDelete) {
+          const listdelete = adminEntrieslist.filter(
+            (item) => item.entry_id != itemid
+          );
+          setAdminEntrieslist(listdelete);
+          axios.defaults.headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getTokenSession()}`,
+          };
+          axios
+            .post(
+              `${config.apiEndPoint}deleteEntry/${itemid}`
+            )
+            .then((response) => {
+              if (response) {
+                // toast.success(response.message);
+              }
+            });
         }
-      })
-      .catch((error) => {
-        if (error.response.status === 401)
-          toast.error(error.response.data.message);
-        else toast.error("Something went wrong. Please try again later.");
       });
+    }
+   
   };
-  const handleEntrieslist = (item) => {
-    
-    let a = item
+  const handleEntrieslist = (item) => {  
+    let a = item;
     const savedEntriesupdate = adminEntrieslist.filter(
       (item) => item.entry_id != a.entry_id
     );
     const adminEntrieslistdate = adminEntrieslist.filter(
       (item) => item.entry_id == a.entry_id
     );
+    adminEntrieslistdate[0].saved = 1
     setAdminEntrieslist(savedEntriesupdate);
     setSavedEntrieslist([...savedEntrieslist, adminEntrieslistdate[0]]);
 
-    axios.defaults.headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getTokenSession()}`,
-    };
-    axios
-      .put(`${config.apiEndPoint}updateEntry/${a.entry_id}`, {
-        updateValue: true,
-      })
-      .then((response) => {
-        if (response) {
-          getDataa();
-          toast.success("update");
-        }
-      })
-      .catch((error) => {
-        if (error.response.status === 401)
-          toast.error(error.response.data.message);
-        else toast.error("Something went wrong. Please try again later.");
-      });
+  
   };
-  const handlelistdelete = (e) => {
-    const listdelete = adminEntrieslist.filter(
-      (item) => item.entry_id != e.target.getAttribute("data-delete")
-    );
-    setAdminEntrieslist(listdelete);
-    axios.defaults.headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${getTokenSession()}`,
-    };
-    axios
-      .post(
-        `${config.apiEndPoint}deleteEntry/${e.target.getAttribute(
-          "data-delete"
-        )}`
-      )
-      .then((response) => {
-        if (response) {
-          toast.success(response.message);
-        }
-      });
-  };
+
   const handleClick = (item, e) => {
     axios.defaults.headers = {
       "Content-Type": "application/json",
@@ -270,9 +271,9 @@ let  getdate;
       (item) => item.id == result.destination.droppableId
     );
 
-    const userid = upcomingenteries.filter(
-      (item) => item.entry_id == result.destination.droppableId
-    );
+    // const userid = upcomingenteries.filter(
+    //   (item) => item.entry_id == result.destination.droppableId
+    // );
 
     if (!result.destination) return;
     else if (result.destination.droppableId === "newEntries") return;
@@ -330,6 +331,7 @@ let  getdate;
                   key={"newEntries"}
                   prefix={"newEntries"}
                   SavedMove={(item) => handleEntrieslist(item)}
+                  removeSaved={(item) => handlesavedEntries(item)}
                 />
               </div>
             </div>
@@ -343,7 +345,7 @@ let  getdate;
                     elements={savedEntrieslist}
                     key={"savedEntries"}
                     prefix={"savedEntries"}
-                    removeSaved={handlesavedEntries}
+                    removeSaved={(item) => handlesavedEntries(item)}
                   />
                 </ul>
               </div>
@@ -384,7 +386,10 @@ let  getdate;
                 {/* <h5>{userdata?.username}</h5> */}
               </div>
             </div>
-            {/* {<Userdata user={userdata} /> } */}
+            {
+              console.log(userdata)
+            }
+            {<Userdata user={userdata} /> }
           </div>
           <div className="aadmindasboard__right">
             <div className="UpcomingEntrie">
