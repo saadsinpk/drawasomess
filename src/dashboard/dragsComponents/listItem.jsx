@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import { AiFillHeart, AiOutlineClose } from "react-icons/ai";
-const ListItem = ({ item, index, saved, removed }) => {
+const ListItem = ({ item, index, saved, removed,userShow }) => {
+const handleClicks = (e) => {
 
+  if(e.target.tagName.toLowerCase() === 'button') {
+  }
+  else {
+    userShow(item)
+  }
+}
 
   return (
     <Draggable draggableId={item.entry_id.toString()} index={index}>
@@ -15,6 +22,7 @@ const ListItem = ({ item, index, saved, removed }) => {
             {...provided.dragHandleProps}
             className="list__item flex gap-2 items-center justify-between"
             key={index}
+            onClick={handleClicks}
           >
             <div>
               <span>Username</span>

@@ -1,21 +1,23 @@
 import React from 'react'
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import Result from '../Result';
-import Social from './Social';
-import img1 from '../../../dist/webImages/1.png';
-import Topplayers from './Topplayers';
+import Result from '../website/components/Result';
+import Social from '../website/components/common/Social';
+import img1 from '../dist/webImages/1.png';
+import Topplayers from '../website/components/common/Topplayers';
+import Header from './components/common/Header';
 
-function Faq({popuptext}) {
+function Faq({data}) {
     const removeModal = (e) => {
         const setting = document.querySelector(".Setting");
         setting.classList.remove("active");
     }
   return (
    <>
-    <div  className="Modal">
+   <Header />
+    <div  className="Faq" ele={data}>
     <div className="Modal__heading p-2 flex items-center">
-    <div className="Modal__heading--left" onClick={removeModal}><AiOutlineArrowLeft /></div>
-    <h2 className="Modal__heading-right mx-auto my-0">{popuptext}</h2>
+    {/* <div className="Modal__heading--left" onClick={removeModal}><AiOutlineArrowLeft /></div> */}
+    <h1 className="Modal__heading-right mx-auto my-0">Faq</h1>
     </div>
     <div className="Modal__body p-3">
             <div className='text-center faqBox border-t py-2'>

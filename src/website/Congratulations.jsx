@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {Link } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
-import Result from '../Result';
-import Social from './Social';
-import Topplayers from './Topplayers';
-import Time from './Time';
-import Header from './Header';
+import Result from './components/Result';
+import Social from './components/common/Social';
+import Topplayers from './components/common/Topplayers';
+import Loader from "../dashboard/components/common/Loader";
+import Time from './components/common/Time';
+import Header from './components/common/Header';
 
-function Congratulations() {
+function Congratulations({settingclick,data,gameto}) {
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  useEffect(() => {
+    let sshow = gameto;
+    !sshow && navigate(`/`);
+    setLoading(false)
+  
+  }, [])
+  
+  if (loading) return <Loader />;
   return (
     <>
-    <Header />
+    <Header settingclicks={settingclick} ele={data} />
    <div  className="con">
     <div className="StatisticsMain-top p-2 flex items-center">
         <Link className="StatisticsMain-top-left" to={"/"}>

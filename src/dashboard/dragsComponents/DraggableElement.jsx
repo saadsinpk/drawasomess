@@ -2,7 +2,7 @@ import { Droppable } from "react-beautiful-dnd";
 import React from "react";
 import ListItem from "./listItem";
 
-const DraggableElement = ({ prefix, elements, SavedMove, removeSaved }) => (
+const DraggableElement = ({ prefix, elements, SavedMove, removeSaved,clickShowUser }) => (
   <ul className="list adminlist">
     <Droppable droppableId={`${prefix}`}>
       {(provided) => (
@@ -13,6 +13,7 @@ const DraggableElement = ({ prefix, elements, SavedMove, removeSaved }) => (
               removed={removeSaved}
               saved={SavedMove}
               item={item}
+              userShow={clickShowUser}
               index={item.entry_id}
             />
           ))}

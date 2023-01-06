@@ -1,9 +1,10 @@
+import {Link } from "react-router-dom";
 import React, { useState } from 'react';
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import Switch from './form/Switch';
 import Social from './Social';
 
-function Setting({popuptext,closeSetting}) {
+function Setting({popuptext,closeSetting,elel}) {
    
     const removeModal = (e) => {
         closeSetting(false)
@@ -20,7 +21,7 @@ function Setting({popuptext,closeSetting}) {
         <ul className='list'>
             <li className='flex justify-between py-2 px-2'>
                 <div className='userList__left'>UserName</div>
-                <div className='userList__right'>DavidU</div>
+                <div className='userList__right'>{elel && elel}</div>
             </li>
             <li className='flex justify-between py-2 px-2'>
                 <div className='userList__left'>Dark Theme</div>
@@ -34,7 +35,7 @@ function Setting({popuptext,closeSetting}) {
             </li>
             <li className='flex justify-between py-2 px-2'>
                 <div className='userList__left'>Questions?</div>
-                <div className='userList__right'>FAQ</div>
+                <div className='userList__right'><Link to={"/faq"}>FAQ</Link></div>
             </li>
         </ul>
     </div>

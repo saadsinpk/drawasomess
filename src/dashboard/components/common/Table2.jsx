@@ -44,7 +44,7 @@ function Table2({data,switches,saved,itemsPerPage}) {
      </thead>
      <tbody>
          {
-        data.map((item,index) => {
+        currentItems.map((item,index) => {
           const {email,username,tiktok_link,twitter_link,instagram_link,share_user,share_social,created_at,is_active,id,ip_address} = item
             return(
                 <tr key={index}>

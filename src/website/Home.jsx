@@ -5,19 +5,19 @@ import Keyboard from './components/common/Keyboard';
 import img1 from '../dist/webImages/1.png';
 import { FaPlay } from "react-icons/fa";
 
-function Home() {
+function Home({data,settingclick,gameto}) {
   const [stopKeyboard, setStopKeyboard] = useState(false);
-  console.log(stopKeyboard)
   const handlestopKeyboard = () => {
     setStopKeyboard(true)
-    console.log(stopKeyboard,"dfhjkj")
   }
   return (
    <>
-   <Header keyboa={handlestopKeyboard}  />
+   <Header keyboa={handlestopKeyboard} settingclicks={settingclick} ele={data}  />
    <div className="jeff text-center flex justify-end p-4 ml-auto">
-    
-    <Link to={"/playby"}>Today's submission by JEFF </Link>
+    {/* {gameto ?  <Link to={"/playby"}>Today's submission by JEFF </Link> : 
+    <p>Today's submission by JEFF
+      </p>} */}
+   
    </div>
    <div className="diagramMain">
     <img src={img1} alt="" />

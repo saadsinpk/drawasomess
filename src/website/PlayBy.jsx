@@ -1,14 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../website/components/common/Header';
 import Keyboard from '../website/components/common/Keyboard';
-import img1 from '../dist/webImages/1.png';
-import { FaPlay } from "react-icons/fa";
 import Social from '../website/components/common/Social';
+import Loader from "../dashboard/components/common/Loader";
+import { useNavigate } from 'react-router-dom';
 
-function PlayBy() {
+function PlayBy({settingclick,data,gameto}) {
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  useEffect(() => {
+    let sshow = gameto;
+    !sshow && navigate(`/`);
+    setLoading(false)
+  
+  }, [])
+  
+  if (loading) return <Loader />;
   return (
     <>
-    <Header  />
+    <Header settingclicks={settingclick} ele={data}  />
     <div className='my-2'>
     <Social />
     </div>

@@ -110,16 +110,15 @@ function AdminDashboard({ isDragging }) {
         setAlllistData(response.data.entries);
         let user__id = response.data.entries[0].user_id
         getUserData(user__id);
-
-        const now = new Date("01-01-2023");
+        const now = new Date();
         const upCommingEntries = getAllDaysInMonth(
           now.getFullYear(),
           now.getMonth()
         ).map((item, index) => {
           const isEntryOnDate = responseUpcommingEntires.filter(
-            (el) =>
-              el.upcomming_date.getDate() + el.upcomming_date.getMonth() ==
-              item.getDate() + item.getMonth()
+          (el) =>
+            el.upcomming_date.getDate() + el.upcomming_date.getMonth() +  el.upcomming_date.getFullYear() ==
+            item.getDate() + item.getMonth() + item.getFullYear()
           )[0];
           if (isEntryOnDate) {
             return {
@@ -246,7 +245,7 @@ function AdminDashboard({ isDragging }) {
   
   };
 
-  const handleClick = (item, e) => {
+  const handleClick = (item) => {
     axios.defaults.headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${getTokenSession()}`,
@@ -285,7 +284,7 @@ let  getdate;
     setupcomingenteries((prev) =>
       prev.map((item) => {
         if (item.id == result.destination.droppableId) {
-          const user = adminEntrieslist[indexOfDroppableEntry];
+          const user = newsavedentrydata[indexOfDroppableEntry];
           getdate = item.date
       
           return {
@@ -330,6 +329,7 @@ let  getdate;
                   elements={adminEntrieslist}
                   key={"newEntries"}
                   prefix={"newEntries"}
+                  clickShowUser={(item) => handleClick(item)}
                   SavedMove={(item) => handleEntrieslist(item)}
                   removeSaved={(item) => handlesavedEntries(item)}
                 />
@@ -345,6 +345,7 @@ let  getdate;
                     elements={savedEntrieslist}
                     key={"savedEntries"}
                     prefix={"savedEntries"}
+                    clickShowUser={(item) => handleClick(item)}
                     removeSaved={(item) => handlesavedEntries(item)}
                   />
                 </ul>

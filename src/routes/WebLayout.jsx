@@ -6,47 +6,56 @@ import PlayBy from "../website/PlayBy";
 import Submission from "../website/Submission";
 import Home from "../website/Home";
 import Topranking from "../website/components/common/Topranking";
-import Congratulations from "../website/components/common/Congratulations";
+import Congratulations from "../website/Congratulations";
 import Loader from "../dashboard/components/common/Loader";
 import {getUserToken,removeUserToken,setUserToken} from "../website/utils/common";
 import { toast } from "react-toastify";
-import { set } from "lodash";
+import Faq from "../website/Faq";
+import Setting from "../website/components/common/Setting";
 
 function WebLayout() {
+  const [themeMode, setThemeMode] = useState(( eval( localStorage.getItem("switch"))))
   const isComponentMounted = useRef(true);
+  const [uesrname, setUesrname] = useState("");
+  const [settingModal, setSettingModal] = useState(false);
   const [loading, setLoading] = useState(true);
-        const [theme, setTheme] = useState("light");
-        const themeMode = (e) => {
-          const body = document.body;
-          if (localStorage.getItem("theme") == "dark") {
-            setTheme("dark");
-            body.classList.add("active");
-          }
-          else {
-            setTheme("light");
-             body.classList.remove("active")
-          }
-        }
+  const [datauser, setDatauser] = useState("")
+  const [todayGameShoe, setTodayGameShoe] = useState("")
+
         useEffect(() => {
+
           if (isComponentMounted.current) {
-            getDataa();
+            getDatass();  
           }
           return () => {
             isComponentMounted.current = false;
             setLoading(true);
           };
         }, []);
-        const getDataa = async () => {
-          if(getUserToken()) {
+        const getDatass = async () => {
             axios.defaults.headers = {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${getUserToken()}`,
+              "Authorization": `Bearer ${getUserToken()}`,
             };
-          }
-        axios.post(`${config.apiEndPoint2}getUserId`)
+        axios.get(`${config.apiEndPoint2}getUserId`)
             .then((response) => {
+              setDatauser(response.data)
+              const body = document.body;
+             
+              if(themeMode == true) {
+                body.classList.add("active")
+            }
+            else {
+                localStorage.removeItem('theme')
+                body.classList.remove("active")
+            }
               console.log(response.data)
-              setUserToken(response.data.token)
+              if(response.data.token) {
+                setUserToken(response.data.token)
+              }
+              if(response.data.username) {
+                setUesrname(response.data.username)
+              }
               setLoading(false);
             })
             .catch((error) => {
@@ -62,15 +71,20 @@ function WebLayout() {
             });
           }
             if (loading) return <Loader />;
+            const SettingtoggleClass = (e) => {
+              setSettingModal(true)
+              };
   return (
    <>
-    <main onLoad={themeMode} className={theme} >
+    <main  >
+    {settingModal && <Setting popuptext={"Setting"} elel={uesrname} closeSetting={setSettingModal}   />}  
     <Routes >
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/playby" element={<PlayBy />} />
-          <Route exact path="/topranking" element={<Topranking />} />
-          <Route exact path="/submission" element={<Submission />} />
-          <Route exact path="/congratulations" element={<Congratulations />} />
+          <Route exact path="/" element={<Home data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />
+          <Route exact path="/playby" element={<PlayBy data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />
+          <Route exact path="/topranking" element={<Topranking  data={uesrname}  settingclick={SettingtoggleClass} />} />
+          <Route exact path="/submission" element={<Submission data={uesrname}  settingclick={SettingtoggleClass} />} />
+          <Route exact path="/congratulations" element={<Congratulations data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />
+          <Route exact path="/faq" element={<Faq data={uesrname}  settingclick={SettingtoggleClass} />} />
         </Routes>
         </main>
         </>
