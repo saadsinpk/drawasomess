@@ -556,3 +556,10 @@ border-color:black;
 .active #canvas1 {
     border-color: #fff !important;
 }
+.canvasDiv {
+    width: 90%;
+    border: 1px solid #000;
+    height: 400px;
+    overflow: hidden;
+    margin: 0 auto;
+}

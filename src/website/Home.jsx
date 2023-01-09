@@ -14,9 +14,9 @@ function Home({data,settingclick,gameto}) {
    <>
    <Header keyboa={handlestopKeyboard} settingclicks={settingclick} ele={data}  />
    <div className="jeff text-center flex justify-end p-4 ml-auto">
-    {/* {gameto ?  <Link to={"/playby"}>Today's submission by JEFF </Link> : 
+    {gameto ?  <Link to={"/playby"}>Today's submission by JEFF </Link> : 
     <p>Today's submission by JEFF
-      </p>} */}
+      </p>}
    
    </div>
    <div className="diagramMain">

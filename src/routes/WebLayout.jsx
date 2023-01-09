@@ -23,7 +23,6 @@ function WebLayout() {
   const [todayGameShoe, setTodayGameShoe] = useState("")
 
         useEffect(() => {
-
           if (isComponentMounted.current) {
             getDatass();  
           }
@@ -33,10 +32,10 @@ function WebLayout() {
           };
         }, []);
         const getDatass = async () => {
-            axios.defaults.headers = {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${getUserToken()}`,
-            };
+            // axios.defaults.headers = {
+            //   "Content-Type": "application/json",
+            //   "Authorization": `Bearer ${getUserToken()}`,
+            // };
         axios.get(`${config.apiEndPoint2}getUserId`)
             .then((response) => {
               setDatauser(response.data)
@@ -49,14 +48,14 @@ function WebLayout() {
                 localStorage.removeItem('theme')
                 body.classList.remove("active")
             }
-              console.log(response.data)
               if(response.data.token) {
                 setUserToken(response.data.token)
               }
               if(response.data.username) {
                 setUesrname(response.data.username)
+                setLoading(false);
               }
-              setLoading(false);
+             
             })
             .catch((error) => {
               if (error?.response?.status === 500) {
