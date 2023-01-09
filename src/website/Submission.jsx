@@ -10,193 +10,182 @@ import ThanksMessage from '../website/components/common/ThanksMessage';
 import { ReactSketchCanvas } from "react-sketch-canvas";
 
 
-  const Submission = class extends React.Component {
-    constructor(props) {
-      super(props);
+function Submission() {
   
-      this.state = {
-        some: " ",
-        color: "white"
-      };
-  
-      this.canvas = React.createRef();
-    }
-  
-    selectPenColor = (colors) => {
-      this.setState({
-        color: colors
-      });
-      console.log(this.state.color);
+  const [thanks, setThanks] = useState(false);
+
+  const navigate = useNavigate();
+  const initialValues = {
+    phrase : "",
+    email : "",
+    username : "",
+    instagramusername : "",
+    tiktokusername : "",
+    twitterhandle : "",
+    facebookusername : "",
+    youtube : "",
+    share : "",
+    anonymous : "",
+    shareaccounts : ""
+  };
+  const validationSchema = yup.object({
+    email: yup.string().email("Invaild Email").required("Must Required"),
+  });
+  const  onSubmit  = async (values) => {
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
     };
-  
-    render() {
-      return (
-        <div>
-          <ReactSketchCanvas
-            style={{
-              border: "0.0625rem solid #fff"
-            }}
-            ref={this.canvas}
-            strokeWidth={4}
-            strokeColor={this.state.color}
-            canvasColor="black"
-          />
-          <button
-            onClick={() => {
-              this.canvas.current
-                .exportImage("png")
-                .then((data) => {
-                  console.log(data);
-                  this.setState({
-                    some: data
-                  });
-                })
-                .catch((e) => {
-                  console.log(e);
-                });
-            }}
-          >
-            Get Image
-          </button>
-          <button
-            onClick={() => {
-              this.canvas.current.eraseMode(false);
-            }}
-          >
-            Pen
-          </button>
-          <button
-            onClick={() => {
-              this.canvas.current.eraseMode(true);
-            }}
-          >
-            Eraser
-          </button>
-          <button
-            onClick={() => {
-              this.canvas.current.resetCanvas();
-            }}
-          >
-            Reset
-          </button>
-  
-          <button
-            onClick={() => {
-              this.canvas.current.redo();
-            }}
-          >
-            Redo
-          </button>
-          <button
-            onClick={() => {
-              this.canvas.current.undo();
-            }}
-          >
-            Undo
-          </button>
-          <div data-v-2d5e4991="" class="color-picker">
-            <button
-              data-v-2d5e4991=""
-              class="active"
-              onClick={() => this.selectPenColor("white")}
-            >
-              <div data-v-2d5e4991="" style={{ background: "white" }}></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              class=""
-              onClick={() => this.selectPenColor("rgb(250, 49, 66)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: " rgb(250, 49, 66)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              class=""
-              onClick={() => this.selectPenColor("rgb(21, 127, 251)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(21, 127, 251)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              class=""
-              onClick={() => this.selectPenColor("rgb(253, 210, 48)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(253, 210, 48)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              class=""
-              onClick={() => this.selectPenColor("rgb(81, 215, 39)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(81, 215, 39)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              class=""
-              onClick={() => this.selectPenColor("rgb(241, 124, 252)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(241, 124, 252)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              class=""
-              onClick={() => this.selectPenColor("rgb(131, 95, 244)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(131, 95, 244)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              class=""
-              onClick={() => this.selectPenColor("rgb(114, 225, 253)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(114, 225, 253)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              class=""
-              onClick={() => this.selectPenColor("rgb(255, 152, 0)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(255, 152, 0)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              class=""
-              onClick={() => this.selectPenColor("rgb(152, 82, 19)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(152, 82, 19)" }}
-              ></div>
-            </button>
-          </div>
-          {this.state.some !== "" && <img src={this.state.some} />}
+    axios.post(`https://fastbuddys.com/corePHP/api-login.php`,
+       values)
+      .then((response) => {
+        setThanks(true)
+      })
+  }
+  return (
+   <>
+   <Header2  />
+   <div className="diagramMain p-4">
+    <div className='canvasDiv'>
+      </div>
+    <div className='flex items-center justify-between w-100'>
+    <div className="colorMain flex items-center gap-2">
+    <div className='playbtn'><FaPlay /></div>
+    <div className="colorMainB">
+            <h5>color</h5>
+        <div className="colorMainBox flex  justify-center gap-1">
+            <div className="colorMainBox_" style={{background:"#377E22"}}> </div>
+            <div className="colorMainBox_" style={{background:"#EA3323"}}> </div>
+            <div className="colorMainBox_" style={{background:"#0000F5"}}> </div>
+            <div className="colorMainBox_" style={{background:"#FFFFFF"}}> </div>
+            <div className="colorMainBox_" style={{background:"#000000"}}> </div>
         </div>
-      );
-    }
+        </div>
+        </div>
+        <div className='size text-center'>
+            <p className='m-0'>SIZE</p>
+            <div className="sizeB flex items-center gap-2">
+            <div className="sizeBox active"></div>
+            <div className="sizeBox"></div>
+            <div className="sizeBox"></div>
+            <div className="sizeBox"></div>
+            <div className="sizeBox"></div>
+            </div>
+        </div>
+  
+   </div>
+   </div>
+  {thanks && <ThanksMessage />}
+
+  {!thanks && <div className="formMain">
+   <Formik
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          validationSchema={validationSchema}
+          validateOnChange
+        >
+           {({ isSubmitting }) => {
+            return (
+                <Form>
+                  <div className="inputBox">
+                  <Field
+                      type="text"
+                      name="phrase"
+                      placeholder="Your word or Phrase"
+                    />
+                  </div>
+                  <div className="inputBox">
+                  <Field
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                    />
+                      <ErrorMessage name="email">
+                    {(msg) => (
+                      <div style={{ color: "red", whiteSpace: "nowrap" }}>
+                        {msg}
+                      </div>
+                    )}
+                  </ErrorMessage>
+                  </div>
+                  <div className="inputBox">
+                  <Field
+                      type="text"
+                      name="username"
+                      placeholder="Username"
+                    />
+                  </div>
+                  <div className="inputBox">
+                  <Field
+                      type="text"
+                      name="instagramusername"
+                      placeholder="Instagram Username (Optional)"
+                    />
+                  </div>
+                  <div className="inputBox">
+                  <Field
+                      type="text"
+                      name="tiktokusername"
+                      placeholder="TikTok Username (Optional)"
+                    />
+                  </div>
+                  <div className="inputBox">
+                  <Field
+                      type="text"
+                      name="twitterhandle"
+                      placeholder="Twitter Handle (Optional)"
+                    />
+                  </div>
+                  <div className="inputBox">
+                  <Field
+                      type="text"
+                      name="facebookusername"
+                      placeholder="Facebook Username (Optional)"
+                    />
+                  </div>
+                  <div className="inputBox">
+                  <Field
+                      type="text"
+                      name="youtube"
+                      placeholder="Youtube (Optional)"
+                    />
+                  </div>
+                  <div className='checkboxsection'>
+                    <p className='text-center'>If selected...</p>
+                    <div className='radioBox flex'>
+                    <div className="radioBox_ flex gap-1  w-100">
+                    <Field
+                      type="checkbox"
+                      name="share"
+                      id="share"
+                      />
+                      <label htmlFor="share">Share my username</label>
+                    </div>
+                    <div className="radioBox_ flex gap-1  w-100">
+                    <Field
+                      type="checkbox"
+                      name="anonymous"
+                      id="anonymous"
+                      />
+                      <label htmlFor="anonymous">Stay anonymous</label>
+                    </div>
+                    </div>
+                    <div className="radioBox_ flex gap-1 mt-2  w-100">
+                    <Field
+                      type="checkbox"
+                      name="shareaccounts"
+                      id="shareaccounts"
+                      />
+                      <label htmlFor="shareaccounts">If selected, share social media accounts</label>
+                    </div>
+                  </div>
+                  <button   disabled={isSubmitting} className='btn btn-primary my-2 block mx-auto'>SUBMIT</button>
+              </Form>
+           );
+          }}
+        </Formik>
+   </div>} 
+   </>
+  )
 }
 
 export default Submission

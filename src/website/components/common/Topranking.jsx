@@ -10,14 +10,16 @@ import Loader from "../../../dashboard/components/common/Loader";
 import { getUserToken, removeUserToken } from "../../utils/common";
 import { toast } from "react-toastify";
 
-function Topranking({settingclick,data}) {
+function Topranking({settingclick,data,se}) {
   const isComponentMounted = useRef(true);
   const [topUser, setTopUser] = useState()
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     if (isComponentMounted.current) {
 
       getDataa();
+      se(false)
     } 
     return () => {
       isComponentMounted.current = false;

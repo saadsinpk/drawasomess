@@ -35,7 +35,6 @@
     return (
       <>
       {/* <HowToSubmit   /> */}
-     {/* {howToSubmit && <HowToSubmit   />}  */}
          {userModal && <UserModal closeUserModal={UserModaltoggle}  />}  
       {/* <Faq  popuptext={"PLAYER FAQ"}   /> */}
     {play && <HowToPlay closePlay={setPlay} />} 

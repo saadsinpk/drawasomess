@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { Routes, Route } from "react-router-dom";
 import axios from "axios";
 import config from "../services/config.json";
@@ -12,6 +12,7 @@ import {getUserToken,removeUserToken,setUserToken} from "../website/utils/common
 import { toast } from "react-toastify";
 import Faq from "../website/Faq";
 import Setting from "../website/components/common/Setting";
+import Canvas from "../website/Canvas";
 
 function WebLayout() {
   const [themeMode, setThemeMode] = useState(( eval( localStorage.getItem("switch"))))
@@ -21,10 +22,11 @@ function WebLayout() {
   const [loading, setLoading] = useState(true);
   const [datauser, setDatauser] = useState("")
   const [todayGameShoe, setTodayGameShoe] = useState("")
-
+  const [gameName, setGameName] = useState("")
         useEffect(() => {
           if (isComponentMounted.current) {
             getDatass();  
+          
           }
           return () => {
             isComponentMounted.current = false;
@@ -32,13 +34,14 @@ function WebLayout() {
           };
         }, []);
         const getDatass = async () => {
-            // axios.defaults.headers = {
-            //   "Content-Type": "application/json",
-            //   "Authorization": `Bearer ${getUserToken()}`,
-            // };
+            axios.defaults.headers = {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${getUserToken()}`,
+            };
         axios.get(`${config.apiEndPoint2}getUserId`)
             .then((response) => {
               setDatauser(response.data)
+              setTodayGameShoe(response.data.game_played_today)
               const body = document.body;
              
               if(themeMode == true) {
@@ -69,21 +72,29 @@ function WebLayout() {
               }
             });
           }
+          const SettingtoggleClass = (e) => {
+            setSettingModal(true)
+            };
+          const gamefuntion = (dataa) => {
+            setGameName(dataa)
+            };
+           
+
             if (loading) return <Loader />;
-            const SettingtoggleClass = (e) => {
-              setSettingModal(true)
-              };
+           
   return (
    <>
     <main  >
+
     {settingModal && <Setting popuptext={"Setting"} elel={uesrname} closeSetting={setSettingModal}   />}  
     <Routes >
-          <Route exact path="/" element={<Home data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />
+          <Route exact path="/" element={<Home ga={(dataa) => gamefuntion(dataa)}  data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />
           <Route exact path="/playby" element={<PlayBy data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />
-          <Route exact path="/topranking" element={<Topranking  data={uesrname}  settingclick={SettingtoggleClass} />} />
+          <Route exact path="/topranking" element={<Topranking se={setSettingModal}  data={uesrname}  settingclick={SettingtoggleClass} />} />
           <Route exact path="/submission" element={<Submission data={uesrname}  settingclick={SettingtoggleClass} />} />
           <Route exact path="/congratulations" element={<Congratulations data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />
           <Route exact path="/faq" element={<Faq data={uesrname}  settingclick={SettingtoggleClass} />} />
+          <Route exact path="/canvas" element={<Canvas />} />
         </Routes>
         </main>
         </>

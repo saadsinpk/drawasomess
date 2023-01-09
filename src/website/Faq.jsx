@@ -1,19 +1,49 @@
-import React from 'react'
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import React, { useEffect, useRef, useState } from 'react'
+import axios from "axios";
+import config from "../services/config.json";
 import Result from '../website/components/Result';
 import Social from '../website/components/common/Social';
 import img1 from '../dist/webImages/1.png';
-import Topplayers from '../website/components/common/Topplayers';
+import Loader from "../dashboard/components/common/Loader";
+import { toast } from "react-toastify";
 import Header from './components/common/Header';
+import { removeUserToken } from './utils/common';
 
-function Faq({data}) {
-    const removeModal = (e) => {
-        const setting = document.querySelector(".Setting");
-        setting.classList.remove("active");
-    }
+function Faq({data,settingclick,se}) {
+    const [loading, setLoading] = useState(true);
+    const isComponentMounted = useRef(true);
+    useEffect(() => {
+        if (isComponentMounted.current) {
+          getDataa();  
+        }
+        return () => {
+          isComponentMounted.current = false;
+          setLoading(true);
+        };
+      }, []);
+    const getDataa = async () => {
+    axios.get(`${config.apiEndPoint2}getUserId`)
+        .then((response) => {
+          setLoading(false);
+          se(false)
+        })
+        .catch((error) => {
+          removeUserToken("usertoken");
+          if (error?.response?.status === 500) {
+            removeUserToken("usertoken");
+          } else if (error?.response?.status === 401) {
+            setLoading(true);
+            toast.error(error.response.data.message);
+          } else {
+            setLoading(true);
+            toast.error("Something went wrong. Please try again later.");
+          }
+        });
+      }
+        if (loading) return <Loader />;
   return (
    <>
-   <Header />
+   <Header settingclicks={settingclick} ele={data} />
     <div  className="Faq" ele={data}>
     <div className="Modal__heading p-2 flex items-center">
     {/* <div className="Modal__heading--left" onClick={removeModal}><AiOutlineArrowLeft /></div> */}
