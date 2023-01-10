@@ -97,6 +97,13 @@ function Home({data,settingclick,gameto,ga}) {
       navigate(`/congratulations`)
     }
   }
+
+function MyComponent() {
+  
+  const markup = { __html: getGameImages }
+  return <div dangerouslySetInnerHTML={ markup } />;
+  
+}
   return (
    <>
    <Header keyboa={handlestopKeyboard}  settingclicks={settingclick} ele={data}  />
@@ -107,7 +114,7 @@ function Home({data,settingclick,gameto,ga}) {
    
    </div>
    <div className="diagramMain">
-    {getGameImages}
+   {MyComponent()}
    <div className="playBox my-3 mx-auto flex justify-center items-center">
    <button onClick={handleplay}>{startTimer ? time : <FaPlay /> }</button>
     
