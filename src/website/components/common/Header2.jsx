@@ -1,21 +1,19 @@
-import React,{useState,useContext} from 'react';
+import React,{useState} from 'react';
+import { Link } from "react-router-dom";
 import { AiOutlineSetting } from "react-icons/ai";
-import { FaBars,FaQuestion,FaRegSun,FaAlignLeft } from "react-icons/fa";
+import { FaBars,FaQuestion} from "react-icons/fa";
 import HowToSubmit from './HowToSubmit';
-import Setting from './Setting';
 
-function Header2() {
-    const [settingModal, setsettingModal] = useState(false);
+function Header2({settingclicks}) {
     const [submitModal, setsubmitModal] = useState(false);
-    const SettingtoggleClass = (e) => {
-      setsettingModal(true)
-      };
     const submittoggleClass = (e) => {
         setsubmitModal(true)
       };
+      const settintogle = (e) => {
+        settingclicks(true);
+        };
   return (
     <>
-      {settingModal && <Setting popuptext={"Setting"} closeSetting={setsettingModal}   />}  
       {submitModal && <HowToSubmit  closesubmirModal={setsubmitModal}   />}  
        
         <div className="header py-2">
@@ -25,14 +23,15 @@ function Header2() {
                       <FaBars />
                   </div>
                   <div className="header__lefttext">
-                      Drawesome
-                      <h4>Submissions</h4>
+                    <Link to={"/"} >
+                    Drawesome
+                      <h4>Submissions</h4></Link>
                   </div>
               </div>
               <div className="header__right">
                       <ul className='list flex justify-center gap-2'>
                           <li><a href="#" onClick={submittoggleClass}><FaQuestion /></a></li>
-                          <li><a href="#"  onClick={SettingtoggleClass} ><AiOutlineSetting /></a></li>
+                          <li><a href="#"  onClick={settintogle} ><AiOutlineSetting /></a></li>
                       </ul>
               </div>
           </div>

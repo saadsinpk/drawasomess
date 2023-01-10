@@ -12,7 +12,8 @@ function HowToPlay({closePlay}) {
   return (  
 
    <>
-   <div  className={'Modal'}>
+   <div  className={'Modal'} onClick={closefuntion}>
+    <div className="ModalBox" onClick={(e) => e.stopPropagation()}>
    <div className="closebutton ml-auto text-right px-2">
        <button onClick={closefuntion}><AiOutlineClose /></button>
    </div>
@@ -26,6 +27,7 @@ function HowToPlay({closePlay}) {
    <div className="section10_t mt-4">
     <p>There is a new word or phrase every day at midnight 12AM EST.</p>
     <p>You also have the opportunity to draw your own image to submit for use for future entries.</p>
+   </div>
    </div>
   </div></>
   )

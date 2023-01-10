@@ -1,42 +1,23 @@
+import { useState } from "react";
 import React from 'react';
 import $ from "jquery";
-import { useState,useEffect,useRef } from "react";
 
 
-function Keyboard({keyboa}) {
+function Keyboard({keyboa,submitenter}) {
   const [value, setValue] = useState("");
-  const inputRef = useRef();
-  let keyvalue = [];
   const keyboardClick = (e) => {
-      inputRef.current.focus();
-      e.preventDefault();
-      let datav = e.target.getAttribute("data-key");
-      keyvalue.push(datav);
      $(".typeval").val($(".typeval").val() +  e.target.getAttribute("data-key"));
-  
-    
-   
-   
-   
     }
-    const keyboardClickback = (e) => {
+    const keyboardClickback = () => {
       let val = $(".typeval").val();
       let val2 = val.split("");
       val2.pop();
       $(".typeval").val(val2.join(""));
     }
-    const KeyboardInput = (e) => {
-      var val = keyvalue;
-      setValue(e.target.value)
-    }
-    window.addEventListener("keypress", function() {
-      if(inputRef.current){
-       inputRef.current.focus();
-     }
-      })
+
   return (
     <> <div className="typeKeyboard px-5"> 
-    <input type="text" ref={inputRef} className='typeval'   value={value} onChange={KeyboardInput}   placeholder='Ice Skating' />
+    <input type="text"  className='typeval'   value={value} readOnly   placeholder='Ice Skating' />
    </div>
    <div className="Keyboard-module" role="group" aria-label="Keyboard">
        <div className="container mx-auto px-4">
@@ -65,7 +46,7 @@ function Keyboard({keyboa}) {
             <div data-testid="spacer" className="keygap"></div>
             </div>
             <div className="Keyboard-module_row my-2 flex items-center gap-2">
-                <button type="button" data-key="↵" className="Key-module_row-button flex items-center justify-center Key-module_oneAndAHalf__K6JBY">enter</button>
+                <button type="button" onClick={submitenter && submitenter} data-key="↵" className="Key-module_row-button flex items-center justify-center Key-module_oneAndAHalf__K6JBY">enter</button>
             <button type="button" onClick={keyboardClick} data-key="z" className="Key-module_row-button flex items-center justify-center">z</button>
             <button type="button" onClick={keyboardClick} data-key="x" className="Key-module_row-button flex items-center justify-center">x</button>
             <button type="button" onClick={keyboardClick} data-key="c" className="Key-module_row-button flex items-center justify-center">c</button>

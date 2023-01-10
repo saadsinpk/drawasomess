@@ -47,13 +47,13 @@ function Statistics({popuptext,closeStatistics}) {
 
       }
     //   if (loading) return <Loader />;
-    const removeModal = (e) => {
+    const removeModal = () => {
         closeStatistics(false)
     }
   return (
    <>
-   <div  className={"Modal"}>
-    <div className="ModalBox">
+   <div  className={"Modal"} onClick={removeModal}>
+    <div className="ModalBox" onClick={(e) => e.stopPropagation()}>
     <div className="StatisticsMain-top p-2 flex items-center">
         <div className="StatisticsMain-top-left" onClick={removeModal}>
             <AiOutlineArrowLeft />

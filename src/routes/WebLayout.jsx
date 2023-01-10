@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import Faq from "../website/Faq";
 import Setting from "../website/components/common/Setting";
 import Canvas from "../website/Canvas";
+import UserModal from '../website/UserModal';
 
 function WebLayout() {
   const [themeMode, setThemeMode] = useState(( eval( localStorage.getItem("switch"))))
@@ -34,10 +35,12 @@ function WebLayout() {
           };
         }, []);
         const getDatass = async () => {
+          if(getUserToken()) {
             axios.defaults.headers = {
               "Content-Type": "application/json",
               "Authorization": `Bearer ${getUserToken()}`,
             };
+          }
         axios.get(`${config.apiEndPoint2}getUserId`)
             .then((response) => {
               setDatauser(response.data)
@@ -72,6 +75,7 @@ function WebLayout() {
               }
             });
           }
+        
           const SettingtoggleClass = (e) => {
             setSettingModal(true)
             };
@@ -81,6 +85,9 @@ function WebLayout() {
            
 
             if (loading) return <Loader />;
+            const updatehome = () => {
+              getDatass()
+            }
            
   return (
    <>
@@ -91,10 +98,11 @@ function WebLayout() {
           <Route exact path="/" element={<Home ga={(dataa) => gamefuntion(dataa)}  data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />
           <Route exact path="/playby" element={<PlayBy data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />
           <Route exact path="/topranking" element={<Topranking se={setSettingModal}  data={uesrname}  settingclick={SettingtoggleClass} />} />
-          <Route exact path="/submission" element={<Submission data={uesrname}  settingclick={SettingtoggleClass} />} />
+          <Route exact path="/submission" element={<Submission data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />
           <Route exact path="/congratulations" element={<Congratulations data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />
           <Route exact path="/faq" element={<Faq data={uesrname}  settingclick={SettingtoggleClass} />} />
           <Route exact path="/canvas" element={<Canvas />} />
+          <Route exact path="/user"  element={<UserModal updatess={() => updatehome()} data={uesrname} gameto={todayGameShoe} settingclick={SettingtoggleClass} />} />
         </Routes>
         </main>
         </>

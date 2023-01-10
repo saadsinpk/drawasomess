@@ -1,26 +1,89 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
+import config from "../services/config.json";
+import axios from 'axios';
+import { toast } from "react-toastify";
 import Header from '../website/components/common/Header';
 import Keyboard from '../website/components/common/Keyboard';
 import Social from '../website/components/common/Social';
 import Loader from "../dashboard/components/common/Loader";
+import { getUserToken, removeUserToken } from './utils/common';
 import { useNavigate } from 'react-router-dom';
 
 function PlayBy({settingclick,data,gameto}) {
+  const [apidata, setApidata] = useState("")
   const [loading, setLoading] = useState(true);
+  const isComponentMounted = useRef(true);
   const navigate = useNavigate();
   useEffect(() => {
     let sshow = gameto;
-    !sshow && navigate(`/`);
-    setLoading(false)
+    // sshow != "0" && navigate(`/`);
+    if (isComponentMounted.current) {
+      getData()
+    }
+    return () => {
+      isComponentMounted.current = false;
+      setLoading(true);
+    };
   
   }, [])
+  const getData = async () => {
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${getUserToken()}`,
+    };
+axios.get(`${config.apiEndPoint2}getTodaysGame`)
+    .then((response) => {
+      let resdata = {
+        "entry_id" : response.data.todays_game.entry_id,
+        "user_id" : response.data.todays_game.user_id
+      }
+      getData2(resdata)
+   
+
+     
+    })
+    .catch((error) => {
+      if (error?.response?.status === 500) {
+        removeUserToken("usertoken");
+      } else if (error?.response?.status === 401) {
+        setLoading(true);
+        toast.error(error.response.data.message);
+      } else {
+        setLoading(true);
+        toast.error("Something went wrong. Please try again later.");
+      }
+    });
+
+  }
+  const getData2 =  (resdata) => {
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${getUserToken()}`,
+    };
+    axios.post(`${config.apiEndPoint2}getDrawnBy`,resdata)
+    .then((response) => { 
+      setApidata(response.data.userData)
+      setLoading(false);
+    })
+    .catch((error) => {
+      if (error?.response?.status === 500) {
+        removeUserToken("usertoken");
+      } else if (error?.response?.status === 401) {
+        setLoading(true);
+        toast.error(error.response.data.message);
+      } else {
+        setLoading(true);
+        toast.error("Something went wrong. Please try again later.");
+      }
+    });
+  }
   
   if (loading) return <Loader />;
   return (
     <>
     <Header settingclicks={settingclick} ele={data}  />
     <div className='my-2'>
-    <Social />
+    <Social data={apidata} />
     </div>
     <div className="diagramMain">
     <p><span id="more-1072"></span></p>
@@ -50,20 +113,7 @@ function PlayBy({settingclick,data,gameto}) {
 </div>
 </div>
 
-<div id="canvasBtnsDiv " className='flex gap-2 flex_wrap p-3'>
-<input type="button" className='btn btn-primary' id="recordBtn" value="Record" />
-<input type="button" className='btn btn-primary' id="playBtn" value="Play" />
-<input type="button" className='btn btn-primary' id="pauseBtn" value="Pause" />
-  <input type="button" className='btn btn-primary' id="clearBtn" value="Clear" />
-    <input type="button" className='btn btn-primary' id="serializeBtn" value="Serialize" />
-    <input type="button" className='btn btn-primary' id="deserializeBtn" value="Deserialize" />
-</div>
-<div id="serializerDiv" style={{"display":"none"}}>
-<textarea rows="8" cols="60" id="serDataTxt"></textarea>
-<br />
-<input type="button" id="cancelBtn" value="Close" />
-<input type="submit" id="okBtn" value="Submit" />
-</div>
+
 
    
    </div>

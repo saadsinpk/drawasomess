@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
-function Topplayers() {
+function Topplayers({data}) {
   return (
     <div className="section1Box">
-    <h2>See today’s top 30 players so far by clicking <Link to={"/topranking"}>here</Link></h2>
+    <h2>See today’s top 30 players so far by clicking <Link to={data ? "/user" : "/topranking"}>here</Link></h2>
     </div>
   )
 }

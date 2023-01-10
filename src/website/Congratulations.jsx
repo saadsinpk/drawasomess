@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+  import config from "../services/config.json";
 import {Link } from "react-router-dom";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import Result from './components/Result';
@@ -8,17 +9,56 @@ import Topplayers from './components/common/Topplayers';
 import Loader from "../dashboard/components/common/Loader";
 import Time from './components/common/Time';
 import Header from './components/common/Header';
+import { getUserToken, removeUserToken } from './utils/common';
+import axios from 'axios';
+import { toast } from "react-toastify";
 
 function Congratulations({settingclick,data,gameto}) {
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   useEffect(() => {
     let sshow = gameto;
-    !sshow && navigate(`/`);
-    setLoading(false)
+    sshow != "0" && navigate(`/`);
   
-  }, [])
-  
+  }, [gameto])
+  const [datann, setDatann] = useState("")
+  const [loading, setLoading] = useState(true);
+  const isComponentMounted = useRef(true);
+
+  useEffect(() => {
+    if (isComponentMounted.current) {
+      getData()
+    }
+    return () => {
+      isComponentMounted.current = false;
+      setLoading(true);
+    };
+  }, []);
+  const getData = async () => {
+      axios.defaults.headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${getUserToken()}`,
+      };
+  axios.get(`${config.apiEndPoint2}statistics`)
+      .then((response) => {
+        setDatann(response.data)
+          console.log(response.data)
+          setLoading(false)
+       
+      })
+      .catch((error) => {
+        if (error?.response?.status === 500) {
+          removeUserToken("usertoken");
+        } else if (error?.response?.status === 401) {
+          setLoading(true);
+          toast.error(error.response.data.message);
+        } else {
+          setLoading(true);
+          toast.error("Something went wrong. Please try again later.");
+        }
+      });
+
+    }
+
   if (loading) return <Loader />;
   return (
     <>
@@ -30,12 +70,12 @@ function Congratulations({settingclick,data,gameto}) {
         </Link>
         <h2 className="heading-right mx-auto my-0">Congratulations</h2>
     </div>
-    <Time />
+    <Time datas={datann} />
     
-        <Result />
+        <Result datas={datann} />
 
         <div className='section1'>
-          <Topplayers />
+          <Topplayers data={"user"} />
           <div className="section1Box bordernone">
             <h2>Got what it takes to enter a challenging drawing? Click 
               <Link to={"/submission"} > here </Link> to take your shot at submitting a drawing to be used for upcoming challenges.</h2>

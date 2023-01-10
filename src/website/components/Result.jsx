@@ -1,5 +1,4 @@
-import { data } from 'jquery';
-import React, { useState } from 'react'
+import React from 'react'
 
 function Result({datas}) {
   return (

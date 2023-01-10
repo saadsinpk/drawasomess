@@ -12,6 +12,7 @@ function HowToSubmit({closesubmirModal}) {
 
    <>
    <div  className={'Modal'}>
+   <div className="ModalBox">
    <div className="closebutton ml-auto text-right px-2">
        <button onClick={removeModal}><AiOutlineClose /></button>
    </div>
@@ -49,6 +50,7 @@ function HowToSubmit({closesubmirModal}) {
    <div className="forst my-2 mx-auto text-center py-2"></div>
    <div className="section10_t mt-4">
     <p>Our team will review your image and you will be notified via email if selected for upcoming an date. Your social media handle will be shared if you choose however your email will be kept private at all times.</p>
+   </div>
    </div>
   </div></>
   )

@@ -8,7 +8,7 @@
   import Statistics from './Statistics';
   import Topranking from './Topranking';
   import Faq from '../../Faq';
-  import UserModal from './UserModal';
+  import UserModal from '../../UserModal';
   import HowToSubmit from './HowToSubmit';
 
   function Header({keyboa,settingclicks}) {  

@@ -43,6 +43,16 @@ body.active {
         }
     }
     .Modal {
-        background: #000;
+        background: #00000085;
+       &Box {
+            background: #141414;
+
+        }
+    }
+    .inputdesign {
+        color: #000;
+    }
+    .canvasDiv {
+        border-color: #fff;
     }
 }

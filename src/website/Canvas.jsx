@@ -35,7 +35,7 @@ import { ReactSketchCanvas } from "react-sketch-canvas";
             strokeColor={this.state.color}
             canvasColor="#fff"
           />
-          <video controls></video>
+          <div className='gap-2 flex canvasbtn'>
           <button
             onClick={() => {
               this.canvas.current
@@ -50,6 +50,7 @@ import { ReactSketchCanvas } from "react-sketch-canvas";
                   console.log(e);
                 });
             }}
+            className="btn btn-primary"
           >
             Get Image
           </button>
@@ -57,6 +58,7 @@ import { ReactSketchCanvas } from "react-sketch-canvas";
             onClick={() => {
               this.canvas.current.eraseMode(false);
             }}
+            className="btn btn-primary"
           >
             Pen
           </button>
@@ -64,6 +66,7 @@ import { ReactSketchCanvas } from "react-sketch-canvas";
             onClick={() => {
               this.canvas.current.eraseMode(true);
             }}
+            className="btn btn-primary"
           >
             Eraser
           </button>
@@ -71,6 +74,7 @@ import { ReactSketchCanvas } from "react-sketch-canvas";
             onClick={() => {
               this.canvas.current.resetCanvas();
             }}
+            className="btn btn-primary"
           >
             Reset
           </button>
@@ -79,6 +83,7 @@ import { ReactSketchCanvas } from "react-sketch-canvas";
             onClick={() => {
               this.canvas.current.redo();
             }}
+            className="btn btn-primary"
           >
             Redo
           </button>
@@ -86,107 +91,21 @@ import { ReactSketchCanvas } from "react-sketch-canvas";
             onClick={() => {
               this.canvas.current.undo();
             }}
+            className="btn btn-primary"
           >
             Undo
           </button>
+          </div>
           <div data-v-2d5e4991="" class="color-picker">
+            <input type="color" onChange={(e) => this.selectPenColor(e.target.value)}  />
             <button
               data-v-2d5e4991=""
               class="active"
-              onClick={() => this.selectPenColor("white")}
+             
             >
               <div data-v-2d5e4991="" style={{ background: "white" }}></div>
             </button>
-            <button
-              data-v-2d5e4991=""
-              className="canvasbutton"
-              onClick={() => this.selectPenColor("rgb(250, 49, 66)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: " rgb(250, 49, 66)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              className="canvasbutton"
-              onClick={() => this.selectPenColor("rgb(21, 127, 251)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(21, 127, 251)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              className="canvasbutton"
-              onClick={() => this.selectPenColor("rgb(253, 210, 48)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(253, 210, 48)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              className="canvasbutton"
-              onClick={() => this.selectPenColor("rgb(81, 215, 39)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(81, 215, 39)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              className="canvasbutton"
-              onClick={() => this.selectPenColor("rgb(241, 124, 252)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(241, 124, 252)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              className="canvasbutton"
-              onClick={() => this.selectPenColor("rgb(131, 95, 244)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(131, 95, 244)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              className="canvasbutton"
-              onClick={() => this.selectPenColor("rgb(114, 225, 253)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(114, 225, 253)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              className="canvasbutton"
-              onClick={() => this.selectPenColor("rgb(255, 152, 0)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(255, 152, 0)" }}
-              ></div>
-            </button>
-            <button
-              data-v-2d5e4991=""
-              className="canvasbutton"
-              onClick={() => this.selectPenColor("rgb(152, 82, 19)")}
-            >
-              <div
-                data-v-2d5e4991=""
-                style={{ background: "rgb(152, 82, 19)" }}
-              ></div>
-            </button>
+         
           </div>
           {this.state.some !== "" && <img src={this.state.some} />}
         </div>
