@@ -42,7 +42,7 @@ function Setting({popuptext,closeSetting,elel}) {
     <br />
     <div className='flowBox text-center'>
                 <h2 className='mb-3'>Follow us below</h2>
-                <Social />
+                <Social  data={"f"} />
             </div>
    </div>
   )

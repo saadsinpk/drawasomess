@@ -17,7 +17,7 @@ function Congratulations({settingclick,data,gameto}) {
   const navigate = useNavigate();
   useEffect(() => {
     let sshow = gameto;
-    sshow != "0" && navigate(`/`);
+    sshow != "1" && navigate(`/`);
   
   }, [gameto])
   const [datann, setDatann] = useState("")
@@ -83,7 +83,7 @@ function Congratulations({settingclick,data,gameto}) {
             <div className="section1Box section1Box3 my-2">
             <div className='flowBox text-center'>
                 <h2 className='mb-2'>Follow us below</h2>
-                <Social />
+                <Social data={"dashgki"} />
             </div>
             </div>
         </div>

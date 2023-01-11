@@ -85,7 +85,7 @@ function Topranking({settingclick,data,se}) {
             <div className="section1Box section1Box3 my-2">
             <div className='flowBox text-center'>
                 <h2 className='mb-2'>Follow us below</h2>
-                <Social />
+                <Social data={"d"} />
             </div>
             </div>
      </div>

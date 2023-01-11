@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import Header from './components/common/Header';
 import { getUserToken, removeUserToken,setUserToken } from './utils/common';
 
-function UserModal({data,settingclick,gameto,updatess}) {
+function UserModal({data,settingclick,updatess}) {
   const [loading, setLoading] = useState(true);
   const [submitbutton, setSubmitbutton] = useState(false)
   const initialValues = {

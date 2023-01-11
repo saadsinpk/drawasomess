@@ -10,13 +10,14 @@ import { getUserToken, removeUserToken } from './utils/common';
 import { useNavigate } from 'react-router-dom';
 
 function PlayBy({settingclick,data,gameto}) {
-  const [apidata, setApidata] = useState("")
+  const [apidata, setApidata] = useState("");
+  const [gameData, setGameData] = useState("")
   const [loading, setLoading] = useState(true);
   const isComponentMounted = useRef(true);
   const navigate = useNavigate();
   useEffect(() => {
     let sshow = gameto;
-    // sshow != "0" && navigate(`/`);
+    sshow != "1" && navigate(`/`);
     if (isComponentMounted.current) {
       getData()
     }
@@ -37,6 +38,7 @@ axios.get(`${config.apiEndPoint2}getTodaysGame`)
         "entry_id" : response.data.todays_game.entry_id,
         "user_id" : response.data.todays_game.user_id
       }
+      setGameData(response.data.todays_game)
       getData2(resdata)
    
 
@@ -79,6 +81,12 @@ axios.get(`${config.apiEndPoint2}getTodaysGame`)
   }
   
   if (loading) return <Loader />;
+  function MyComponent() {
+  
+    const markup = { __html: gameData.photo_link }
+    return <div className='diagramImg' dangerouslySetInnerHTML={ markup } />;
+    
+  }
   return (
     <>
     <Header settingclicks={settingclick} ele={data}  />
@@ -88,30 +96,34 @@ axios.get(`${config.apiEndPoint2}getTodaysGame`)
     <div className="diagramMain">
     <p><span id="more-1072"></span></p>
 <div id="drawingDiv" >
-	<canvas id="canvas1" className='mx-auto block' style={{"width":"90%", "height":"280px",  "border":"1px solid #000"}}></canvas>
-<div id="colorsDiv" className='flex p-2 justify-between'>
-  <div className="left">
-		<span>Colors :</span>
-    <div className='flex gap-2'>
-<div className="colorbox selectedColor" id="blackbox" style={{"backgroundColor":"black"}} ></div>
-<div className="colorbox" id="redbox" style={{"backgroundColor":"red"}}></div>
-<div className="colorbox" id="bluebox" style={{"backgroundColor":"blue"}}></div>
-<div className="colorbox" id="whitebox" style={{"backgroundColor":"white"}}></div>
-<div className="colorbox" id="greenbox" style={{"backgroundColor":"green"}}></div>
-</div>
-</div>
-<div className="right">
-	<span>	Stoke Size :</span>
-  <div className='flex items-center gap-2'>
-<div className="stroke stroke_selected" style={{"borderRadius":"3px","borderWidth":"3px"}}></div>
-<div className="stroke" style={{"borderRadius":"6px","borderWidth":"5px"}}></div>
-<div className="stroke" style={{"borderRadius":"8px","borderWidth":"7px"}}></div>
-<div className="stroke" style={{"borderRadius":"12px","borderWidth":"10px"}}></div>
-<div className="stroke" style={{"borderRadius":"16px","borderWidth":"13px"}}></div>
-<div className="stroke" style={{"borderRadius":"18px","borderWidth":"15px"}}></div>
-</div>
-</div>
-</div>
+	<div className='gragImg'>
+    {MyComponent()}
+  </div>
+  <div className='flex items-center justify-between w-100 px-4 py-3'>
+    <div className="colorMain flex items-center gap-2">
+    <div className="colorMainB">
+            <h5>color</h5>
+        <div className="colorMainBox flex  justify-center gap-1">
+            <div className="colorMainBox_" style={{background:"#377E22"}}> </div>
+            <div className="colorMainBox_" style={{background:"#EA3323"}}> </div>
+            <div className="colorMainBox_" style={{background:"#0000F5"}}> </div>
+            <div className="colorMainBox_" style={{background:"#FFFFFF"}}> </div>
+            <div className="colorMainBox_" style={{background:"#000000"}}> </div>
+        </div>
+        </div>
+        </div>
+        <div className='size text-center'>
+            <p className='m-0'>SIZE</p>
+            <div className="sizeB flex items-center gap-2">
+            <div className="sizeBox active"></div>
+            <div className="sizeBox"></div>
+            <div className="sizeBox"></div>
+            <div className="sizeBox"></div>
+            <div className="sizeBox"></div>
+            </div>
+        </div>
+  
+   </div>
 
 
 
