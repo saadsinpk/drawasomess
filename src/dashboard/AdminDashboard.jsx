@@ -111,16 +111,20 @@ function AdminDashboard({ isDragging }) {
         setAlllistData(response.data.entries);
         let user__id = response.data.entries[0].user_id
         getUserData(user__id);
-        const now = new Date();
+        const now = new Date("01-01-2023");
         const upCommingEntries = getAllDaysInMonth(
           now.getFullYear(),
           now.getMonth()
         ).map((item, index) => {
           const isEntryOnDate = responseUpcommingEntires.filter(
-          (el) =>
-            el.upcomming_date.getDate() + el.upcomming_date.getMonth() +  el.upcomming_date.getFullYear() ==
-            item.getDate() + item.getMonth() + item.getFullYear()
-          )[0];
+          (el) =>{
+// console.log(el.upcomming_date.getDate() + el.upcomming_date.getMonth() +  el.upcomming_date.getFullYear())
+          console.log(item,el.upcomming_date)
+          return item===el.upcomming_date
+          //  return  el.upcomming_date.getDate() + el.upcomming_date.getMonth() +  el.upcomming_date.getFullYear() ==
+            // item.getDate() + item.getMonth() + item.getFullYear()
+        })[0];
+          console.log(isEntryOnDate)
           if (isEntryOnDate) {
             return {
               ...isEntryOnDate,

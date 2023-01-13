@@ -8,6 +8,7 @@ function Demo() {
       var that = this;
 
       $(window).mousemove(function(e) {
+        console.log(e)
         if(that.state == 1) {
           that.frames.push([e.clientX, e.clientY]);
         }

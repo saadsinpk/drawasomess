@@ -32,7 +32,7 @@ function Submission({data,settingclick,gameto}) {
   const navigate = useNavigate();
   useEffect(() => {
     let sshow = gameto;
-    sshow != "1" && navigate(`/`);
+    // sshow != "1" && navigate(`/`);
     
   
   }, [])
@@ -46,7 +46,7 @@ function Submission({data,settingclick,gameto}) {
 
   useEffect(() => {
     let interval = null;
-    setTime(10)
+    setTime(20)
     if (startTimer) {
       interval = setInterval(() => {
         setTime((prev) => {
@@ -82,7 +82,7 @@ const [initialValues, setInitialValues] = useState({
     word_phrase: yup.string().max(10000).required("Must Required"),
   });
   const  handleexport = () => {
-    refcanvas.current.exportImage("png")
+    refcanvas.current.exportImage("gif")
     .then((data) => {
       setCanvasdata({...canvasdata,"some":data});
       data ? setInitialValues({...initialValues,photo_link:data}) :
