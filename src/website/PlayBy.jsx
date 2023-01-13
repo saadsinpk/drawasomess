@@ -11,7 +11,9 @@ import { useNavigate } from 'react-router-dom';
 
 function PlayBy({settingclick,data,gameto}) {
   const [apidata, setApidata] = useState("");
-  const [gameData, setGameData] = useState("")
+  const [stopKeyboard, setStopKeyboard] = useState(false);
+  const [gameData, setGameData] = useState("");
+  const [value, setValue] = useState("");
   const [loading, setLoading] = useState(true);
   const isComponentMounted = useRef(true);
   const navigate = useNavigate();
@@ -27,6 +29,14 @@ function PlayBy({settingclick,data,gameto}) {
     };
   
   }, [])
+  const handlekeyboard = (item) => {
+    setValue([...value,item].join(""));
+  }
+  const keyboardClickback = () => {
+    let poppe = value.split("");
+   poppe.pop();
+    setValue(poppe.join(""))
+  }
   const getData = async () => {
     axios.defaults.headers = {
       "Content-Type": "application/json",
@@ -81,6 +91,12 @@ axios.get(`${config.apiEndPoint2}getTodaysGame`)
   }
   
   if (loading) return <Loader />;
+  const handlestopKeyboard = () => {
+    setStopKeyboard(true)
+  }
+  const handlesubmit = () => {
+
+  }
   function MyComponent() {
   
     const markup = { __html: gameData.photo_link }
@@ -130,7 +146,7 @@ axios.get(`${config.apiEndPoint2}getTodaysGame`)
    
    </div>
    </div>
-   <Keyboard />
+   <Keyboard keyval={value} dataitem={(item) =>handlekeyboard(item)} keyremove={keyboardClickback} keyboa={handlestopKeyboard} submitenter={handlesubmit} />
     </>  )
 }
 

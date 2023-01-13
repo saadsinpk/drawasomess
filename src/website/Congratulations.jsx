@@ -18,7 +18,6 @@ function Congratulations({settingclick,data,gameto}) {
   useEffect(() => {
     let sshow = gameto;
     sshow != "1" && navigate(`/`);
-  
   }, [gameto])
   const [datann, setDatann] = useState("")
   const [loading, setLoading] = useState(true);
@@ -26,19 +25,51 @@ function Congratulations({settingclick,data,gameto}) {
 
   useEffect(() => {
     if (isComponentMounted.current) {
-      getData()
+      getDatass()
     }
     return () => {
       isComponentMounted.current = false;
       setLoading(true);
     };
   }, []);
+  const getDatass = async () => {
+
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${getUserToken()}`,
+    };
+axios.get(`${config.apiEndPoint2}getTodaysGame`)
+    .then((response) => {
+      if(response.data.errorMessage) {
+      }
+      else {
+        let entry = response.data.todays_game.entry_id
+        getData(entry)
+      }
+     
+    
+     
+    })
+    .catch((error) => {
+      if (error?.response?.status === 500) {
+        removeUserToken("usertoken");
+      } else if (error?.response?.status === 401) {
+        setLoading(true);
+        toast.error(error.response.data.message);
+      } else {
+        setLoading(true);
+        toast.error("Something went wrong. Please try again later.");
+      }
+    });
+  }
   const getData = async () => {
       axios.defaults.headers = {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${getUserToken()}`,
       };
-  axios.get(`${config.apiEndPoint2}statistics`)
+  axios.post(`${config.apiEndPoint2}statistics`, {
+    "entry_id": "9"
+  })
       .then((response) => {
         setDatann(response.data)
           console.log(response.data)

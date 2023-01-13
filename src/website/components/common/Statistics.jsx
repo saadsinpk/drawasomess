@@ -27,7 +27,7 @@ function Statistics({popuptext,closeStatistics}) {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${getUserToken()}`,
         };
-    axios.get(`${config.apiEndPoint2}statistics`)
+    axios.post(`${config.apiEndPoint2}statistics`)
         .then((response) => {
             setDatan(response.data)
             setLoading(false)

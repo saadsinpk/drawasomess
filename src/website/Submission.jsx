@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import axios from "axios";
 import config from "../services/config.json";
 import { useNavigate } from "react-router-dom";
@@ -28,6 +28,7 @@ function Submission({data,settingclick,gameto}) {
     size: "3",
   })
   const refcanvas = useRef();
+
   const navigate = useNavigate();
   useEffect(() => {
     let sshow = gameto;
@@ -169,6 +170,7 @@ const [initialValues, setInitialValues] = useState({
           /> : canvasdata.some ? <div><img src={canvasdata.some} /></div> :<div></div>}
           
           </div>
+      
     {showtext && <div style={{color:"red"}}>fill canvas</div> }
     
     <div className='flex items-center justify-between w-100'>

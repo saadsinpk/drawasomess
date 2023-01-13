@@ -10,6 +10,7 @@ import { DragDropContext } from "react-beautiful-dnd";
 import DraggableElement from "./dragsComponents/DraggableElement";
 import DraggableDateElement from "./dragsComponents/DraggableDateElement";
 import swal from 'sweetalert';
+import { useNavigate } from "react-router-dom";
 
 function AdminDashboard({ isDragging }) {
   const [data, setData] = useState("");
@@ -19,7 +20,7 @@ function AdminDashboard({ isDragging }) {
   const [time, setTime] = useState(60);
   const [startTimer, setStartTimer] = useState(false);
   const [timerid, setTimerid] = useState(0);
-
+  const navigate = useNavigate();
   function handleplay() {
     setStartTimer(true);
   }
@@ -135,8 +136,9 @@ function AdminDashboard({ isDragging }) {
         
       })
       .catch((error) => {
+        removeTokenSession("token");
+        navigate(`/admin/login`)
         if (error?.response?.status === 500) {
-          removeTokenSession("token");
         } else if (error?.response?.status === 401) {
           setLoading(true);
           toast.error(error.response.data.message);

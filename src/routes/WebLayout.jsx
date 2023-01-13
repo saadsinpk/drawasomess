@@ -94,7 +94,7 @@ function WebLayout() {
     <main>
     {settingModal && <Setting popuptext={"Setting"} elel={uesrname} closeSetting={setSettingModal}   />}  
     <Routes >
-          <Route exact path="/" element={<Home ga={(dataa) => gamefuntion(dataa)}  data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />
+          <Route exact path="/" element={<Home upsetTodayGameShoe={setTodayGameShoe} ga={(dataa) => gamefuntion(dataa)}  data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />
           <Route exact path="/playby" element={<PlayBy data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />
           <Route exact path="/topranking" element={<Topranking se={setSettingModal}  data={uesrname}  settingclick={SettingtoggleClass} />} />
           <Route exact path="/submission" element={<Submission data={uesrname} gameto={todayGameShoe}  settingclick={SettingtoggleClass} />} />

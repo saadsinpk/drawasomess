@@ -11,7 +11,7 @@ import Loader from '../dashboard/components/common/Loader';
 import { toast } from "react-toastify";
 import { getUserToken, removeUserToken } from './utils/common';
 
-function Home({data,settingclick,gameto,ga,updatess}) {
+function Home({data,settingclick,gameto,ga,upsetTodayGameShoe}) {
   const navigate = useNavigate();
   const [gameUserName, setGameUserName] = useState("")
   const [stopKeyboard, setStopKeyboard] = useState(false);
@@ -20,6 +20,7 @@ function Home({data,settingclick,gameto,ga,updatess}) {
   const [timerid, setTimerid] = useState(0);
   const [value, setValue] = useState("");
   const [gameserdata, setGameserdata] = useState("")
+  const [todayGame, setTodayGame] = useState("");
   const handlekeyboard = (item) => {
     setValue([...value,item].join(""));
   }
@@ -77,7 +78,10 @@ function Home({data,settingclick,gameto,ga,updatess}) {
       };
   axios.get(`${config.apiEndPoint2}getTodaysGame`)
       .then((response) => {
+       
         if(response.data.errorMessage) {
+          console.log("h")
+            setTodayGame(response.data.errorMessage)
           setLoading(false)
         }
         else {
@@ -132,13 +136,14 @@ axios.post(`${config.apiEndPoint2}checkGameWord`,{
   
 })
     .then((response) => {
+      upsetTodayGameShoe("1")
       if(response.data.errorMessage) {
         toast.error(response.data.errorMessage);
 
       }
       else {
+        gameto = 1;
         toast.success(response.data.message);
-        updatess()
          navigate(`/congratulations`);
       }
     })
@@ -172,11 +177,11 @@ function MyComponent() {
    </div>
    <div className="diagramMain">
    {startTimer ? MyComponent() : <div className='diagramImg ' style={{minHeight:"180px"}}></div>}
-   {gameto == "0" ?
+   {!todayGame ? (gameto == "0" ?
    <div className="playBox my-3 mx-auto flex justify-center items-center">
      <button onClick={handleplay}>{startTimer ? time : <FaPlay /> }</button> 
    </div> :
-    <div className='text-center my-3 px-3' style={{color:"red"}}>You have played the game now try again tomorrow</div>}
+    <div className='text-center my-3 px-3' style={{color:"red"}}>You have played the game now try again tomorrow</div>) : <div className='text-center my-3 px-3' style={{color:"red"}}>No Game Today</div>}
    </div>
    <Keyboard keyval={value} dataitem={(item) =>handlekeyboard(item)} keyremove={keyboardClickback} keyboa={handlestopKeyboard} submitenter={handlesubmit} />
    </>
