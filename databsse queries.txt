@@ -1,0 +1,13 @@
+db queries
+
+tables 
+players
+admin
+
+CREATE TABLE admin(
+    ID int NOT NULL,
+    username varchar(255),
+    password varchar(255),
+    
+   PRIMARY KEY (ID)
+);

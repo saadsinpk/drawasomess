@@ -1,0 +1,5 @@
+node_modules/
+.env
+npm-debug.log
+.DS_Store
+webgame-cc727-firebase-adminsdk-yoqgl-d79fbb1fdd.json
