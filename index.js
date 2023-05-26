@@ -21,8 +21,8 @@ const playerRoute = require('./src/routes/players');
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  // res.header("Access-Control-Allow-Origin", "https://drawesomegame.herokuapp.com/");
-  res.header("Access-Control-Allow-Origin", "http://192.168.18.12:3301");
+  res.header("Access-Control-Allow-Origin", "https://drawesomegame.herokuapp.com/");
+  // res.header("Access-Control-Allow-Origin", "http://192.168.18.12:3301");
 
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
   res.header("Access-Control-Allow-credentials", true);
