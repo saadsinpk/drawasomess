@@ -1313,6 +1313,8 @@ router.put('/addUpcomingEntry', verifyToken, function (req, res) {
 
 });
 
+
+
 router.put('/updateUser', verifyToken, function (req, res) {
 
     const userId = req.body.user_id;
@@ -1525,6 +1527,56 @@ router.put('/removeUpcomingEntry', verifyToken, function (req, res) {
 
         const rowsUpdated = result.affectedRows;
         return res.json({ message: "Success Entry Removed from Upcoming Entries", rowsUpdated });
+    })
+
+});
+router.put('/backtonewEntry', verifyToken, function (req, res) {
+
+
+    const entryId = req.body.entryId;
+
+
+
+
+    if (!entryId) {
+        return res.json({ errorMessage: "Incomplete Data required play date and entry id" });
+    }
+
+    const upComingQuery = `UPDATE entries
+    SET is_upcoming = false ,saved = false , upcomming_date = ""
+    WHERE entry_id = ${entryId};
+    `
+
+    con.query(upComingQuery, [entryId], function (err, result, feild) {
+        if (err) return res.json({ errorMessage: err.message });
+
+        const rowsUpdated = result.affectedRows;
+        return res.json({ message: "Success Entry Removed from Upcoming Entries", rowsUpdated });
+    })
+
+});
+router.put('/addsaveEntry', verifyToken, function (req, res) {
+
+
+    const entryId = req.body.entryId;
+
+
+
+
+    if (!entryId) {
+        return res.json({ errorMessage: "Incomplete Data required play date and entry id" });
+    }
+
+    const upComingQuery = `UPDATE entries
+    SET is_upcoming = false , saved = true , upcomming_date = ""
+    WHERE entry_id = ${entryId};
+    `
+
+    con.query(upComingQuery, [entryId], function (err, result, feild) {
+        if (err) return res.json({ errorMessage: err.message });
+
+        const rowsUpdated = result.affectedRows;
+        return res.json({ message: "Success Entry moved to Saved Entry", rowsUpdated });
     })
 
 });
